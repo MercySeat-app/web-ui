@@ -1,73 +1,193 @@
-# React + TypeScript + Vite
+# @mercyseat/web-ui
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A reusable, themeable React component library powering the MercySeat Creator Portal and future MercySeat applications.  
+Built with **React**, **TypeScript**, **Vite**, **Tailwind CSS v4**, **Radix UI**, **class-variance-authority**, **Storybook**, and **Vitest**.
 
-Currently, two official plugins are available:
+Designed for consistency, accessibility, and ease of iteration across the MercySeat ecosystem.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Fully typed** React components (TypeScript + vite-plugin-dts)
+- **Themed with Tailwind v4** and MercySeat’s color system
+- **Composable UI primitives** using `cva` + Radix primitives
+- **Consumer-friendly builds:** ESM + CJS + generated type definitions
+- **Storybook** for component documentation and visual development
+- **Vitest + Testing Library** for fast, reliable unit tests
+- **asChild support** (Radix Slot) for flexible composition
+- Designed for consumption via  
+  - **GitHub dependency**, or  
+  - Publishing to **npm** (optional)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📦 Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Install from GitHub (recommended for internal MercySeat apps)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+In the consuming app’s `package.json`:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```jsonc
+"dependencies": {
+  "@mercyseat/web-ui": "git+https://github.com/<your-username>/mercyseat-web-ui.git#main"
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then install:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
 ```
+
+## 🚀 Usage
+
+Import components directly
+
+```typescript
+import { Button } from "@mercyseat/web-ui";
+
+export function Example() {
+  return (
+    <Button variant="blue-hepatica-solid" size="md">
+      Save changes
+    </Button>
+  );
+}
+```
+
+The library injects its own stylesheet:
+```typescript
+import "./styles.css";
+```
+
+Consumers do not need to configure Tailwind or fonts to use MercySeat UI components.
+
+## 🔧 Development
+
+Clone and install dependencies:
+
+```bash
+git clone https://github.com/<you>/mercyseat-web-ui.git
+cd mercyseat-web-ui
+pnpm install
+```
+
+## 🖥️ Storybook
+
+Start Storybook:
+```bash
+pnpm storybook
+```
+
+Visit:
+
+`http://localhost:6006`
+
+
+Storybook provides:
+
+- Component previews
+- Documentation
+- Playground controls
+- Design review environment
+
+## 🧪 Testing
+
+Run the entire test suite:
+```bash
+pnpm test
+```
+
+Watch mode:
+```bash
+pnpm test:watch
+```
+
+Coverage:
+```bash
+pnpm test:coverage
+```
+
+This library uses:
+
+- Vitest
+- @testing-library/react
+- @testing-library/user-event
+- jsdom
+
+## 🏗️ Building the library
+
+```bash
+pnpm build
+```
+
+Outputs the following into /dist:
+
+- `index.esm.js` – ESM bundle
+- `index.cjs.js` – CommonJS bundle
+- `index.d.ts` – Type definitions
+- Compiled CSS (Tailwind v4)
+
+`prepare` automatically runs `vite build` so GitHub consumers get a fresh build.
+
+## 🗂️ Project Structure
+
+```css
+src/
+  components/
+    button.tsx
+    input.tsx
+    ...
+  lib/
+    utils.ts
+  index.css
+  index.ts
+
+.storybook/
+vitest.config.ts
+vite.config.ts
+README.md
+```
+
+## 🎨 Design System Principles
+
+- Typography:\
+Manrope (Google Fonts) via font-sans
+- Color tokens:\
+Custom MercySeat colors via Tailwind v4 theme
+- Component architecture:
+  - Variant props via class-variance-authority
+  - asChild via Radix Slot
+  - Accessible markup
+  - Composable styling
+
+Inspired by the shadcn/ui philosophy while customized for MercySeat’s brand and UX needs.
+
+## 🔁 Versioning & Releasing
+
+Using GitHub dependencies:
+
+- Push to main
+- Consumers reinstall → they get updated components automatically
+
+## 🤝 Contributing
+
+When adding or modifying components:
+
+1. Add/Update component in src/components
+2. Add unit tests
+3. Add Storybook stories
+4. Export from src/index.ts
+5. Verify everything in Storybook
+6. Commit + push
+
+Linting:
+```bash
+pnpm lint
+```
+
+## 📝 License
+
+MIT License.
+Copyright © MercySeat.
