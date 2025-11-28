@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-blue-hepatica-900: #19183B;
+  --color-blue-hepatica-800: #323175;
+  --color-blue-hepatica-700: #383783;
+  --color-blue-hepatica-600: #6361EA;
+  --color-blue-hepatica-500: #8281EE;
+  --color-blue-hepatica-400: #A1A0F2;
+  --color-blue-hepatica-300: #C1C0F7;
+  --color-blue-hepatica-200: #E0DFFB;
+  --color-blue-hepatica-100: #EFEFFD;
+
+  --color-lavender-blue-900: #27273E;
+  --color-lavender-blue-800: #4D4E7C;
+  --color-lavender-blue-700: #7475B9;
+  --color-lavender-blue-600: #9A9CF7;
+  --color-lavender-blue-500: #AEB0F9;
+  --color-lavender-blue-400: #C2C4FA;
+  --color-lavender-blue-300: #D7D7FC;
+  --color-lavender-blue-200: #EBEBFD;
+  --color-lavender-blue-100: #F5F5FE;
+
+  --color-bright-red-900: #300D0D;
+  --color-bright-red-800: #601B1B;
+  --color-bright-red-700: #902828;
+  --color-bright-red-600: #BF3535;
+  --color-bright-red-500: #CC5D5D;
+  --color-bright-red-400: #D98686;
+  --color-bright-red-300: #E6AEAE;
+  --color-bright-red-200: #F2D7D7;
+  --color-bright-red-100: #F9EBEB;
+
+  --color-blood-red-900: #1A0000;
+  --color-blood-red-800: #330000;
+  --color-blood-red-700: #4D0000;
+  --color-blood-red-600: #660000;
+  --color-blood-red-500: #853333;
+  --color-blood-red-400: #A36666;
+  --color-blood-red-300: #C29999;
+  --color-blood-red-200: #E0CCCC;
+  --color-blood-red-100: #F0E5E5;
+
+  --color-gray-900: #20283C;
+  --color-gray-800: #2F364C;
+  --color-gray-700: #3F465B;
+  --color-gray-600: #5B6346;
+  --color-gray-500: #6B7385;
+  --color-gray-400: #7C8495;
+  --color-gray-300: #8C94A6;
+  --color-gray-200: #ACB4C6;
+  --color-gray-100: #C0C8D9;
+  --color-gray-50: #CAD2E1;
+  --color-gray-25: #EFF1F5;
+
+  --color-forest-blue-900: #031217;
+  --color-forest-blue-800: #06252F;
+  --color-forest-blue-700: #083746;
+  --color-forest-blue-600: #0B495D;
+  --color-forest-blue-500: #3C6D7D;
+  --color-forest-blue-400: #6D929E;
+  --color-forest-blue-300: #9DB6BE;
+  --color-forest-blue-200: #CEDBDF;
+  --color-forest-blue-100: #E7EDEF;
+
+  --color-turquoise-green-900: #093522;
+  --color-turquoise-green-800: #116A45;
+  --color-turquoise-green-700: #1A9F67;
+  --color-turquoise-green-600: #22D489;
+  --color-turquoise-green-500: #4EDDA1;
+  --color-turquoise-green-400: #7AE6B8;
+  --color-turquoise-green-300: #A7EED0;
+  --color-turquoise-green-200: #D3F6E7;
+  --color-turquoise-green-100: #E9FBF3;
+
+  --color-splashing-wave-900: #0F3440;
+  --color-splashing-wave-800: #1F6880;
+  --color-splashing-wave-700: #2E9CBF;
+  --color-splashing-wave-600: #3DD0FF;
+  --color-splashing-wave-500: #64D9FF;
+  --color-splashing-wave-400: #8BE3FF;
+  --color-splashing-wave-300: #B1ECFF;
+  --color-splashing-wave-200: #D8F6FF;
+  --color-splashing-wave-100: #ECFAFF;
+
+  --color-vivid-orange-900: #402200;
+  --color-vivid-orange-800: #804500;
+  --color-vivid-orange-700: #BF6700;
+  --color-vivid-orange-600: #FF8A00;
+  --color-vivid-orange-500: #FFA133;
+  --color-vivid-orange-400: #FFB966;
+  --color-vivid-orange-300: #FFD099;
+  --color-vivid-orange-200: #FFE8CC;
+  --color-vivid-orange-100: #FFF3E5;
+
+  --color-liberty-900: #111122;
+  --color-liberty-800: #222344;
+  --color-liberty-700: #333465;
+  --color-liberty-600: #444587;
+  --color-liberty-500: #696A9F;
+  --color-liberty-400: #8F90B7;
+  --color-liberty-300: #B4B5CF;
+  --color-liberty-200: #DADAE7;
+  --color-liberty-100: #ECECF3;
+
+  --color-purple-rain-900: #201433;
+  --color-purple-rain-800: #3F2866;
+  --color-purple-rain-700: #5F3B99;
+  --color-purple-rain-600: #7E4FCC;
+  --color-purple-rain-500: #9872D6;
+  --color-purple-rain-400: #B295E0;
+  --color-purple-rain-300: #CCB8EB;
+  --color-purple-rain-200: #E5DCF5;
+  --color-purple-rain-100: #F2EDFA;
+
+  --color-maroon-light-900: #300D1A;
+  --color-maroon-light-800: #601B34;
+  --color-maroon-light-700: #8F284D;
+  --color-maroon-light-600: #BF3567;
+  --color-maroon-light-500: #CC5D85;
+  --color-maroon-light-400: #D986A4;
+  --color-maroon-light-300: #E5AEC2;
+  --color-maroon-light-200: #F2D7E1;
+  --color-maroon-light-100: #F9EBF0;
+
+  --shadow-button: 0px 0px 0px 4px var(--color-gray-100);
+}
