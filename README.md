@@ -30,7 +30,7 @@ In the consuming app’s `package.json`:
 
 ```jsonc
 "dependencies": {
-  "@mercyseat/web-ui": "git+https://github.com/<your-username>/mercyseat-web-ui.git#main"
+  "@mercyseat/web-ui": "git+https://github.com/MercySeat-app/web-ui.git#main"
 }
 ```
 
@@ -68,7 +68,7 @@ Consumers do not need to configure Tailwind or fonts to use MercySeat UI compone
 Clone and install dependencies:
 
 ```bash
-git clone https://github.com/<you>/mercyseat-web-ui.git
+git clone https://github.com/MercySeat-app/web-ui.git
 cd mercyseat-web-ui
 pnpm install
 ```
