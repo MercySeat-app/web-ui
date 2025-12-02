@@ -10,12 +10,16 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/mercyseat-ui.es.js",
       "require": "./dist/mercyseat-ui.cjs.js"
-    }
+    },
+    "./styles.css": "./dist/web-ui.css"
   },
   "files": [
     "dist"
   ],
-  "scripts": {
+  "sideEffects": [
+    "./dist/web-ui.css"
+  ],
+    "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
