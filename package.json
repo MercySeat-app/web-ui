@@ -19,7 +19,7 @@
   "sideEffects": [
     "./dist/web-ui.css"
   ],
-    "scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -74,6 +74,8 @@
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.555.0",
+    "react-dropzone": "^14.3.8",
+    "react-easy-crop": "^5.5.6",
     "tailwind-merge": "^3.4.0"
   }
 }
