@@ -19,7 +19,7 @@
   "sideEffects": [
     "./dist/web-ui.css"
   ],
-    "scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -53,6 +53,7 @@
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "@vitest/coverage-v8": "4.0.14",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
@@ -74,6 +75,7 @@
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.555.0",
+    "react-icons": "^5.5.0",
     "tailwind-merge": "^3.4.0"
   }
 }

@@ -8,8 +8,9 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "jsx": "react-jsx",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "module": "ESNext"
   },
-  "include": ["src/index.ts", "src/components/**/*"],
+  "include": ["src/index.ts", "src/components/**/*", "src/types/**.*"],
   "exclude": ["src/main.tsx", "src/App.tsx", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.stories.tsx"]
 }
