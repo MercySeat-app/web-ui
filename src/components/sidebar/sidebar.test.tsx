@@ -19,18 +19,21 @@ describe("<Sidebar />", () => {
     expect(aside).toHaveClass("w-[247px]");
   });
 
-  it("renders the header with logo and brand name", () => {
+  it("renders the logo lockup with wordmark text", () => {
     render(
       <Sidebar>
         <div>Content</div>
       </Sidebar>
     );
 
-    const logo = screen.getByAltText("MercySeat logo");
-    expect(logo).toBeInTheDocument();
-
     const title = screen.getByText("MercySeat");
     expect(title).toBeInTheDocument();
+
+    const headerWrapper = title.closest("div") as HTMLDivElement | null;
+    expect(headerWrapper).not.toBeNull();
+
+    const svg = headerWrapper!.querySelector("svg");
+    expect(svg).not.toBeNull();
   });
 
   it("renders a background image layer behind the content", () => {
@@ -97,7 +100,7 @@ describe("<Sidebar />", () => {
 
     const button = screen.getByRole("button", { name: "Open sidebar" });
 
-    const overlay = document.querySelector("div.bg-black\\/40") as HTMLElement; // tailwind class selector
+    const overlay = document.querySelector("div.bg-black\\/40") as HTMLElement;
     expect(overlay).toBeInTheDocument();
     expect(overlay.className).toContain("opacity-0");
     expect(overlay.className).toContain("pointer-events-none");

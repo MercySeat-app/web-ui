@@ -3,9 +3,9 @@
 import { useCallback, useState, type ReactNode } from "react";
 import { RiMenuUnfold4Line } from "react-icons/ri";
 import { cn } from "../../lib/utils";
+import { LogoLockup } from "../main-logo";
 
 const backgroundImageUrl = new URL("./background.svg", import.meta.url).href;
-const logo = new URL("./logo.svg", import.meta.url).href;
 
 type SidebarProps = {
   children: ReactNode;
@@ -67,10 +67,7 @@ export function Sidebar({ children }: SidebarProps) {
         <div className="w-full flex flex-1 flex-col">
           <div className="flex justify-center pt-7 pb-12 border-b border-b border-b-white/15 mb-6">
             <div className="w-[8.75rem] flex items-center gap-x-1">
-              <img src={logo} alt="MercySeat logo" />
-              <h1 className="font-sans font-normal text-base leading-[0.04rem] text-white">
-                MercySeat
-              </h1>
+              <LogoLockup size={32} />
             </div>
           </div>
           <div className="flex flex-1">{children}</div>
