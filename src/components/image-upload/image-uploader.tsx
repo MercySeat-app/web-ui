@@ -40,10 +40,13 @@ export interface ImageUploaderProps {
    */
   maxSize?: number;
   /**
-   * Required placeholder text for the second line (e.g., "PNG, JPG, or WEBP (recommended: 1080X660px)")
-   * The first line "Click to upload or drag and drop" is hardcoded
+   * Placeholder text for the dropzone
    */
-  placeholder: string;
+  placeholder?: string;
+  /**
+   * Hint text shown below the placeholder
+   */
+  hint?: string;
 }
 
 interface CroppedImage {
@@ -59,7 +62,8 @@ function ImageUploader({
   onChange,
   className,
   maxSize = 5242880, // 5MB default
-  placeholder,
+  placeholder = "Click to upload or drag and drop",
+  hint,
 }: ImageUploaderProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [croppedImages, setCroppedImages] = useState<CroppedImage[]>([]);
@@ -285,9 +289,15 @@ function ImageUploader({
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <Image className="w-12 h-12 mb-4 text-gray-400" />
             <p className="mb-2 text-sm text-gray-700 font-medium">
-              Click to upload or drag and drop
+              {placeholder}
             </p>
-            <p className="text-xs text-gray-500">{placeholder}</p>
+            {hint && <p className="text-xs text-gray-500">{hint}</p>}
+            {!hint && (
+              <p className="text-xs text-gray-500">
+                {extensions.map((ext) => ext.toUpperCase()).join(", ")}
+                {maxSize && ` (max ${(maxSize / 1048576).toFixed(0)}MB)`}
+              </p>
+            )}
           </div>
         </div>
       ) : (
