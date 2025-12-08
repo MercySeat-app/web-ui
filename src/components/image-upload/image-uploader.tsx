@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
-import { Image, X, Upload } from "lucide-react";
+import { X, Upload } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Button } from "../button";
 import { getCroppedImg } from "./image-utils";
@@ -274,15 +274,14 @@ function ImageUploader({
         <div
           {...getRootProps()}
           className={cn(
-            "relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer transition-colors",
-            isDragActive
-              ? "border-blue-hepatica-600 bg-blue-hepatica-50"
-              : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+            "relative flex flex-col items-center justify-center w-full h-64 border cursor-pointer transition-colors bg-transparent",
+            isDragActive && "border-blue-hepatica-600"
           )}
+          style={{ borderColor: "#CAD2E1", borderRadius: "10px" }}
         >
           <input {...getInputProps()} />
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <Image className="w-12 h-12 mb-4 text-gray-400" />
+            <img src="/img_icon.svg" alt="" className="w-12 h-12 mb-4 text-gray-400" />
             <p className="mb-2 text-sm text-gray-700 font-medium">
               Click to upload or drag and drop
             </p>
@@ -321,7 +320,8 @@ function ImageUploader({
           {multiple && (
             <div
               {...getRootProps()}
-              className="flex items-center justify-center w-full h-20 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center w-full h-20 border cursor-pointer bg-transparent transition-colors"
+              style={{ borderColor: "#CAD2E1", borderRadius: "10px" }}
             >
               <input {...getInputProps()} />
               <div className="flex items-center gap-2 text-sm text-gray-600">
