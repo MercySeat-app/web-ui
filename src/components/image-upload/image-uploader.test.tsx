@@ -16,8 +16,8 @@ describe("ImageUploader", () => {
     expect(screen.getByText(/upload your photo/i)).toBeInTheDocument();
   });
 
-  it("shows custom hint text when provided", () => {
-    render(<ImageUploader hint="PNG, JPG, or WEBP (recommended: 800x800px)" />);
+  it("shows custom placeholder text when provided", () => {
+    render(<ImageUploader placeholder="PNG, JPG, or WEBP (recommended: 800x800px)" />);
     expect(
       screen.getByText(/PNG, JPG, or WEBP \(recommended: 800x800px\)/i)
     ).toBeInTheDocument();
