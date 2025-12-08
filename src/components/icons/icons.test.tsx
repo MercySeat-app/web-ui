@@ -1,6 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { ChurchIcon, GiftIcon, MinistryIcon, SermonIcon, Icon } from "./index";
+import {
+  AnnouncementIcon,
+  ChurchIcon,
+  ClassIcon,
+  EventIcon,
+  GiftIcon,
+  Icon,
+  MinistryIcon,
+  PodcastIcon,
+  SeriesIcon,
+  SermonIcon,
+  SubscriptionIcon,
+} from "./index";
 
 describe("Icon components", () => {
   it("ChurchIcon renders an SVG and respects numeric size", () => {
@@ -59,5 +71,75 @@ describe("Icon components", () => {
     expect(svg.tagName.toLowerCase()).toBe("svg");
     expect(svg).toHaveAttribute("width", "20");
     expect(svg).toHaveAttribute("height", "20");
+  });
+
+  it("AnnouncementIcon uses currentColor for stroke", () => {
+    const { container } = render(
+      <AnnouncementIcon aria-label="Announcement icon" />
+    );
+
+    const svg = screen.getByRole("img", { name: "Announcement icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("ClassIcon uses currentColor for stroke", () => {
+    const { container } = render(<ClassIcon aria-label="Class icon" />);
+
+    const svg = screen.getByRole("img", { name: "Class icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("EventIcon uses currentColor for stroke", () => {
+    const { container } = render(<EventIcon aria-label="Event icon" />);
+
+    const svg = screen.getByRole("img", { name: "Event icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("PodcastIcon uses currentColor for stroke", () => {
+    const { container } = render(<PodcastIcon aria-label="Podcast icon" />);
+
+    const svg = screen.getByRole("img", { name: "Podcast icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("SeriesIcon uses currentColor for stroke", () => {
+    const { container } = render(<SeriesIcon aria-label="Series icon" />);
+
+    const svg = screen.getByRole("img", { name: "Series icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("SubscriptionIcon uses currentColor for stroke", () => {
+    const { container } = render(
+      <SubscriptionIcon aria-label="Subscription icon" />
+    );
+
+    const svg = screen.getByRole("img", { name: "Subscription icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
   });
 });

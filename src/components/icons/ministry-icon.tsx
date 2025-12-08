@@ -8,6 +8,7 @@ export function MinistryIcon({ size, className, ...props }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
+      fill="none"
       className={cn("inline-block", className)}
       {...svgProps}
     >
