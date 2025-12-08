@@ -24,8 +24,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     extensions: ["jpeg", "jpg", "png", "webp"],
-    placeholder: "Click to upload or drag and drop",
-    hint: "PNG, JPG, or WEBP (recommended: 800x800px)",
+    placeholder: "PNG, JPG, or WEBP (recommended: 1080x660px)",
   },
 };
 
@@ -34,8 +33,7 @@ export const WithCrop: Story = {
     extensions: ["jpeg", "jpg", "png", "webp"],
     shouldCrop: true,
     aspectRatio: 1,
-    placeholder: "Upload and crop your image",
-    hint: "Square format (1:1 ratio)",
+    placeholder: "PNG, JPG, or WEBP (recommended: 800x800px)",
   },
 };
 
@@ -43,8 +41,7 @@ export const MultipleImages: Story = {
   args: {
     extensions: ["jpeg", "jpg", "png", "webp", "gif"],
     multiple: true,
-    placeholder: "Upload multiple images",
-    hint: "You can upload multiple images at once",
+    placeholder: "PNG, JPG, or WEBP (recommended: 1080x660px)",
   },
 };
 
@@ -54,8 +51,7 @@ export const MultipleCrop: Story = {
     multiple: true,
     shouldCrop: true,
     aspectRatio: 16 / 9,
-    placeholder: "Upload and crop multiple images",
-    hint: "Landscape format (16:9 ratio)",
+    placeholder: "PNG, JPG, or WEBP (recommended: 1920x1080px)",
   },
 };
 
@@ -64,8 +60,7 @@ export const LandscapeCrop: Story = {
     extensions: ["jpeg", "jpg", "png", "webp"],
     shouldCrop: true,
     aspectRatio: 16 / 9,
-    placeholder: "Upload landscape image",
-    hint: "16:9 aspect ratio",
+    placeholder: "PNG, JPG, or WEBP (recommended: 1920x1080px)",
   },
 };
 
@@ -74,16 +69,14 @@ export const PortraitCrop: Story = {
     extensions: ["jpeg", "jpg", "png", "webp"],
     shouldCrop: true,
     aspectRatio: 3 / 4,
-    placeholder: "Upload portrait image",
-    hint: "3:4 aspect ratio",
+    placeholder: "PNG, JPG, or WEBP (recommended: 1080x1440px)",
   },
 };
 
 export const LimitedFileTypes: Story = {
   args: {
     extensions: ["png"],
-    placeholder: "PNG files only",
-    hint: "Only PNG format is accepted",
+    placeholder: "PNG files only (recommended: 1080x660px)",
   },
 };
 
@@ -91,8 +84,7 @@ export const SmallFileSize: Story = {
   args: {
     extensions: ["jpeg", "jpg", "png"],
     maxSize: 1048576, // 1MB
-    placeholder: "Upload image (max 1MB)",
-    hint: "Maximum file size: 1MB",
+    placeholder: "PNG, JPG, or WEBP (max 1MB, recommended: 1080x660px)",
   },
 };
 
@@ -130,8 +122,7 @@ export const Interactive: Story = {
     extensions: ["jpeg", "jpg", "png", "webp"],
     shouldCrop: true,
     aspectRatio: 1,
-    placeholder: "Upload and crop your image",
-    hint: "PNG, JPG, or WEBP (recommended: 800x800px)",
+    placeholder: "PNG, JPG, or WEBP (recommended: 800x800px)",
   },
 };
 
@@ -168,8 +159,7 @@ export const MultipleInteractive: Story = {
   args: {
     extensions: ["jpeg", "jpg", "png", "webp"],
     multiple: true,
-    placeholder: "Upload multiple images",
-    hint: "You can upload multiple images at once",
+    placeholder: "PNG, JPG, or WEBP (recommended: 1080x660px)",
   },
 };
 
