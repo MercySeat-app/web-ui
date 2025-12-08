@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ImageUpload } from "./image-upload";
+import { ImageUploader } from "./image-uploader";
 import { useState } from "react";
 
 const meta = {
-  title: "Components/ImageUpload",
-  component: ImageUpload,
+  title: "Components/ImageUploader",
+  component: ImageUploader,
   parameters: {
     layout: "centered",
   },
@@ -16,7 +16,7 @@ const meta = {
     ),
   ],
   tags: ["autodocs"],
-} satisfies Meta<typeof ImageUpload>;
+} satisfies Meta<typeof ImageUploader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -102,7 +102,7 @@ export const Interactive: Story = {
 
     return (
       <div className="space-y-4">
-        <ImageUpload
+        <ImageUploader
           {...args}
           onChange={(newFiles) => {
             setFiles(newFiles);
@@ -141,7 +141,7 @@ export const MultipleInteractive: Story = {
 
     return (
       <div className="space-y-4">
-        <ImageUpload
+        <ImageUploader
           {...args}
           onChange={(newFiles) => {
             setFiles(newFiles);

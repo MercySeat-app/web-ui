@@ -1,2 +1,2 @@
-export { ImageUpload, type ImageUploadProps } from "./image-upload";
+export { ImageUploader, type ImageUploaderProps } from "./image-uploader";
 

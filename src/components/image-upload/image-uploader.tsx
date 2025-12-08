@@ -7,7 +7,7 @@ import { cn } from "../../lib/utils";
 import { Button } from "../button";
 import { getCroppedImg } from "./image-utils";
 
-export interface ImageUploadProps {
+export interface ImageUploaderProps {
   /**
    * Array of file extensions allowed (e.g., ['jpeg', 'png', 'gif'])
    */
@@ -54,7 +54,7 @@ interface CroppedImage {
   preview: string;
 }
 
-function ImageUpload({
+function ImageUploader({
   extensions = ["jpeg", "jpg", "png", "webp", "gif"],
   shouldCrop = false,
   aspectRatio = 1,
@@ -64,7 +64,7 @@ function ImageUpload({
   maxSize = 5242880, // 5MB default
   placeholder = "Click to upload or drag and drop",
   hint,
-}: ImageUploadProps) {
+}: ImageUploaderProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [croppedImages, setCroppedImages] = useState<CroppedImage[]>([]);
   const [currentCropIndex, setCurrentCropIndex] = useState<number>(0);
@@ -360,5 +360,5 @@ function ImageUpload({
   );
 }
 
-export { ImageUpload };
+export { ImageUploader };
 

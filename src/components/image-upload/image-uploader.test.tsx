@@ -1,36 +1,36 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ImageUpload } from "./image-upload";
+import { ImageUploader } from "./image-uploader";
 
-describe("ImageUpload", () => {
+describe("ImageUploader", () => {
   it("renders dropzone with default placeholder", () => {
-    render(<ImageUpload />);
+    render(<ImageUploader />);
     expect(
       screen.getByText(/click to upload or drag and drop/i)
     ).toBeInTheDocument();
   });
 
   it("renders custom placeholder", () => {
-    render(<ImageUpload placeholder="Upload your photo" />);
+    render(<ImageUploader placeholder="Upload your photo" />);
     expect(screen.getByText(/upload your photo/i)).toBeInTheDocument();
   });
 
   it("shows custom hint text when provided", () => {
-    render(<ImageUpload hint="PNG, JPG, or WEBP (recommended: 800x800px)" />);
+    render(<ImageUploader hint="PNG, JPG, or WEBP (recommended: 800x800px)" />);
     expect(
       screen.getByText(/PNG, JPG, or WEBP \(recommended: 800x800px\)/i)
     ).toBeInTheDocument();
   });
 
   it("displays allowed file extensions", () => {
-    render(<ImageUpload extensions={["png", "jpg"]} />);
+    render(<ImageUploader extensions={["png", "jpg"]} />);
     expect(screen.getByText(/PNG, JPG/)).toBeInTheDocument();
   });
 
   it("calls onChange when file is dropped (no crop)", async () => {
     const onChange = vi.fn();
-    const { container } = render(<ImageUpload onChange={onChange} shouldCrop={false} />);
+    const { container } = render(<ImageUploader onChange={onChange} shouldCrop={false} />);
 
     const file = new File(["test"], "test.png", { type: "image/png" });
     const input = container.querySelector('input[type="file"]') as HTMLInputElement;
@@ -44,7 +44,7 @@ describe("ImageUpload", () => {
 
   it("shows crop interface when shouldCrop is true", async () => {
     const onChange = vi.fn();
-    const { container } = render(<ImageUpload onChange={onChange} shouldCrop={true} />);
+    const { container } = render(<ImageUploader onChange={onChange} shouldCrop={true} />);
 
     const file = new File(["test"], "test.png", { type: "image/png" });
     const input = container.querySelector('input[type="file"]') as HTMLInputElement;
@@ -59,7 +59,7 @@ describe("ImageUpload", () => {
   });
 
   it("shows preview after image is uploaded without crop", async () => {
-    const { container } = render(<ImageUpload shouldCrop={false} />);
+    const { container } = render(<ImageUploader shouldCrop={false} />);
 
     const file = new File(["test"], "test.png", { type: "image/png" });
     const input = container.querySelector('input[type="file"]') as HTMLInputElement;
@@ -74,7 +74,7 @@ describe("ImageUpload", () => {
 
   it("accepts valid file types only", async () => {
     const onChange = vi.fn();
-    const { container } = render(<ImageUpload extensions={["png"]} onChange={onChange} shouldCrop={false} />);
+    const { container } = render(<ImageUploader extensions={["png"]} onChange={onChange} shouldCrop={false} />);
 
     // Upload a valid PNG file
     const validFile = new File(["test"], "test.png", { type: "image/png" });
@@ -89,7 +89,7 @@ describe("ImageUpload", () => {
 
   it("accepts multiple files when multiple prop is true", async () => {
     const onChange = vi.fn();
-    const { container } = render(<ImageUpload onChange={onChange} multiple={true} shouldCrop={false} />);
+    const { container } = render(<ImageUploader onChange={onChange} multiple={true} shouldCrop={false} />);
 
     const file1 = new File(["test1"], "test1.png", { type: "image/png" });
     const file2 = new File(["test2"], "test2.png", { type: "image/png" });
@@ -104,7 +104,7 @@ describe("ImageUpload", () => {
 
   it("only accepts single file when multiple prop is false", async () => {
     const onChange = vi.fn();
-    const { container } = render(<ImageUpload onChange={onChange} multiple={false} shouldCrop={false} />);
+    const { container } = render(<ImageUploader onChange={onChange} multiple={false} shouldCrop={false} />);
 
     const file1 = new File(["test1"], "test1.png", { type: "image/png" });
     const file2 = new File(["test2"], "test2.png", { type: "image/png" });
@@ -118,7 +118,7 @@ describe("ImageUpload", () => {
   });
 
   it("shows 'Add more images' button after upload when multiple is true", async () => {
-    const { container } = render(<ImageUpload multiple={true} shouldCrop={false} />);
+    const { container } = render(<ImageUploader multiple={true} shouldCrop={false} />);
 
     const file = new File(["test"], "test.png", { type: "image/png" });
     const input = container.querySelector('input[type="file"]') as HTMLInputElement;
@@ -131,7 +131,7 @@ describe("ImageUpload", () => {
   });
 
   it("does not show 'Add more images' button when multiple is false", async () => {
-    const { container } = render(<ImageUpload multiple={false} shouldCrop={false} />);
+    const { container } = render(<ImageUploader multiple={false} shouldCrop={false} />);
 
     const file = new File(["test"], "test.png", { type: "image/png" });
     const input = container.querySelector('input[type="file"]') as HTMLInputElement;
@@ -144,12 +144,12 @@ describe("ImageUpload", () => {
   });
 
   it("applies custom className to container", () => {
-    const { container } = render(<ImageUpload className="custom-class" />);
+    const { container } = render(<ImageUploader className="custom-class" />);
     expect(container.firstChild).toHaveClass("custom-class");
   });
 
   it("shows drag active state", async () => {
-    const { container } = render(<ImageUpload />);
+    const { container } = render(<ImageUploader />);
     
     // The dropzone should exist
     const dropzone = container.querySelector('[class*="border-dashed"]');
