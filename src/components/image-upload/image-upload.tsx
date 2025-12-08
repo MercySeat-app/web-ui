@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
@@ -65,18 +65,18 @@ function ImageUpload({
   placeholder = "Click to upload or drag and drop",
   hint,
 }: ImageUploadProps) {
-  const [files, setFiles] = React.useState<File[]>([]);
-  const [croppedImages, setCroppedImages] = React.useState<CroppedImage[]>([]);
-  const [currentCropIndex, setCurrentCropIndex] = React.useState<number>(0);
-  const [isCropping, setIsCropping] = React.useState(false);
-  const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = React.useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = React.useState<Area | null>(
+  const [files, setFiles] = useState<File[]>([]);
+  const [croppedImages, setCroppedImages] = useState<CroppedImage[]>([]);
+  const [currentCropIndex, setCurrentCropIndex] = useState<number>(0);
+  const [isCropping, setIsCropping] = useState(false);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(
     null
   );
-  const [previewUrls, setPreviewUrls] = React.useState<string[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
-  const accept = React.useMemo(() => {
+  const accept = useMemo(() => {
     const mimeTypes: Record<string, string[]> = {};
     extensions.forEach((ext) => {
       const normalizedExt = ext.toLowerCase().replace(/^\./, "");
@@ -89,7 +89,7 @@ function ImageUpload({
     return mimeTypes;
   }, [extensions]);
 
-  const onDrop = React.useCallback(
+  const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length === 0) return;
 
@@ -117,14 +117,14 @@ function ImageUpload({
       multiple,
     });
 
-  const onCropComplete = React.useCallback(
+  const onCropComplete = useCallback(
     (_croppedArea: Area, croppedAreaPixels: Area) => {
       setCroppedAreaPixels(croppedAreaPixels);
     },
     []
   );
 
-  const handleCropConfirm = React.useCallback(async () => {
+  const handleCropConfirm = useCallback(async () => {
     if (!croppedAreaPixels || !files[currentCropIndex]) return;
 
     try {
@@ -168,7 +168,7 @@ function ImageUpload({
     }
   }, [croppedAreaPixels, currentCropIndex, files, croppedImages, onChange]);
 
-  const handleCropCancel = React.useCallback(() => {
+  const handleCropCancel = useCallback(() => {
     setIsCropping(false);
     setFiles([]);
     setCroppedImages([]);
@@ -178,7 +178,7 @@ function ImageUpload({
     setCroppedAreaPixels(null);
   }, []);
 
-  const handleRemoveImage = React.useCallback(
+  const handleRemoveImage = useCallback(
     (index: number) => {
       URL.revokeObjectURL(previewUrls[index]);
       const newPreviews = previewUrls.filter((_, i) => i !== index);
@@ -198,7 +198,7 @@ function ImageUpload({
   );
 
   // Cleanup on unmount
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       previewUrls.forEach((url) => URL.revokeObjectURL(url));
     };
