@@ -9,7 +9,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div style={{ padding: "2rem" }}>
+      <div style={{height: "600px", padding: "2rem" }}>
         <Story />
       </div>
     ),
