@@ -215,39 +215,56 @@ function ImageUploader({
     const currentFileUrl = URL.createObjectURL(files[currentCropIndex]);
 
     return (
-      <div className={cn("relative w-full", className)}>
-        <div className="relative h-[400px] w-full bg-gray-900 rounded-lg overflow-hidden">
-          <Cropper
-            image={currentFileUrl}
-            crop={crop}
-            zoom={zoom}
-            aspect={aspectRatio}
-            onCropChange={setCrop}
-            onCropComplete={onCropComplete}
-            onZoomChange={setZoom}
-          />
-        </div>
-        <div className="mt-4 space-y-4">
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">
-              Zoom: {zoom.toFixed(1)}x
-            </label>
-            <input
-              type="range"
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(e) => setZoom(parseFloat(e.target.value))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-            />
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+      >
+        <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl mx-4 max-h-[90vh] flex flex-col">
+          {/* Modal Header */}
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Profile Image
+            </h2>
           </div>
-          {multiple && files.length > 1 && (
-            <p className="text-sm text-gray-600">
-              Cropping image {currentCropIndex + 1} of {files.length}
-            </p>
-          )}
-          <div className="flex gap-2 justify-end">
+
+          {/* Modal Content */}
+          <div className="flex-1 overflow-auto p-6">
+            <div className="relative h-[400px] w-full bg-gray-900 rounded-lg overflow-hidden">
+              <Cropper
+                image={currentFileUrl}
+                crop={crop}
+                zoom={zoom}
+                aspect={aspectRatio}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+              />
+            </div>
+            <div className="mt-4 space-y-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Zoom: {zoom.toFixed(1)}x
+                </label>
+                <input
+                  type="range"
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  value={zoom}
+                  onChange={(e) => setZoom(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+              {multiple && files.length > 1 && (
+                <p className="text-sm text-gray-600">
+                  Cropping image {currentCropIndex + 1} of {files.length}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Modal Footer */}
+          <div className="px-6 py-4 border-t border-gray-200 flex gap-2 justify-end">
             <Button
               type="button"
               variant="gray-outline"
@@ -260,7 +277,7 @@ function ImageUploader({
               variant="blue-hepatica-solid"
               onClick={handleCropConfirm}
             >
-              {currentCropIndex < files.length - 1 ? "Next" : "Done"}
+              {currentCropIndex < files.length - 1 ? "Next" : "Save"}
             </Button>
           </div>
         </div>
@@ -299,21 +316,50 @@ function ImageUploader({
             {previewUrls.map((url, index) => (
               <div
                 key={url}
-                className="relative group aspect-square rounded-lg overflow-hidden border border-gray-200"
+                className={cn(
+                  "relative group",
+                  multiple
+                    ? "aspect-square rounded-lg overflow-hidden border border-gray-200"
+                    : "flex items-center justify-center"
+                )}
               >
-                <img
-                  src={url}
-                  alt={`Preview ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveImage(index)}
-                  className="absolute top-2 right-2 p-1 bg-bright-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-bright-red-700"
-                  aria-label="Remove image"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                {multiple ? (
+                  <>
+                    <img
+                      src={url}
+                      alt={`Preview ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(index)}
+                      className="absolute top-2 right-2 p-1 bg-bright-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-bright-red-700"
+                      aria-label="Remove image"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </>
+                ) : (
+                  <div className="relative w-full max-w-xs mx-auto">
+                    <div className="relative w-full aspect-square rounded-full overflow-hidden bg-white border-[1px] border-gray-50 shadow-lg">
+                      <img
+                        src={url}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <button
+                        type="button"
+                        className="absolute bottom-4 right-4 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-white shadow-md hover:bg-gray-400 transition-colors cursor-pointer"
+                        aria-label="Change image"
+                      >
+                        <img src="/camera_icon.svg" alt="" />
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
