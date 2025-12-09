@@ -223,7 +223,7 @@ function ImageUploader({
           {/* Modal Header */}
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">
-              Profile Image
+              Crop Image
             </h2>
           </div>
 
@@ -277,7 +277,7 @@ function ImageUploader({
               variant="blue-hepatica-solid"
               onClick={handleCropConfirm}
             >
-              {currentCropIndex < files.length - 1 ? "Next" : "Save"}
+              {currentCropIndex < files.length - 1 ? "Next" : "Crop"}
             </Button>
           </div>
         </div>
@@ -286,12 +286,12 @@ function ImageUploader({
   }
 
   return (
-    <div className={cn("w-full space-y-4", className)}>
+    <div className={cn("w-full space-y-4 min-h-38.5", className)}>
       {previewUrls.length === 0 ? (
         <div
           {...getRootProps()}
           className={cn(
-            "relative flex flex-col items-center justify-center w-full h-64 border cursor-pointer transition-colors bg-transparent",
+            "relative flex flex-col items-center justify-center w-full h-full min-h-38.5 border cursor-pointer transition-colors bg-transparent",
             isDragActive && "border-blue-hepatica-600"
           )}
           style={{ borderColor: "#CAD2E1", borderRadius: "10px" }}
@@ -302,7 +302,7 @@ function ImageUploader({
             <p className="mb-2 text-sm text-gray-700 font-medium">
               Click to upload or drag and drop
             </p>
-            {placeholder && <p className="text-xs text-gray-500">{placeholder}</p>}
+            {placeholder && <p className="text-xs text-gray-500 text-center">{placeholder}</p>}
           </div>
         </div>
       ) : (

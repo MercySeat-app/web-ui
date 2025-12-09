@@ -9,7 +9,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: "600px", padding: "2rem" }}>
+      <div style={{ padding: "2rem" }}>
         <Story />
       </div>
     ),
@@ -24,6 +24,7 @@ export const Default: Story = {
   args: {
     extensions: ["jpeg", "jpg", "png", "webp"],
     placeholder: "PNG, JPG, or WEBP (recommended: 800x800px)",
+    className: "h-52",
   },
 };
 
