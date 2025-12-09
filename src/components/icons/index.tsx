@@ -6,6 +6,7 @@ import { ChurchIcon } from "./church-icon";
 import { ClassIcon } from "./class-icon";
 import { EventIcon } from "./event-icon";
 import { GiftIcon } from "./gift-icon";
+import { HomeIcon } from "./home-icon";
 import { MinistryIcon } from "./ministry-icon";
 import { PodcastIcon } from "./podcast-icon";
 import { SeriesIcon } from "./series-icon";
@@ -18,6 +19,7 @@ export type IconName =
   | "class"
   | "event"
   | "gift"
+  | "home"
   | "ministry"
   | "podcast"
   | "series"
@@ -30,6 +32,7 @@ const iconMap: Record<IconName, (props: IconProps) => JSX.Element> = {
   class: ClassIcon,
   event: EventIcon,
   gift: GiftIcon,
+  home: HomeIcon,
   ministry: MinistryIcon,
   podcast: PodcastIcon,
   series: SeriesIcon,
@@ -48,6 +51,7 @@ export {
   EventIcon,
   ClassIcon,
   GiftIcon,
+  HomeIcon,
   MinistryIcon,
   PodcastIcon,
   SeriesIcon,
