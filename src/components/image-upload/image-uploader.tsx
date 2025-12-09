@@ -173,6 +173,24 @@ function ImageUploader({
     setCroppedAreaPixels(null);
   }, []);
 
+  const handleReset = useCallback(() => {
+    // Revoke all preview URLs to prevent memory leaks
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+
+    // Clear all state
+    setFiles([]);
+    setCroppedImages([]);
+    setPreviewUrls([]);
+    setCurrentCropIndex(0);
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCroppedAreaPixels(null);
+    setIsCropping(false);
+
+    // Call onChange with empty array
+    onChange?.([]);
+  }, [previewUrls, onChange]);
+
   const handleRemoveImage = useCallback(
     (index: number) => {
       URL.revokeObjectURL(previewUrls[index]);
@@ -307,61 +325,75 @@ function ImageUploader({
         </div>
       ) : (
         <div className="space-y-4">
-          <div
-            className={cn(
-              "grid gap-4",
-              multiple ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1"
-            )}
-          >
-            {previewUrls.map((url, index) => (
-              <div
-                key={url}
-                className={cn(
-                  "relative group",
-                  multiple
-                    ? "aspect-square rounded-lg overflow-hidden border border-gray-200"
-                    : "flex items-center justify-center"
-                )}
-              >
-                {multiple ? (
-                  <>
-                    <img
-                      src={url}
-                      alt={`Preview ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveImage(index)}
-                      className="absolute top-2 right-2 p-1 bg-bright-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-bright-red-700"
-                      aria-label="Remove image"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </>
-                ) : (
-                  <div className="relative w-full max-w-xs mx-auto">
-                    <div className="relative w-full aspect-square rounded-full overflow-hidden bg-white border border-gray-50 shadow-lg">
+          <div className="relative">
+            <div
+              className={cn(
+                "grid gap-4",
+                multiple ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1"
+              )}
+            >
+              {previewUrls.map((url, index) => (
+                <div
+                  key={url}
+                  className={cn(
+                    "relative group",
+                    multiple
+                      ? "aspect-square rounded-lg overflow-hidden border border-gray-200"
+                      : "flex items-center justify-center"
+                  )}
+                >
+                  {multiple ? (
+                    <>
                       <img
                         src={url}
-                        alt="Preview"
+                        alt={`Preview ${index + 1}`}
                         className="w-full h-full object-cover"
                       />
-                    </div>
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
                       <button
                         type="button"
-                        className="absolute bottom-4 right-4 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-white shadow-md hover:bg-gray-400 transition-colors cursor-pointer"
-                        aria-label="Change image"
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute top-2 right-2 p-1 bg-bright-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-bright-red-700"
+                        aria-label="Remove image"
                       >
-                        <img src="/camera_icon.svg" alt="" />
+                        <X className="w-4 h-4" />
                       </button>
+                    </>
+                  ) : (
+                    <div className="relative w-full max-w-xs mx-auto">
+                      <div className="relative w-full aspect-square rounded-full overflow-hidden bg-white border border-gray-50 shadow-lg">
+                        <img
+                          src={url}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <button
+                          type="button"
+                          className="absolute bottom-4 right-4 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center border-white shadow-md hover:bg-gray-400 transition-colors cursor-pointer"
+                          aria-label="Change image"
+                        >
+                          <img src="/camera_icon.svg" alt="" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
+            </div>
+            {/* Reset button in top right */}
+            <button
+              type="button"
+              onClick={handleReset}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full transition-colors"
+              style={{ backgroundColor: "#EFF1F5" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E0E2E8")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#EFF1F5")}
+              aria-label="Reset image selection"
+            >
+              <X className="w-4 h-4 text-gray-700" strokeWidth={2.5} />
+            </button>
           </div>
           {multiple && (
             <div
