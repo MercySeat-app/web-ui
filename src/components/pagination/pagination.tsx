@@ -82,23 +82,25 @@ export function Pagination({
       <div className="flex items-center gap-2">
         <span className="font-sans text-xs text-gray-700">Rows per page:</span>
 
-        <Select
-          disabled={disabled || !onPageSizeChange}
-          defaultValue={`${pageSize}`}
-          onValueChange={handlePageSizeChange}
-          data-testid="pagination--items-per-page"
-        >
-          <SelectTrigger variant="ghost" disabled={disabled}>
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            {pageSizeOptions.map((option) => (
-              <SelectItem key={option} value={`${option}`}>
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="w-16">
+          <Select
+            disabled={disabled || !onPageSizeChange}
+            defaultValue={`${pageSize}`}
+            onValueChange={handlePageSizeChange}
+            data-testid="pagination--items-per-page"
+          >
+            <SelectTrigger variant="ghost" disabled={disabled}>
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              {pageSizeOptions.map((option) => (
+                <SelectItem key={option} value={`${option}`}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Range + pagination controls */}
