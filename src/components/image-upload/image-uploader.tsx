@@ -341,7 +341,7 @@ function ImageUploader({
                   </>
                 ) : (
                   <div className="relative w-full max-w-xs mx-auto">
-                    <div className="relative w-full aspect-square rounded-full overflow-hidden bg-white border-[1px] border-gray-50 shadow-lg">
+                    <div className="relative w-full aspect-square rounded-full overflow-hidden bg-white border border-gray-50 shadow-lg">
                       <img
                         src={url}
                         alt="Preview"
