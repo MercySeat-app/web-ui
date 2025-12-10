@@ -6,6 +6,7 @@ import {
   ClassIcon,
   EventIcon,
   GiftIcon,
+  HomeIcon,
   Icon,
   MinistryIcon,
   PodcastIcon,
@@ -136,6 +137,17 @@ describe("Icon components", () => {
     );
 
     const svg = screen.getByRole("img", { name: "Subscription icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("HomeIcon uses currentColor for stroke", () => {
+    const { container } = render(<HomeIcon aria-label="Home icon" />);
+
+    const svg = screen.getByRole("img", { name: "Home icon" });
     expect(svg.tagName.toLowerCase()).toBe("svg");
 
     const path = container.querySelector("path");
