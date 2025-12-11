@@ -10,9 +10,9 @@ const meta: Meta<typeof Button> = {
     docs: {
       description: {
         component:
-          "The primary action button for MercySeat. It supports multiple color variants, sizes, and can render as a Radix Slot via `asChild`."
-      }
-    }
+          "The primary action button for MercySeat. It supports multiple color variants, sizes, and can render as a Radix Slot via `asChild`.",
+      },
+    },
   },
   argTypes: {
     variant: {
@@ -26,20 +26,20 @@ const meta: Meta<typeof Button> = {
         "gray-ghost",
         "bright-red-solid",
         "bright-red-outline",
-        "bright-red-ghost"
-      ]
+        "bright-red-ghost",
+      ],
     },
     size: {
       control: { type: "inline-radio" },
-      options: ["sm", "md", "lg", "icon"]
+      options: ["sm", "md", "lg", "icon"],
     },
     asChild: {
-      control: "boolean"
+      control: "boolean",
     },
     disabled: {
-      control: "boolean"
-    }
-  }
+      control: "boolean",
+    },
+  },
 };
 
 export default meta;
@@ -52,8 +52,8 @@ export const Playground: Story = {
     children: "Click me",
     variant: "blue-hepatica-solid",
     size: "md",
-    disabled: false
-  }
+    disabled: false,
+  },
 };
 
 export const BlueHepaticaVariants: Story = {
@@ -71,16 +71,16 @@ export const BlueHepaticaVariants: Story = {
     </div>
   ),
   args: {
-    size: "md"
+    size: "md",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Blue Hepatica is the primary MercySeat brand color. Use the solid variant for primary actions, outline for secondary actions, and ghost for tertiary actions."
-      }
-    }
-  }
+          "Blue Hepatica is the primary MercySeat brand color. Use the solid variant for primary actions, outline for secondary actions, and ghost for tertiary actions.",
+      },
+    },
+  },
 };
 
 export const GrayVariants: Story = {
@@ -98,8 +98,8 @@ export const GrayVariants: Story = {
     </div>
   ),
   args: {
-    size: "md"
-  }
+    size: "md",
+  },
 };
 
 export const BrightRedVariants: Story = {
@@ -117,16 +117,16 @@ export const BrightRedVariants: Story = {
     </div>
   ),
   args: {
-    size: "md"
+    size: "md",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Bright red variants are used for destructive or high-attention actions (e.g. delete, cancel subscription)."
-      }
-    }
-  }
+          "Bright red variants are used for destructive or high-attention actions (e.g. delete, cancel subscription).",
+      },
+    },
+  },
 };
 
 export const Sizes: Story = {
@@ -142,14 +142,13 @@ export const Sizes: Story = {
         Large
       </Button>
       <Button {...args} size="icon" aria-label="Icon button">
-        {/* you can drop an icon here later */}
-        •
+        {/* you can drop an icon here later */}•
       </Button>
     </div>
   ),
   args: {
-    variant: "blue-hepatica-solid"
-  }
+    variant: "blue-hepatica-solid",
+  },
 };
 
 export const AsChildLink: Story = {
@@ -160,14 +159,14 @@ export const AsChildLink: Story = {
   ),
   args: {
     variant: "gray-ghost",
-    size: "md"
+    size: "md",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "`asChild` allows the button styles to be applied to a different underlying element (like a link) using Radix `Slot`."
-      }
-    }
-  }
+          "`asChild` allows the button styles to be applied to a different underlying element (like a link) using Radix `Slot`.",
+      },
+    },
+  },
 };
