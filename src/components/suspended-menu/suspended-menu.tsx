@@ -4,7 +4,7 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import type { ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
-export interface MenuItem {
+export interface SuspendedMenuItem {
   /**
    * The label text for the menu item
    */
@@ -29,7 +29,7 @@ export interface MenuItem {
   disabled?: boolean;
 }
 
-export interface MenuProps {
+export interface SuspendedMenuProps {
   /**
    * The trigger element that opens the menu when clicked
    */
@@ -37,7 +37,7 @@ export interface MenuProps {
   /**
    * Array of menu items to display
    */
-  items: MenuItem[];
+  items: SuspendedMenuItem[];
   /**
    * Additional CSS classes for the menu content
    */
@@ -54,7 +54,7 @@ export interface MenuProps {
   side?: "top" | "right" | "bottom" | "left";
 }
 
-function Menu({ children, items, className, align = "end", side = "bottom" }: MenuProps) {
+function SuspendedMenu({ children, items, className, align = "end", side = "bottom" }: SuspendedMenuProps) {
   return (
     <DropdownMenuPrimitive.Root>
       <DropdownMenuPrimitive.Trigger asChild>
@@ -83,7 +83,7 @@ function Menu({ children, items, className, align = "end", side = "bottom" }: Me
               key={index}
               className={cn(
                 "relative flex items-center gap-2 px-3 py-2 text-sm rounded-sm outline-none cursor-pointer",
-                "focus:bg-gray-100 data-disabled:pointer-events-none data-disabled:opacity-50",
+                "focus:bg-gray-25 data-disabled:pointer-events-none data-disabled:opacity-50",
                 "transition-colors",
                 item.variant === "destructive"
                   ? "text-bright-red-600 focus:text-bright-red-700"
@@ -110,5 +110,5 @@ function Menu({ children, items, className, align = "end", side = "bottom" }: Me
   );
 }
 
-export { Menu };
+export { SuspendedMenu };
 

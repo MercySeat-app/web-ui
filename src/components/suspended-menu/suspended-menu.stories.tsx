@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Menu } from "./menu";
+import { SuspendedMenu } from "./suspended-menu";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { Button } from "../button";
 
-const meta: Meta<typeof Menu> = {
-  title: "Components/Menu",
-  component: Menu,
+const meta: Meta<typeof SuspendedMenu> = {
+  title: "Components/SuspendedMenu",
+  component: SuspendedMenu,
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
@@ -19,7 +19,7 @@ const meta: Meta<typeof Menu> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Menu>;
+type Story = StoryObj<typeof SuspendedMenu>;
 
 export const Default: Story = {
   args: {
@@ -175,7 +175,7 @@ export const InTableContext: Story = {
               </span>
             </td>
             <td className="px-4 py-3 text-right">
-              <Menu
+              <SuspendedMenu
                 items={[
                   {
                     label: "Edit",
@@ -197,7 +197,7 @@ export const InTableContext: Story = {
                 >
                   <MoreVertical className="w-5 h-5 text-gray-700" />
                 </button>
-              </Menu>
+              </SuspendedMenu>
             </td>
           </tr>
         </tbody>
@@ -207,7 +207,7 @@ export const InTableContext: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Example usage of Menu component in a table context, matching the design shown in the screenshot.",
+        story: "Example usage of SuspendedMenu component in a table context, matching the design shown in the screenshot.",
       },
     },
   },

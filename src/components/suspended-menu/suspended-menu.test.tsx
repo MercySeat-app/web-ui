@@ -1,17 +1,17 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Menu } from "./menu";
+import { SuspendedMenu } from "./suspended-menu";
 import { Pencil, Trash2 } from "lucide-react";
 
-describe("Menu", () => {
+describe("SuspendedMenu", () => {
   it("renders trigger element", () => {
     render(
-      <Menu
+      <SuspendedMenu
         items={[]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     expect(screen.getByRole("button", { name: /open menu/i })).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("Menu", () => {
     const user = userEvent.setup();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Edit",
@@ -31,7 +31,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -46,7 +46,7 @@ describe("Menu", () => {
     const user = userEvent.setup();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Edit",
@@ -59,7 +59,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -77,7 +77,7 @@ describe("Menu", () => {
     const deleteHandler = vi.fn();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Edit",
@@ -90,7 +90,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -111,7 +111,7 @@ describe("Menu", () => {
     const user = userEvent.setup();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Edit",
@@ -126,7 +126,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -142,7 +142,7 @@ describe("Menu", () => {
     const user = userEvent.setup();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Delete",
@@ -152,7 +152,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -169,7 +169,7 @@ describe("Menu", () => {
     const onClick = vi.fn();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Disabled Item",
@@ -179,7 +179,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
@@ -200,7 +200,7 @@ describe("Menu", () => {
     const user = userEvent.setup();
     
     render(
-      <Menu
+      <SuspendedMenu
         items={[
           {
             label: "Edit",
@@ -209,7 +209,7 @@ describe("Menu", () => {
         ]}
       >
         <button type="button">Open Menu</button>
-      </Menu>
+      </SuspendedMenu>
     );
 
     const trigger = screen.getByRole("button", { name: /open menu/i });
