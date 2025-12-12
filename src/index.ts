@@ -15,3 +15,4 @@ export * from "./components/table";
 export * from "./components/textarea";
 export * from "./components/typography";
 export * from "./components/image-upload";
+export * from "./components/suspended-menu";
