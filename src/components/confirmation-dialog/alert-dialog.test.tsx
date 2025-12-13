@@ -1,30 +1,29 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { ConfirmationDialog } from "./confirmation-dialog";
+import { AlertDialog, DialogAction, DialogCancel } from "./alert-dialog";
 import { Button } from "../button";
 
-describe("ConfirmationDialog", () => {
+describe("AlertDialog", () => {
   it("renders when open is true", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -36,23 +35,23 @@ describe("ConfirmationDialog", () => {
 
   it("does not render when open is false", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={false}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -63,23 +62,23 @@ describe("ConfirmationDialog", () => {
 
   it("renders header content", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -90,23 +89,23 @@ describe("ConfirmationDialog", () => {
 
   it("renders content", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -117,51 +116,53 @@ describe("ConfirmationDialog", () => {
 
   it("renders action buttons", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
     );
 
-    expect(screen.getByRole("button", { name: /confirm/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /confirm/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
   });
 
   it("renders custom action buttons", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Keep
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="bright-red-solid">
                 Delete
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -176,23 +177,23 @@ describe("ConfirmationDialog", () => {
     const onOpenChange = vi.fn();
 
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={onOpenChange}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -206,7 +207,7 @@ describe("ConfirmationDialog", () => {
 
   it("renders custom header content", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header={
@@ -217,16 +218,16 @@ describe("ConfirmationDialog", () => {
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -237,7 +238,7 @@ describe("ConfirmationDialog", () => {
 
   it("renders custom content with rich HTML", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
@@ -252,16 +253,16 @@ describe("ConfirmationDialog", () => {
         }
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -277,23 +278,23 @@ describe("ConfirmationDialog", () => {
     const onOpenChange = vi.fn();
 
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={onOpenChange}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
@@ -308,23 +309,23 @@ describe("ConfirmationDialog", () => {
 
   it("renders dialog content when open", () => {
     render(
-      <ConfirmationDialog
+      <AlertDialog
         open={true}
         onOpenChange={vi.fn()}
         header="Test Dialog"
         content="Test description"
         actions={
           <>
-            <AlertDialog.Cancel asChild>
+            <DialogCancel asChild>
               <Button type="button" variant="gray-outline">
                 Cancel
               </Button>
-            </AlertDialog.Cancel>
-            <AlertDialog.Action asChild>
+            </DialogCancel>
+            <DialogAction asChild>
               <Button type="button" variant="blue-hepatica-solid">
                 Confirm
               </Button>
-            </AlertDialog.Action>
+            </DialogAction>
           </>
         }
       />
