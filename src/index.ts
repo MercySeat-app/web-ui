@@ -16,3 +16,4 @@ export * from "./components/textarea";
 export * from "./components/typography";
 export * from "./components/image-upload";
 export * from "./components/suspended-menu";
+export * from "./components/alert-dialog";
