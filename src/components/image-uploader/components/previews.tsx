@@ -16,7 +16,7 @@ type Props = {
 
 export function Previews({ urls, multiple, rounded, aspect, onRemove }: Props) {
   const previewClass = cn(
-    "w-full overflow-hidden bg-white border border-gray-50 shadow-lg",
+    "w-full overflow-hidden bg-white border border-gray-50 shadow-lg max-h-[176px]",
     rounded ? "rounded-full" : "rounded-lg"
   );
 
@@ -33,8 +33,7 @@ export function Previews({ urls, multiple, rounded, aspect, onRemove }: Props) {
     <div className="space-y-4 relative">
       <div
         className={cn(
-          "grid gap-4",
-          multiple ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1"
+          multiple ? "grid gap-4 grid-cols-2 sm:grid-cols-3" : "flex"
         )}
       >
         {urls.map((url, index) => (
@@ -67,7 +66,7 @@ export function Previews({ urls, multiple, rounded, aspect, onRemove }: Props) {
                 </button>
               </>
             ) : (
-              <div className="relative w-full max-w-xs mx-auto">
+              <div className="relative w-fit max-h-[11rem]">
                 <div className={previewClass} style={ratioStyle}>
                   <img
                     src={url}
