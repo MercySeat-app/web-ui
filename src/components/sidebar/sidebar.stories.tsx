@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Sidebar } from "./sidebar";
+import { MenuItem } from "../menu-item";
+import { Icon } from "../icons";
 
 const meta: Meta<typeof Sidebar> = {
   title: "Layout/Sidebar",
@@ -38,30 +40,18 @@ export const Basic: Story = {
     <>
       <Sidebar>
         <nav className="flex flex-col gap-1 text-sm w-full">
-          <a
-            className="rounded-md px-3 py-2 hover:bg-gray-25 text-white/90"
-            href="#"
-          >
-            Dashboard
-          </a>
-          <a
-            className="rounded-md px-3 py-2 hover:bg-gray-25 text-white/90"
-            href="#"
-          >
-            Content
-          </a>
-          <a
-            className="rounded-md px-3 py-2 hover:bg-gray-25 text-white/90"
-            href="#"
-          >
-            Subscribers
-          </a>
-          <a
-            className="rounded-md px-3 py-2 hover:bg-gray-25 text-white/90"
-            href="#"
-          >
-            Settings
-          </a>
+          <MenuItem collapsed={false} active>
+            <a href="#">
+              <Icon name="church" />
+              <span>My Organization</span>
+            </a>
+          </MenuItem>
+          <MenuItem collapsed={false} active={false}>
+            <a href="#">
+              <Icon name="subscription" />
+              <span>Subscription</span>
+            </a>
+          </MenuItem>
         </nav>
       </Sidebar>
 
