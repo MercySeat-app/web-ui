@@ -1,6 +1,7 @@
 // src/components/button.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
+import { Icon } from "../icons";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -154,7 +155,10 @@ export const Sizes: Story = {
 export const AsChildLink: Story = {
   render: (args) => (
     <Button {...args} asChild>
-      <a href="#docs">Go to docs section</a>
+      <a href="#docs">
+        <Icon name="announcement" />
+        Go to docs section
+      </a>
     </Button>
   ),
   args: {

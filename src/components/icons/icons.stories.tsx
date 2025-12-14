@@ -11,6 +11,7 @@ import {
   SeriesIcon,
   PodcastIcon,
   EventIcon,
+  HomeIcon,
 } from "./index";
 
 const meta: Meta<typeof Icon> = {
@@ -144,6 +145,10 @@ export const AllIconsOnDark: Story = {
         <div className="flex items-center gap-3">
           <EventIcon size={24} className="text-white" />
           <span className="text-xs text-slate-200">Event</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <HomeIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">Home</span>
         </div>
       </div>
     </div>
