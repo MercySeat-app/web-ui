@@ -24,7 +24,6 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "vite build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest --config vitest.config.ts",
