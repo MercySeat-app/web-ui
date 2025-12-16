@@ -12398,12 +12398,12 @@ function r0({
     c && URL.revokeObjectURL(c), l(null), n(null);
   }, [n, c]), B = o ? { aspectRatio: "1 / 1" } : { aspectRatio: `${t}` };
   return /* @__PURE__ */ u.jsxs("div", { className: ne("w-full space-y-2", s), children: [
-    c ? /* @__PURE__ */ u.jsxs("div", { className: "relative w-full", children: [
+    c ? /* @__PURE__ */ u.jsxs("div", { className: "relative w-fit max-h-[11rem]", children: [
       /* @__PURE__ */ u.jsx(
         "div",
         {
           className: ne(
-            "w-full overflow-hidden border border-gray-50 bg-white shadow-lg",
+            "h-[11rem] overflow-hidden border border-gray-50 bg-white shadow-lg",
             o ? "rounded-full" : "rounded-lg"
           ),
           style: B,
@@ -12412,7 +12412,7 @@ function r0({
             {
               src: c,
               alt: "Preview",
-              className: "h-full w-full object-cover",
+              className: "object-contain",
               style: { maxHeight: "11rem" }
             }
           )

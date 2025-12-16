@@ -171,11 +171,11 @@ export function ImageUploader({
           </div>
         </div>
       ) : (
-        <div className="relative w-full">
+        <div className="relative w-fit max-h-[11rem]">
           {/* Preview frame — mobile friendly, max height 11rem */}
           <div
             className={cn(
-              "w-full overflow-hidden border border-gray-50 bg-white shadow-lg",
+              "h-[11rem] overflow-hidden border border-gray-50 bg-white shadow-lg",
               rounded ? "rounded-full" : "rounded-lg"
             )}
             style={previewBoxStyle}
@@ -183,7 +183,7 @@ export function ImageUploader({
             <img
               src={previewUrl}
               alt="Preview"
-              className="h-full w-full object-cover"
+              className="object-contain"
               style={{ maxHeight: "11rem" }}
             />
           </div>
