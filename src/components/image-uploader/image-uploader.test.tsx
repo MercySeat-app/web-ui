@@ -1,127 +1,99 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
-
+import "@testing-library/jest-dom";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { ImageUploader } from "./image-uploader";
+import { useState } from "react";
 
-vi.mock("./use-image-uploader", () => ({
-  useImageUploader: vi.fn(),
+vi.mock("react-easy-crop", () => ({
+  __esModule: true,
+  default: () => <div data-testid="cropper" />,
 }));
 
-const { useImageUploader } = await import("./use-image-uploader");
+vi.mock("./utils/image-utils", () => ({
+  getCroppedImg: vi.fn(
+    async () => new File(["x"], "cropped.png", { type: "image/png" })
+  ),
+}));
 
-type MockItem = {
-  id: string;
-  originalUrl: string;
-  crop: { x: number; y: number };
-  zoom: number;
-  naturalAspect?: number;
-};
+function createFile(name = "test.png", type = "image/png") {
+  return new File(["hello"], name, { type });
+}
+
+function Controlled({ aspectRatio = 1 }: { aspectRatio?: number }) {
+  const [value, setValue] = useState<File | null>(null);
+
+  return (
+    <ImageUploader
+      value={value}
+      onChange={setValue}
+      aspectRatio={aspectRatio}
+      extensions={["png"]}
+    />
+  );
+}
 
 describe("<ImageUploader />", () => {
-  const baseHookReturn = {
-    items: [] as MockItem[],
-    previews: [] as string[],
-    activeItem: null as MockItem | null,
-
-    addFiles: vi.fn(),
-    removeAt: vi.fn(),
-    reset: vi.fn(),
-
-    closeCrop: vi.fn(),
-    confirmCrop: vi.fn(),
-
-    setCrop: vi.fn(),
-    setZoom: vi.fn(),
-    setCroppedArea: vi.fn(),
-
-    getEffectiveAspect: vi.fn().mockReturnValue(1),
-  };
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-    (useImageUploader as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      ...baseHookReturn,
-    });
-  });
-
-  it("renders DropzoneArea when there are no previews", () => {
-    render(<ImageUploader />);
+  it("renders dropzone when no value is provided", () => {
+    render(
+      <ImageUploader
+        value={null}
+        onChange={vi.fn()}
+        aspectRatio={1}
+        extensions={["png"]}
+      />
+    );
 
     expect(
-      screen.getByText(/Click to upload or drag and drop/i)
+      screen.getByText("Click to upload or drag and drop")
     ).toBeInTheDocument();
   });
 
-  it("renders Previews when there are previews", () => {
-    (useImageUploader as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      ...baseHookReturn,
-      previews: ["blob:1"],
-      items: [
-        { id: "1", originalUrl: "blob:o1", crop: { x: 0, y: 0 }, zoom: 1 },
-      ],
-    });
+  it("renders preview when value is provided", () => {
+    const file = createFile();
 
-    render(<ImageUploader />);
+    render(
+      <ImageUploader
+        value={file}
+        onChange={vi.fn()}
+        aspectRatio={1}
+        extensions={["png"]}
+      />
+    );
+
     expect(screen.getByAltText("Preview")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /Remove image/i })
-    ).toBeInTheDocument();
   });
 
-  it("renders CropModal when activeItem exists", () => {
-    const activeItem: MockItem = {
-      id: "abc",
-      originalUrl: "blob:orig",
-      crop: { x: 0, y: 0 },
-      zoom: 1,
-      naturalAspect: 1.8,
-    };
-
-    (useImageUploader as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      ...baseHookReturn,
-      items: [activeItem],
-      previews: ["blob:p1"],
-      activeItem,
-      getEffectiveAspect: vi.fn().mockReturnValue(1.8),
-    });
-
-    render(<ImageUploader />);
-    expect(
-      screen.getByRole("dialog", { name: /Crop image/i })
-    ).toBeInTheDocument();
-  });
-
-  it("passes preview aspect rules: rounded -> 1", () => {
-    (useImageUploader as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      ...baseHookReturn,
-      previews: ["blob:p1"],
-      items: [
-        {
-          id: "1",
-          originalUrl: "blob:o1",
-          crop: { x: 0, y: 0 },
-          zoom: 1,
-          naturalAspect: 2,
-        },
-      ],
-    });
-
-    render(<ImageUploader rounded />);
-
-    const img = screen.getByAltText("Preview");
-    const wrapper = img.closest("div") as HTMLDivElement;
-
-    expect(wrapper?.getAttribute("style") ?? "").toContain("aspect-ratio");
-  });
-
-  it("calls useImageUploader with multiple/aspectRatio/onChange", () => {
+  it("calls onChange(null) when remove button is clicked", () => {
     const onChange = vi.fn();
-    render(<ImageUploader multiple aspectRatio={16 / 9} onChange={onChange} />);
+    const file = createFile();
 
-    expect(useImageUploader).toHaveBeenCalledWith({
-      multiple: true,
-      aspectRatio: 16 / 9,
-      onChange,
+    render(
+      <ImageUploader
+        value={file}
+        onChange={onChange}
+        aspectRatio={1}
+        extensions={["png"]}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /remove image/i }));
+
+    expect(onChange).toHaveBeenCalledWith(null);
+  });
+
+  it("opens crop modal when a file is dropped", async () => {
+    render(<Controlled aspectRatio={1} />);
+
+    const input = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
+    expect(input).toBeTruthy();
+
+    fireEvent.change(input, {
+      target: {
+        files: [createFile()],
+      },
     });
+
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
   });
 });

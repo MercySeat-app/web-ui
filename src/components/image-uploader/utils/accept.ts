@@ -1,14 +1,13 @@
 export function buildAccept(extensions: string[]) {
   const mimeTypes: Record<string, string[]> = {};
 
-  extensions.forEach((ext) => {
-    const normalizedExt = ext.toLowerCase().replace(/^\./, "");
-    const mimeType =
-      `image/${normalizedExt === "jpg" ? "jpeg" : normalizedExt}`;
+  for (const extRaw of extensions) {
+    const ext = extRaw.toLowerCase().replace(/^\./, "");
+    const mime = `image/${ext === "jpg" ? "jpeg" : ext}`;
 
-    mimeTypes[mimeType] ??= [];
-    mimeTypes[mimeType].push(`.${normalizedExt}`);
-  });
+    mimeTypes[mime] ??= [];
+    mimeTypes[mime].push(`.${ext}`);
+  }
 
   return mimeTypes;
 }

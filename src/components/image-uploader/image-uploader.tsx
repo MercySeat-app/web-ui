@@ -1,85 +1,230 @@
 "use client";
 
-import { cn } from "../../lib/utils";
-import { DropzoneArea } from "./components/dropzone-area";
-import { CropModal } from "./components/crop-modal";
-import { Previews } from "./components/previews";
-import { useImageUploader } from "./use-image-uploader";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { X } from "lucide-react";
 
-export interface ImageUploaderProps {
-  extensions?: string[];
-  aspectRatio?: number; // if undefined -> uses natural aspect
-  rounded?: boolean; // round crop mask + round preview
-  multiple?: boolean;
-  onChange?: (files: File[]) => void;
-  className?: string;
+import dropzone from "./assets/dropzone.svg";
+
+import { cn } from "../../lib/utils";
+import { CropModal } from "./crop-modal";
+import { buildAccept } from "./utils/accept";
+import { getCroppedImg } from "./utils/image-utils";
+
+export type ImageUploaderProps = {
+  value: File | null;
+  onChange: (file: File | null) => void;
+
+  aspectRatio: number;
+  extensions: string[];
+  rounded?: boolean;
   maxSize?: number;
   placeholder?: string;
-}
+  className?: string;
+};
 
 export function ImageUploader({
-  extensions = ["jpeg", "jpg", "png", "webp"],
-  aspectRatio,
-  rounded = false,
-  multiple = false,
+  value,
   onChange,
-  className,
+  aspectRatio,
+  extensions,
+  rounded = false,
   maxSize = 5 * 1024 * 1024,
-  placeholder = "Accepted file extensions: jpeg, jpg, png and webp",
+  placeholder = "Accepted files jpg, png and webp",
+  className,
 }: ImageUploaderProps) {
-  const {
-    items,
-    previews,
-    activeItem,
-    addFiles,
-    removeAt,
-    reset,
-    closeCrop,
-    confirmCrop,
-    setCrop,
-    setZoom,
-    setCroppedArea,
-    getEffectiveAspect,
-  } = useImageUploader({ multiple, aspectRatio, onChange });
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  // Determine preview aspect:
-  // - if rounded -> always 1
-  // - else: use provided aspect or (first image natural aspect) fallback
-  const previewAspect = rounded
-    ? 1
-    : aspectRatio ?? items[0]?.naturalAspect ?? undefined;
+  // crop state
+  const [isCropping, setIsCropping] = useState(false);
+  const [sourceUrl, setSourceUrl] = useState<string | null>(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  } | null>(null);
+
+  const accept = useMemo(() => buildAccept(extensions), [extensions]);
+
+  // keep preview in sync with external `value`
+  useEffect(() => {
+    // clear
+    if (!value) {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+      return;
+    }
+
+    const url = URL.createObjectURL(value);
+    // revoke old
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(url);
+
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  const onDrop = useCallback((accepted: File[]) => {
+    const file = accepted[0];
+    if (!file) return;
+
+    // open crop modal with a temporary source URL
+    const url = URL.createObjectURL(file);
+    setSourceUrl(url);
+    setIsCropping(true);
+
+    // reset crop controls per new selection
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+    setCroppedAreaPixels(null);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive, fileRejections } =
+    useDropzone({
+      onDrop,
+      accept,
+      maxSize,
+      multiple: false,
+    });
+
+  const errors = fileRejections.flatMap((rej) =>
+    rej.errors.map((e) => {
+      if (e.code === "file-too-large") {
+        return `File is too large. Max size is ${(maxSize / 1048576).toFixed(
+          0
+        )}MB`;
+      }
+      if (e.code === "file-invalid-type") {
+        return `Invalid file type. Allowed types: ${extensions.join(", ")}`;
+      }
+      return e.message;
+    })
+  );
+
+  const handleCloseCrop = useCallback(() => {
+    setIsCropping(false);
+    if (sourceUrl) URL.revokeObjectURL(sourceUrl);
+    setSourceUrl(null);
+  }, [sourceUrl]);
+
+  const handleConfirmCrop = useCallback(async () => {
+    if (!sourceUrl || !croppedAreaPixels) return;
+
+    try {
+      const croppedFile = await getCroppedImg(sourceUrl, croppedAreaPixels, {
+        fileName: value?.name ?? "image.png",
+        fileType: value?.type ?? "image/png",
+      });
+
+      // parent owns state
+      onChange(croppedFile);
+
+      // close modal + cleanup source url
+      setIsCropping(false);
+      URL.revokeObjectURL(sourceUrl);
+      setSourceUrl(null);
+    } catch (err) {
+      // keep modal open so user can retry
+
+      console.error("Error cropping image:", err);
+    }
+  }, [croppedAreaPixels, onChange, sourceUrl, value?.name, value?.type]);
+
+  const handleRemove = useCallback(() => {
+    // revoke preview URL (we created it)
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(null);
+    onChange(null);
+  }, [onChange, previewUrl]);
+
+  const previewBoxStyle = rounded
+    ? ({ aspectRatio: "1 / 1" } as const)
+    : ({ aspectRatio: `${aspectRatio}` } as const);
 
   return (
-    <div className={cn("w-full space-y-4 min-h-38.5", className)}>
-      {previews.length === 0 ? (
-        <DropzoneArea
-          extensions={extensions}
-          maxSize={maxSize}
-          multiple={multiple}
-          placeholder={placeholder}
-          onDropFiles={addFiles}
-        />
+    <div className={cn("w-full space-y-2", className)}>
+      {!previewUrl ? (
+        <div
+          {...getRootProps()}
+          className={cn(
+            "relative flex w-full items-center justify-center",
+            "rounded-[0.625rem] border border-gray-50 bg-white",
+            "min-h-[11rem]",
+            "cursor-pointer transition-colors",
+            isDragActive && "border-blue-hepatica-600"
+          )}
+        >
+          <input {...getInputProps()} />
+          <div className="flex flex-col items-center justify-center px-4 text-center gap-y-3">
+            <img src={dropzone} alt="" />
+            <p className="text-sm font-sans font-medium text-gray-700">
+              Click to upload or drag and drop
+            </p>
+            {!!placeholder && (
+              <p className="text-xs text-gray-500">{placeholder}</p>
+            )}
+          </div>
+        </div>
       ) : (
-        <Previews
-          urls={previews}
-          multiple={multiple}
-          rounded={rounded}
-          aspect={previewAspect}
-          onRemove={removeAt}
-          onReset={reset}
-        />
+        <div className="relative w-full">
+          {/* Preview frame — mobile friendly, max height 11rem */}
+          <div
+            className={cn(
+              "w-full overflow-hidden border border-gray-50 bg-white shadow-lg",
+              rounded ? "rounded-full" : "rounded-lg"
+            )}
+            style={previewBoxStyle}
+          >
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="h-full w-full object-cover"
+              style={{ maxHeight: "11rem" }}
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleRemove}
+            aria-label="Remove image"
+            className={cn(
+              "absolute right-1 top-1 inline-flex items-center justify-center",
+              "size-10 rounded-full bg-gray-600 text-white border border-white",
+              "hover:bg-gray-700 transition-colors"
+            )}
+          >
+            <X className="size-4" />
+          </button>
+        </div>
       )}
 
-      {activeItem && (
+      {errors.length > 0 && (
+        <div className="space-y-1">
+          {errors.map((msg, idx) => (
+            <p key={idx} className="text-sm text-bright-red-600">
+              {msg}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {isCropping && sourceUrl && (
         <CropModal
-          item={activeItem}
-          aspect={getEffectiveAspect(activeItem)}
+          imageUrl={sourceUrl}
+          aspect={aspectRatio}
           rounded={rounded}
-          onClose={closeCrop}
-          onConfirm={confirmCrop}
-          onCropChange={(crop) => setCrop(activeItem.id, crop)}
-          onZoomChange={(zoom) => setZoom(activeItem.id, zoom)}
-          onCropComplete={(area) => setCroppedArea(activeItem.id, area)}
+          crop={crop}
+          zoom={zoom}
+          onCropChange={setCrop}
+          onZoomChange={setZoom}
+          onCropComplete={(areaPixels) => setCroppedAreaPixels(areaPixels)}
+          onClose={handleCloseCrop}
+          onConfirm={handleConfirmCrop}
         />
       )}
     </div>
