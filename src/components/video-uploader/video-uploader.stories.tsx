@@ -1,28 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import VideoUploader from "./video-uploader";
 
 const meta: Meta<typeof VideoUploader> = {
   title: "Components/VideoUploader",
   component: VideoUploader,
+  argTypes: {
+    placeholder: { control: "text" },
+    accepts: { control: "object" },
+    onUploaded: { action: "uploaded" },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof VideoUploader>;
 
-export const Local: Story = {
+export const Default: Story = {
   args: {
-    uploadUrl: "http://localhost:5000/upload",
-  },
-};
-
-export const SizeLimitSmall: Story = {
-  args: {
-    maxSizeBytes: 5 * 1024 * 1024,
-  },
-};
-
-export const SizeLimitLarge: Story = {
-  args: {
-    maxSizeBytes: 5000 * 1024 * 1024,
+    value: null,
+    accepts: [
+      "video/mp4",
+      "video/webm",
+      "video/quicktime",
+      "video/x-quicktime",
+      "video/ogg",
+      "video/x-matroska",
+    ],
+    placeholder: "Accepts • MP4, MOV, WebM",
+    onUploaded: action("uploaded"),
   },
 };
