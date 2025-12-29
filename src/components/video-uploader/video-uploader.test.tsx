@@ -21,7 +21,7 @@ describe("<VideoUploader />", () => {
   });
 
   it("renders prompt and uploads a valid video file", async () => {
-    render(<VideoUploader />);
+    render(<VideoUploader value={null} />);
 
     expect(screen.getByText(/Click or drag & drop video/i)).toBeInTheDocument();
 
@@ -38,5 +38,40 @@ describe("<VideoUploader />", () => {
       expect(mockedAxios.put).toHaveBeenCalled();
       expect(mockedAxios.post).toHaveBeenCalled();
     });
+  });
+
+  it("accepts valid video types", async () => {
+    render(<VideoUploader value={null} />);
+    const file = new File(["video"], "clip.mp4", { type: "video/mp4" });
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement | null;
+    await userEvent.upload(input!, file);
+    await waitFor(() => {
+      expect(document.getElementById("error-message")).toBeNull();
+    });
+  });
+
+  it("calls onUploaded callback with correct data", async () => {
+    const onUploaded = vi.fn();
+    render(<VideoUploader value={null} onUploaded={onUploaded} />);
+    const file = new File(["video"], "clip.mp4", { type: "video/mp4" });
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement | null;
+    await userEvent.upload(input!, file);
+    await waitFor(() => {
+      expect(onUploaded).toHaveBeenCalledWith(expect.objectContaining({ key: "vid-123" }));
+    });
+  });
+
+  it("displays error message on upload failure", async () => {
+    mockedAxios.put = vi.fn().mockRejectedValue(new Error("Network error"));
+    render(<VideoUploader value={null} />);
+    const file = new File(["video"], "clip.mp4", { type: "video/mp4" });
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement | null;
+    await userEvent.upload(input!, file);
+    expect(await screen.findByText(/Network error/i)).toBeInTheDocument();
+  });
+
+  it("displays custom placeholder text", () => {
+    render(<VideoUploader value={null} placeholder="Custom placeholder" />);
+    expect(screen.getByText(/Custom placeholder/i)).toBeInTheDocument();
   });
 });

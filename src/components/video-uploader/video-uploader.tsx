@@ -232,7 +232,7 @@ export default function VideoUploader({
                 </div>
                 <div className="h-2 overflow-hidden bg-gray-100 rounded-full">
                     <div
-                        className="h-full transition-all duration-300 ease-out bg-lavenderblue-500"
+                        className="h-full transition-all duration-300 ease-out bg-lavender-blue-500"
                         style={{ width: `${progress}%` }}
                     />
                 </div>

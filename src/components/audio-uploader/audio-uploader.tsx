@@ -57,8 +57,8 @@ export default function AudioUploader({
             // Fallback: check extension if mime fails
             const ext = file.name.split('.').pop()?.toLowerCase();
             if (ext && ['mp3', 'wav', 'm4a', 'aac', 'flac', 'ogg'].includes(ext)) return null;
-
-            return `Invalid file type: ${file.type || 'unknown'}. Allowed: ${accepts.join(", ")}`;
+            return `Invalid file type:`;
+            //return `Invalid file type: ${file.type || 'unknown'}. Allowed: ${accepts.join(", ")}`;
         }
 
         return null;
@@ -166,7 +166,6 @@ export default function AudioUploader({
             onUploaded?.({ key, url: uploadUrl.split('?')[0] });
 
         } catch (err: any) {
-            console.error(err);
             const msg = err?.response?.data?.error || err.message || "Upload failed";
             setError(msg);
         } finally {
@@ -202,7 +201,7 @@ export default function AudioUploader({
                 </div>
             </div>
 
-            {error && <div className="p-2 mt-3 text-sm text-red-600 border border-red-100 rounded bg-red-50">{error}</div>}
+            {error && <div id="error-message" className="p-2 mt-3 text-sm text-red-600 border border-red-100 rounded bg-red-50">{error}</div>}
 
             {/* Preview Area. Commented out for future reference */}
             {/*
