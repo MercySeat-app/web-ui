@@ -132,7 +132,6 @@ export default function VideoUploader({
             const { data: signData } = await axios.post("http://localhost:5000/api/get-upload-url", {
                 fileName: file.name,
                 fileType: file.type,
-                customName: videoName, // The name user typed in the input
             });
 
             const { uploadUrl, key } = signData;
@@ -180,7 +179,7 @@ export default function VideoUploader({
     };
 
     return (
-        <div className="w-full max-w-lg p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
+        <div className="w-full min-w-lg p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
             <div
                 ref={dropRef}
                 className={clsx(
