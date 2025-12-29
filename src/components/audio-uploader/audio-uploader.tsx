@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios, { type AxiosProgressEvent } from "axios";
 import clsx from "clsx";
 import uploadIcon from "../../assets/video-upload-cirle.svg";
+import cancelImage from "../../assets/cancel.svg";
 
 export interface AudioUploaderProps {
     value: File | null;
@@ -172,16 +173,39 @@ export default function AudioUploader({
         }
     };
 
+    const removeFile = () => {
+        setFile(null);
+        if (previewUrl) {
+            URL.revokeObjectURL(previewUrl);
+            setPreviewUrl(null);
+        }
+        setMeta(null);
+        setError(null);
+    };
+
     return (
         <div className="w-full min-w-lg p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
             <div
                 ref={dropRef}
                 className={clsx(
-                    "w-full border-dashed border-1 rounded-md p-6 flex flex-col items-center justify-center cursor-pointer transition-colors",
+                    "w-full border-dashed border-1 rounded-md p-6 flex flex-col items-center justify-center cursor-pointer transition-colors relative",
                     file ? "border-green-400 bg-green-50" : "border-gray-300 hover:border-lavender-blue-700 hover:bg-gray-50"
                 )}
                 onClick={() => inputRef.current?.click()}
             >
+                {/* X Cancel Button */}
+                {file && (
+                    <img
+                        src={cancelImage}
+                        alt="Remove file"
+                        onClick={e => {
+                            e.stopPropagation();
+                            removeFile();
+                        }}
+                        className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/50 hover:bg-red-600 cursor-pointer w-6 h-6 transition-colors"
+                        style={{ objectFit: 'contain' }}
+                    />
+                )}
                 <input
                     ref={inputRef}
                     type="file"
