@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
-import AudioUploader from "./audio-uploader";
+import MediaUploader from "./media-uploader";
 
-describe("AudioUploader snapshot", () => {
+describe("MediaUploader snapshot", () => {
   it("matches snapshot (default)", () => {
-    const { container } = render(<AudioUploader value={null} />);
+    const { container } = render(<MediaUploader value={null} />);
     expect(container).toMatchSnapshot();
   });
 });
