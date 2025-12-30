@@ -128,13 +128,13 @@ export default function MediaUploader({
     };
 
     return (
-        <div className="w-full min-w-lg p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
+        <div className="w-full min-w-lg p-4 bg-white border border-gray-50 rounded-[0.625rem]">
             <div
                 {...getRootProps()}
                 ref={dropRef}
                 className={clsx(
-                    "w-full border-dashed border-1 rounded-md p-6 flex flex-col items-center justify-center cursor-pointer transition-colors relative",
-                    file ? "border-green-400 bg-green-50" : isDragActive ? "border-lavender-blue-700 bg-gray-50" : "border-gray-300 hover:border-lavender-blue-700 hover:bg-gray-50"
+                    "w-full rounded-md p-6 flex flex-col items-center justify-center cursor-pointer transition-colors relative",
+                    file ? "border-green-400 bg-green-50" : isDragActive ? "border-lavender-blue-700 bg-gray-50" : "border-gray-300 hover:border-lavender-blue-700"
                 )}
                 onClick={() => inputRef.current?.click()}
             >
@@ -168,7 +168,7 @@ export default function MediaUploader({
                 />
                 <div className="text-center">
                     <img src={uploadIcon} alt="" className="w-12 h-12 mb-3 block mx-auto text-gray-400" />
-                    <p className="font-medium text-gray-700">{file ? "File ready" : "Click or drag & drop media"}</p>
+                    <p className="text-sm text-gray-700 font-regular">{file ? "File ready" : "Click or drag & drop media"}</p>
                     <p className="mt-1 text-xs text-gray-500">{placeholder}</p>
                     {file && <p className="mt-2 text-sm font-semibold text-green-700">{file.name}</p>}
                 </div>
