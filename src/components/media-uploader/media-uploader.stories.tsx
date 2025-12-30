@@ -28,7 +28,7 @@ export const BothAudioAndVideo: Story = {
 export const AudioOnly: Story = {
   args: {
     placeholder: "Accepts • MP3 only",
-    accepts: ["audio/mp3"],
+    accepts: ["audio/mp3", "audio/mpeg"],
   },
 };
 
