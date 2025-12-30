@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import clsx from "clsx";
-import uploadIcon from "../../assets/video-upload-cirle.svg";
-import cancelImage from "../../assets/cancel.svg";
+import uploadIcon from "./assets/video-upload-cirle.svg";
+import cancelImage from "./assets/cancel.svg";
 import { extractMetadata, validateFile } from "./media-uploader-utils";
 
 export type MediaInfo = {
