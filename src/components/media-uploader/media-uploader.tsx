@@ -3,11 +3,20 @@ import clsx from "clsx";
 import uploadIcon from "../../assets/video-upload-cirle.svg";
 import cancelImage from "../../assets/cancel.svg";
 
-export interface MediaUploaderProps {
+export type MediaInfo = {
+    file: File | null;
+    meta: {
+        duration: number;
+        extension: string;
+        previewUrl: string;
+    } | null
+};
+
+export type MediaUploaderProps = {
     value: File | null;
-    accepts?: string[];
+    onChange: (value: MediaInfo) => void;
     placeholder?: string;
-    onChange?: (file: File | null, mediaType: "audio" | "video" | null) => void;
+    accepts: string[];
 }
 
 const DEFAULT_ACCEPTS = [
@@ -33,15 +42,48 @@ export default function MediaUploader({
         };
     }, [previewUrl]);
 
-    // Determine media type
-    const getMediaType = (file: File): "audio" | "video" | null => {
-        if (file.type.startsWith("audio")) return "audio";
-        if (file.type.startsWith("video")) return "video";
-        // fallback by extension
-        const ext = file.name.split('.').pop()?.toLowerCase();
-        if (["mp3", "wav", "m4a", "aac", "flac", "ogg"].includes(ext || "")) return "audio";
-        if (["mp4", "mov", "webm", "mkv", "ogg"].includes(ext || "")) return "video";
-        return null;
+    const extractMetadata = (file: File): Promise<MediaInfo> => {
+        return new Promise<MediaInfo>((resolve) => {
+            const url = URL.createObjectURL(file);
+            const ext = file.name.split('.').pop()?.toLowerCase() || '';
+            const isVideo = file.type.startsWith("video");
+            const isAudio = file.type.startsWith("audio");
+
+            const metaBase = { extension: ext, previewUrl: url };
+
+            if (isVideo) {
+                const vid = document.createElement("video");
+                vid.preload = "metadata";
+                vid.src = url;
+                vid.onloadedmetadata = () => {
+                    const duration = vid.duration;
+                    URL.revokeObjectURL(url);
+                    resolve({
+                        file,
+                        meta: { ...metaBase, duration }
+                    });
+                };
+                setTimeout(() => resolve({ file, meta: { ...metaBase, duration: 0 } }), 3000);
+            } else if (isAudio) {
+                const aud = document.createElement("audio");
+                aud.preload = "metadata";
+                aud.src = url;
+                aud.onloadedmetadata = () => {
+                    const duration = aud.duration;
+                    URL.revokeObjectURL(url);
+                    resolve({
+                        file,
+                        meta: { ...metaBase, duration }
+                    });
+                };
+                setTimeout(() => resolve({ file, meta: { ...metaBase, duration: 0 } }), 3000);
+            } else {
+                resolve({
+                    file,
+                    meta: { ...metaBase, duration: 0 }
+                });
+            }
+        });
     };
 
     const validateFile = (file: File) => {
@@ -53,7 +95,7 @@ export default function MediaUploader({
         return null;
     };
 
-    const handleChoose = (f: File) => {
+    const handleChoose = async (f: File) => {
         setError(null);
         const vErr = validateFile(f);
         if (vErr) {
@@ -63,8 +105,8 @@ export default function MediaUploader({
         setFile(f);
         const url = URL.createObjectURL(f);
         setPreviewUrl(url);
-        const type = getMediaType(f);
-        onChange?.(f, type);
+        const mediaData = await extractMetadata(f);
+        onChange?.(mediaData);
     };
 
     useEffect(() => {
@@ -105,13 +147,14 @@ export default function MediaUploader({
         };
     }, [dropRef.current]);
 
-    // Removed upload logic
-
     const removeFile = () => {
         setFile(null);
         setPreviewUrl(null);
         setError(null);
-        onChange?.(null, null);
+        onChange?.({
+            file: null,
+            meta: null,
+        });
     };
 
     return (
