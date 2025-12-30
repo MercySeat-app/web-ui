@@ -1,3 +1,4 @@
+import { useDropzone } from "react-dropzone";
 import { useRef, useState, useEffect } from "react";
 import clsx from "clsx";
 import uploadIcon from "./assets/video-upload-cirle.svg";
@@ -37,14 +38,30 @@ export default function MediaUploader({
     const inputRef = useRef<HTMLInputElement | null>(null);
     const dropRef = useRef<HTMLDivElement | null>(null);
 
+
+    const onDrop = async (acceptedFiles: File[]) => {
+        const f = acceptedFiles[0];
+        if (f) await handleChoose(f);
+    };
+
+    // Destructure dropzone props here
+    const {
+        getRootProps,
+        getInputProps,
+        isDragActive
+    } = useDropzone({
+        onDrop,
+        accept: accepts.reduce((acc, type) => ({ ...acc, [type]: [] }), {}),
+        multiple: false,
+        noClick: false,
+        noKeyboard: true,
+    });
+
     useEffect(() => {
         return () => {
             if (previewUrl) URL.revokeObjectURL(previewUrl);
         };
     }, [previewUrl]);
-
-    
-    
 
     const handleChoose = async (f: File) => {
         setError(null);
@@ -71,6 +88,7 @@ export default function MediaUploader({
     }, [_value]);
 
     // Drag & Drop Handlers
+    /*
     useEffect(() => {
         const el = dropRef.current;
         if (!el) return;
@@ -97,6 +115,7 @@ export default function MediaUploader({
             el.removeEventListener("drop", onDrop);
         };
     }, [dropRef.current]);
+    */
 
     const removeFile = () => {
         setFile(null);
@@ -111,13 +130,19 @@ export default function MediaUploader({
     return (
         <div className="w-full min-w-lg p-4 bg-white border border-gray-100 rounded-lg shadow-sm">
             <div
+                {...getRootProps()}
                 ref={dropRef}
                 className={clsx(
                     "w-full border-dashed border-1 rounded-md p-6 flex flex-col items-center justify-center cursor-pointer transition-colors relative",
-                    file ? "border-green-400 bg-green-50" : "border-gray-300 hover:border-lavender-blue-700 hover:bg-gray-50"
+                    file ? "border-green-400 bg-green-50" : isDragActive ? "border-lavender-blue-700 bg-gray-50" : "border-gray-300 hover:border-lavender-blue-700 hover:bg-gray-50"
                 )}
                 onClick={() => inputRef.current?.click()}
             >
+                <input
+                    {...getInputProps()}
+                    ref={inputRef}
+                    hidden
+                />
                 {/* Cancel Button */}
                 {file && (
                     <img
