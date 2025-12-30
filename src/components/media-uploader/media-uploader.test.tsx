@@ -1,54 +1,8 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import MediaUploader, { type MediaInfo } from "./media-uploader";
-
-
-vi.mock("axios");
-
-const extractMetadata = (file: File): Promise<MediaInfo> => {
-  return new Promise<MediaInfo>((resolve) => {
-    const url = URL.createObjectURL(file);
-    const ext = file.name.split('.').pop()?.toLowerCase() || '';
-    const isVideo = file.type.startsWith("video");
-    const isAudio = file.type.startsWith("audio");
-
-    const metaBase = { extension: ext, previewUrl: url };
-
-    if (isVideo) {
-      const vid = document.createElement("video");
-      vid.preload = "metadata";
-      vid.src = url;
-      vid.onloadedmetadata = () => {
-        const duration = vid.duration;
-        URL.revokeObjectURL(url);
-        resolve({
-          file,
-          meta: { ...metaBase, duration }
-        });
-      };
-      setTimeout(() => resolve({ file, meta: { ...metaBase, duration: 0 } }), 3000);
-    } else if (isAudio) {
-      const aud = document.createElement("audio");
-      aud.preload = "metadata";
-      aud.src = url;
-      aud.onloadedmetadata = () => {
-        const duration = aud.duration;
-        URL.revokeObjectURL(url);
-        resolve({
-          file,
-          meta: { ...metaBase, duration }
-        });
-      };
-      setTimeout(() => resolve({ file, meta: { ...metaBase, duration: 0 } }), 3000);
-    } else {
-      resolve({
-        file,
-        meta: { ...metaBase, duration: 0 }
-      });
-    }
-  });
-};
+import MediaUploader from "./media-uploader";
+import { extractMetadata } from "./media-uploader-utils";
 
 describe("<MediaUploader />", () => {
 
