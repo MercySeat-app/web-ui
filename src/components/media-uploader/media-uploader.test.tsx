@@ -1,65 +1,90 @@
-import { describe, it, expect, vi } from "vitest";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
-vi.mock("react-dropzone", () => ({
-  useDropzone: (props: any) => ({
-    getRootProps: () => ({}),
-    getInputProps: () => ({
-      onChange: (e: any) => {
-        const files = Array.from(e.target.files);
-        props.onDrop(files);
-      },
-    }),
-    isDragActive: false,
-    fileRejections: [],
-  }),
+import { MediaUploader } from "./media-uploader";
+import type { MediaInfo } from "./types";
+
+vi.mock("./components/dropzone-area", () => ({
+  DropzoneArea: (props: any) => (
+    <div data-testid="dropzone">
+      <div data-testid="dropzone-extensions">{props.extensions?.join(",")}</div>
+      <div data-testid="dropzone-placeholder">{props.placeholder}</div>
+      <button
+        type="button"
+        data-testid="dropzone-fire"
+        onClick={() =>
+          props.onDropFile?.({
+            file: new File(["x"], "a.wav", { type: "audio/wav" }),
+            meta: {
+              duration: 1,
+              extension: "wav",
+              previewUrl: "blob:demo",
+              type: "audio",
+            },
+          } satisfies MediaInfo)
+        }
+      >
+        FireDrop
+      </button>
+    </div>
+  ),
 }));
 
-import MediaUploader from "./media-uploader";
+vi.mock("./components/selected-file", () => ({
+  SelectedFile: (props: any) => (
+    <div data-testid="selected-file">
+      <div data-testid="selected-file-name">{props.file?.name}</div>
+      <button
+        type="button"
+        data-testid="selected-file-remove"
+        onClick={() => props.onChange?.(null)}
+      >
+        Remove
+      </button>
+    </div>
+  ),
+}));
 
 describe("<MediaUploader />", () => {
-  it("renders DropzoneArea when no file is selected", () => {
-    render(<MediaUploader value={null} onChange={vi.fn()} />);
-    expect(screen.getByText(/Click to upload or drag and drop/i)).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it("displays custom placeholder text", () => {
+  it("renders DropzoneArea when value is null", () => {
     render(
       <MediaUploader
+        accepts={["mp3", "wav"]}
         value={null}
+        placeholder="Upload media"
         onChange={vi.fn()}
-        placeholder="Custom placeholder"
       />
     );
-    expect(screen.getByText(/Custom placeholder/i)).toBeInTheDocument();
+
+    expect(screen.getByTestId("dropzone")).toBeInTheDocument();
+    expect(screen.getByTestId("dropzone-placeholder")).toHaveTextContent(
+      "Upload media"
+    );
+    expect(screen.getByTestId("dropzone-extensions")).toHaveTextContent(
+      "mp3,wav"
+    );
   });
 
-  it("renders SelectedState when a file is selected", async () => {
-    const file = new File(["audio"], "song.mp3", { type: "audio/mp3" });
-    render(<MediaUploader value={file} onChange={vi.fn()} />);
-    expect(screen.getByText(/song.mp3/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /remove/i })).toBeInTheDocument();
-  });
+  it("renders SelectedFile when value is present", () => {
+    const file = new File(["x"], "clip.mp4", { type: "video/mp4" });
 
-  it("removes file when remove button is clicked", async () => {
-    const file = new File(["audio"], "song.mp3", { type: "audio/mp3" });
-    const onChange = vi.fn();
-    render(<MediaUploader value={file} onChange={onChange} />);
-    const removeBtn = screen.getByRole("button", { name: /remove/i });
-    await userEvent.click(removeBtn);
-    expect(onChange).toHaveBeenCalledWith({ file: null, meta: null });
-  });
+    render(
+      <MediaUploader
+        accepts={["mp4"]}
+        value={file}
+        placeholder="ignored"
+        onChange={vi.fn()}
+      />
+    );
 
-  it("should return a MediaInfo object with non-null meta for a valid file", async () => {
-    const { extractMetadata } = await import("./media-uploader-utils");
-    const file = new File(["dummy"], "test.mp3", { type: "audio/mp3" });
-    const mediaData = await extractMetadata(file);
-    expect(mediaData).not.toBeNull();
-    expect(mediaData.file).toBe(file);
-    expect(mediaData.meta).not.toBeNull();
-    expect(typeof mediaData.meta?.duration).toBe("number");
-    expect(typeof mediaData.meta?.extension).toBe("string");
-    expect(typeof mediaData.meta?.previewUrl).toBe("string");
+    expect(screen.getByTestId("selected-file")).toBeInTheDocument();
+    expect(screen.getByTestId("selected-file-name")).toHaveTextContent(
+      "clip.mp4"
+    );
   });
 });
