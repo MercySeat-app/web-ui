@@ -6,7 +6,6 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions"
   ],
-  staticDirs: ["../public","../src/assets"],
   framework: {
     name: "@storybook/react-vite",
     options: {}

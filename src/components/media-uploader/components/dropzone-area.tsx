@@ -1,50 +1,81 @@
-import { useMemo } from "react";
+"use client";
+
+import { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
+import { UploadIcon } from "lucide-react";
 import { cn } from "../../../lib/utils";
-import dropzone from "../assets/video-upload-cirle.svg";
+import { buildAccept } from "../utils";
+
+import type { MediaInfo } from "../types";
+import { getMediaDuration } from "../utils";
 
 type Props = {
-  accepts: string[];
+  extensions: string[];
   placeholder: string;
-  onDropFiles: (files: File[]) => void;
+  onDropFile: (files: MediaInfo) => void;
 };
 
-export function DropzoneArea({
-  accepts,
-  placeholder,
-  onDropFiles,
-}: Props) {
-  const accept = useMemo(() => {
-    return accepts.reduce((acc, type) => ({ ...acc, [type]: [] }), {} as Record<string, string[]>);
-  }, [accepts]);
+export function DropzoneArea({ extensions, placeholder, onDropFile }: Props) {
+  const accept = useMemo(() => buildAccept(extensions), [extensions]);
+
+  const handleDropFile = useCallback(
+    async (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0] || null;
+      if (!file) return;
+
+      if (!file.type.startsWith("video/") && !file.type.startsWith("audio/")) {
+        return;
+      }
+
+      try {
+        const duration = await getMediaDuration(file);
+
+        onDropFile({
+          file,
+          meta: {
+            duration,
+            type: file.type.startsWith("video/") ? "video" : "audio",
+            extension: file.name.split(".").pop() || "",
+            previewUrl: URL.createObjectURL(file),
+          },
+        });
+      } catch (err) {
+        console.error("Failed to read media duration", err);
+      }
+    },
+    [onDropFile]
+  );
 
   const { getRootProps, getInputProps, isDragActive, fileRejections } =
     useDropzone({
-      onDrop: onDropFiles,
+      onDrop: handleDropFile,
       accept,
+      maxFiles: 1,
     });
 
   const errors = fileRejections.flatMap((rej) =>
     rej.errors.map((e) => {
       if (e.code === "file-invalid-type") {
-        return `Invalid file type. Allowed types: ${accepts.join(", ")}`;
+        return `Invalid file type. Allowed types: ${extensions.join(", ")}`;
       }
       return e.message;
     })
   );
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full">
       <div
         {...getRootProps()}
         className={cn(
-          "relative flex flex-col items-center justify-center w-full min-h-38.5 rounded-[0.625rem] cursor-pointer transition-colors bg-white",
+          "relative flex flex-col items-center justify-center w-full min-h-38.5 border border-gray-50 rounded-[0.625rem] cursor-pointer transition-colors bg-white",
           isDragActive && "border-blue-hepatica-600"
         )}
       >
-        <input {...getInputProps()} aria-label="upload" />
+        <input {...getInputProps()} />
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <img src={dropzone} alt="" className="w-12 h-12 mb-4 text-gray-400" />
+          <div className="size-12 flex items-center justify-center rounded-full bg-gray-25 mb-4">
+            <UploadIcon className="size-6 text-blue-hepatica-600" />
+          </div>
           <p className="mb-2 text-sm text-gray-700 font-medium">
             Click to upload or drag and drop
           </p>
