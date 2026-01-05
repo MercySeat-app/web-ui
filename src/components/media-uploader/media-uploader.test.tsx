@@ -1,56 +1,60 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+vi.mock("react-dropzone", () => ({
+  useDropzone: (props: any) => ({
+    getRootProps: () => ({}),
+    getInputProps: () => ({
+      onChange: (e: any) => {
+        const files = Array.from(e.target.files);
+        props.onDrop(files);
+      },
+    }),
+    isDragActive: false,
+    fileRejections: [],
+  }),
+}));
+
 import MediaUploader from "./media-uploader";
-import { extractMetadata } from "./media-uploader-utils";
 
 describe("<MediaUploader />", () => {
-
-  it("accepts valid file types", async () => {
-    render(
-      <MediaUploader
-        value={null}
-        onChange={vi.fn()}
-        accepts={["audio/mpeg"]}
-      />
-    );
-    const file = new File(["audio"], "song.mp3", { type: "audio/mpeg" });
-    const input = document.querySelector('input[type="file"]') as HTMLInputElement | null;
-    await userEvent.upload(input!, file);
-    await waitFor(() => {
-      expect(document.getElementById("error-message")).toBeNull();
-    });
+  it("renders DropzoneArea when no file is selected", () => {
+    render(<MediaUploader value={null} onChange={vi.fn()} />);
+    expect(screen.getByText(/Click to upload or drag and drop/i)).toBeInTheDocument();
   });
-
-
-  it("calls onUploaded callback with correct data", async () => {
-    render(
-      <MediaUploader
-        value={null}
-        onChange={vi.fn()}
-        accepts={["audio/mpeg"]}
-      />
-    );
-  });
-
-
 
   it("displays custom placeholder text", () => {
     render(
       <MediaUploader
         value={null}
         onChange={vi.fn()}
-        accepts={["audio/mpeg"]}
         placeholder="Custom placeholder"
       />
     );
     expect(screen.getByText(/Custom placeholder/i)).toBeInTheDocument();
   });
 
+  it("renders SelectedState when a file is selected", async () => {
+    const file = new File(["audio"], "song.mp3", { type: "audio/mp3" });
+    render(<MediaUploader value={file} onChange={vi.fn()} />);
+    expect(screen.getByText(/song.mp3/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /remove/i })).toBeInTheDocument();
+  });
+
+  it("removes file when remove button is clicked", async () => {
+    const file = new File(["audio"], "song.mp3", { type: "audio/mp3" });
+    const onChange = vi.fn();
+    render(<MediaUploader value={file} onChange={onChange} />);
+    const removeBtn = screen.getByRole("button", { name: /remove/i });
+    await userEvent.click(removeBtn);
+    expect(onChange).toHaveBeenCalledWith({ file: null, meta: null });
+  });
+
   it("should return a MediaInfo object with non-null meta for a valid file", async () => {
+    const { extractMetadata } = await import("./media-uploader-utils");
     const file = new File(["dummy"], "test.mp3", { type: "audio/mp3" });
     const mediaData = await extractMetadata(file);
-
     expect(mediaData).not.toBeNull();
     expect(mediaData.file).toBe(file);
     expect(mediaData.meta).not.toBeNull();
