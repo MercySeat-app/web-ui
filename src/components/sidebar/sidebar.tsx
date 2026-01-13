@@ -48,7 +48,7 @@ export function Sidebar({ children }: SidebarProps) {
       <aside
         className={cn(
           "relative",
-          "fixed inset-y-0 left-0 z-40 w-[247px]",
+          "fixed inset-y-0 left-0 z-40 w-[315px]",
           "bg-no-repeat bg-cover bg-top",
           "transition-transform duration-200 ease-out",
           open ? "translate-x-0" : "-translate-x-full",

@@ -12,6 +12,8 @@ export * from './components/pagination';
 export * from './components/section';
 export * from './components/select';
 export * from './components/sidebar';
+export * from './components/stepper';
+export * from './components/suspended-menu';
 export * from './components/table';
 export * from './components/textarea';
 export * from './components/typography';
