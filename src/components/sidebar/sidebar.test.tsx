@@ -16,7 +16,7 @@ describe("<Sidebar />", () => {
 
     const aside = content.closest("aside");
     expect(aside).not.toBeNull();
-    expect(aside).toHaveClass("w-[247px]");
+    expect(aside).toHaveClass("w-[315px]");
   });
 
   it("renders the logo lockup with wordmark text", () => {
