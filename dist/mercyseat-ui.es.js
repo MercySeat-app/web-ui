@@ -11416,7 +11416,7 @@ function l0({ children: e }) {
           "transition-transform duration-200 ease-out",
           n ? "translate-x-0" : "-translate-x-full",
           // desktop (>= 912px): always visible, static, no transform
-          "lg:relative lg:translate-x-0 lg:shadow-none",
+          "lg:relative! lg:translate-x-0 lg:shadow-none",
           "lg:flex lg:flex-col px-6 overflow-hidden"
         ),
         children: [
@@ -11430,7 +11430,7 @@ function l0({ children: e }) {
             }
           ),
           /* @__PURE__ */ d.jsxs("div", { className: "w-full flex flex-1 flex-col", children: [
-            /* @__PURE__ */ d.jsx("div", { className: "flex justify-center pt-7 pb-12 border-b border-b border-b-white/15 mb-6", children: /* @__PURE__ */ d.jsx("div", { className: "w-[8.75rem] flex items-center gap-x-1", children: /* @__PURE__ */ d.jsx(Zu, { size: 32 }) }) }),
+            /* @__PURE__ */ d.jsx("div", { className: "flex justify-center pt-7 pb-12 border-b border-b-white/15 mb-6", children: /* @__PURE__ */ d.jsx("div", { className: "w-35 flex items-center gap-x-1", children: /* @__PURE__ */ d.jsx(Zu, { size: 32 }) }) }),
             /* @__PURE__ */ d.jsx("div", { className: "flex flex-1", children: e })
           ] })
         ]

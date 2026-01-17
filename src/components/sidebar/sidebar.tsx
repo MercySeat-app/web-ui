@@ -54,7 +54,7 @@ export function Sidebar({ children }: SidebarProps) {
           open ? "translate-x-0" : "-translate-x-full",
 
           // desktop (>= 912px): always visible, static, no transform
-          "lg:relative lg:translate-x-0 lg:shadow-none",
+          "lg:relative! lg:translate-x-0 lg:shadow-none",
           "lg:flex lg:flex-col px-6 overflow-hidden"
         )}
       >
@@ -65,8 +65,8 @@ export function Sidebar({ children }: SidebarProps) {
           className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
         <div className="w-full flex flex-1 flex-col">
-          <div className="flex justify-center pt-7 pb-12 border-b border-b border-b-white/15 mb-6">
-            <div className="w-[8.75rem] flex items-center gap-x-1">
+          <div className="flex justify-center pt-7 pb-12 border-b border-b-white/15 mb-6">
+            <div className="w-35 flex items-center gap-x-1">
               <LogoLockup size={32} />
             </div>
           </div>
