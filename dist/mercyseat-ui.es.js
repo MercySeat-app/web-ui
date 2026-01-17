@@ -11400,7 +11400,7 @@ function l0({ children: e }) {
       "div",
       {
         className: G(
-          "fixed inset-0 z-30 bg-black/40 transition-opacity sidebar:hidden",
+          "fixed inset-0 z-30 bg-black/40 transition-opacity sidebar:hidden lg:hidden",
           n ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         ),
         onClick: o
@@ -11416,7 +11416,7 @@ function l0({ children: e }) {
           "transition-transform duration-200 ease-out",
           n ? "translate-x-0" : "-translate-x-full",
           // desktop (>= 912px): always visible, static, no transform
-          "lg:static lg:translate-x-0 lg:shadow-none",
+          "lg:relative lg:translate-x-0 lg:shadow-none",
           "lg:flex lg:flex-col px-6 overflow-hidden"
         ),
         children: [

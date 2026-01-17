@@ -36,7 +36,7 @@ export function Sidebar({ children }: SidebarProps) {
       {/* Mobile overlay (click to close) */}
       <div
         className={cn(
-          "fixed inset-0 z-30 bg-black/40 transition-opacity sidebar:hidden",
+          "fixed inset-0 z-30 bg-black/40 transition-opacity sidebar:hidden lg:hidden",
           open
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -54,7 +54,7 @@ export function Sidebar({ children }: SidebarProps) {
           open ? "translate-x-0" : "-translate-x-full",
 
           // desktop (>= 912px): always visible, static, no transform
-          "lg:static lg:translate-x-0 lg:shadow-none",
+          "lg:relative lg:translate-x-0 lg:shadow-none",
           "lg:flex lg:flex-col px-6 overflow-hidden"
         )}
       >
