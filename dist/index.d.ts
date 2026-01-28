@@ -9,6 +9,7 @@ export * from './components/main-logo';
 export * from './components/media-uploader';
 export * from './components/menu-item';
 export * from './components/pagination';
+export * from './components/radio-button';
 export * from './components/section';
 export * from './components/select';
 export * from './components/sidebar';
