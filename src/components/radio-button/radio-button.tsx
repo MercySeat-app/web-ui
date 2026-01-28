@@ -32,7 +32,7 @@ export function RadioButton({
         },
       )}
     >
-      <div className="size-10 flex-items-center">
+      <div className="size-10 flex justify-center items-center">
         <input
           type="radio"
           id={id}

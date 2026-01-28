@@ -11246,7 +11246,7 @@ function c0({
         }
       ),
       children: [
-        /* @__PURE__ */ l.jsxs("div", { className: "size-10 flex-items-center", children: [
+        /* @__PURE__ */ l.jsxs("div", { className: "size-10 flex justify-center items-center", children: [
           /* @__PURE__ */ l.jsx(
             "input",
             {
