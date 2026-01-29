@@ -4,10 +4,13 @@ import {
   AnnouncementIcon,
   ChurchIcon,
   ClassIcon,
+  CrownIcon,
   EventIcon,
   GiftIcon,
   HomeIcon,
   Icon,
+  LockClosedIcon,
+  LockOpenIcon,
   MinistryIcon,
   PodcastIcon,
   SeriesIcon,
@@ -55,9 +58,7 @@ describe("Icon components", () => {
   });
 
   it("<Icon /> registry renders ChurchIcon when name='church'", () => {
-    render(
-      <Icon name="church" size={24} aria-label="Church icon from registry" />
-    );
+    render(<Icon name="church" size={24} aria-label="Church icon from registry" />);
 
     const svg = screen.getByRole("img", { name: "Church icon from registry" });
     expect(svg.tagName.toLowerCase()).toBe("svg");
@@ -75,9 +76,7 @@ describe("Icon components", () => {
   });
 
   it("AnnouncementIcon uses currentColor for stroke", () => {
-    const { container } = render(
-      <AnnouncementIcon aria-label="Announcement icon" />
-    );
+    const { container } = render(<AnnouncementIcon aria-label="Announcement icon" />);
 
     const svg = screen.getByRole("img", { name: "Announcement icon" });
     expect(svg.tagName.toLowerCase()).toBe("svg");
@@ -132,9 +131,7 @@ describe("Icon components", () => {
   });
 
   it("SubscriptionIcon uses currentColor for stroke", () => {
-    const { container } = render(
-      <SubscriptionIcon aria-label="Subscription icon" />
-    );
+    const { container } = render(<SubscriptionIcon aria-label="Subscription icon" />);
 
     const svg = screen.getByRole("img", { name: "Subscription icon" });
     expect(svg.tagName.toLowerCase()).toBe("svg");
@@ -153,5 +150,38 @@ describe("Icon components", () => {
     const path = container.querySelector("path");
     expect(path).not.toBeNull();
     expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("CrownIcon uses currentColor for stroke", () => {
+    const { container } = render(<CrownIcon aria-label="Crown icon" />);
+
+    const svg = screen.getByRole("img", { name: "Crown icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("LockOpenIcon uses currentColor for stroke", () => {
+    const { container } = render(<LockOpenIcon aria-label="Lock Open icon" />);
+
+    const svg = screen.getByRole("img", { name: "Lock Open icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("fill", "currentColor");
+  });
+
+  it("LockClosedIcon uses currentColor for stroke", () => {
+    const { container } = render(<LockClosedIcon aria-label="Lock Closed icon" />);
+
+    const svg = screen.getByRole("img", { name: "Lock Closed icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("fill", "currentColor");
   });
 });

@@ -41,6 +41,7 @@ export function RadioButton({
           checked={checked}
           onChange={() => onChange(value)}
           className="sr-only"
+          disabled={disabled}
         />
         <div
           aria-hidden="true"

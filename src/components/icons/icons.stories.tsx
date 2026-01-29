@@ -12,6 +12,9 @@ import {
   PodcastIcon,
   EventIcon,
   HomeIcon,
+  CrownIcon,
+  LockClosedIcon,
+  LockOpenIcon,
 } from "./index";
 
 const meta: Meta<typeof Icon> = {
@@ -27,12 +30,15 @@ const meta: Meta<typeof Icon> = {
     name: {
       control: { type: "select" },
       options: [
+        "announcement",
         "church",
+        "class",
+        "crown",
         "gift",
+        "lock-closed",
+        "lock-open",
         "ministry",
         "sermon",
-        "announcement",
-        "class",
         "subscription",
         "series",
         "podcast",
@@ -102,53 +108,63 @@ export const AllIconsOnDark: Story = {
   },
   render: () => (
     <div className="bg-slate-950 p-6 rounded-xl">
-      <h3 className="mb-4 text-sm font-medium text-slate-100">
-        Icons on dark surface
-      </h3>
+      <h3 className="mb-4 text-sm font-medium text-slate-100">Icons on dark surface</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         <div className="flex items-center gap-3">
-          <ChurchIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Church</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <GiftIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Gift</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <MinistryIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Ministry</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <SermonIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Sermon</span>
-        </div>
-        <div className="flex items-center gap-3">
           <AnnouncementIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Announcement</span>
+          <span className="text-xs text-slate-200">announcement</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <ChurchIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">church</span>
         </div>
         <div className="flex items-center gap-3">
           <ClassIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Class</span>
+          <span className="text-xs text-slate-200">class</span>
         </div>
         <div className="flex items-center gap-3">
-          <SubscriptionIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Subscription</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <SeriesIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Series</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <PodcastIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Podcast</span>
+          <CrownIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">crown</span>
         </div>
         <div className="flex items-center gap-3">
           <EventIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Event</span>
+          <span className="text-xs text-slate-200">event</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <GiftIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">gift</span>
         </div>
         <div className="flex items-center gap-3">
           <HomeIcon size={24} className="text-white" />
-          <span className="text-xs text-slate-200">Home</span>
+          <span className="text-xs text-slate-200">home</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <LockClosedIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">lock-closed</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <LockOpenIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">lock-open</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <MinistryIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">ministry</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <PodcastIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">podcast</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <SeriesIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">series</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <SermonIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">sermon</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <SubscriptionIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">subscription</span>
         </div>
       </div>
     </div>
@@ -168,49 +184,63 @@ export const AllIconsOnLight: Story = {
   },
   render: () => (
     <div className="bg-white p-6 rounded-xl border border-gray-100">
-      <h3 className="mb-4 text-sm font-medium text-gray-900">
-        Icons on light surface
-      </h3>
+      <h3 className="mb-4 text-sm font-medium text-gray-900">Icons on light surface</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         <div className="flex items-center gap-3">
-          <ChurchIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Church</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <GiftIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Gift</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <MinistryIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Ministry</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <SermonIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Sermon</span>
-        </div>
-        <div className="flex items-center gap-3">
           <AnnouncementIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Announcement</span>
+          <span className="text-xs text-gray-700">announcement</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <ChurchIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">church</span>
         </div>
         <div className="flex items-center gap-3">
           <ClassIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Class</span>
+          <span className="text-xs text-gray-700">class</span>
         </div>
         <div className="flex items-center gap-3">
-          <SubscriptionIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Subscription</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <SeriesIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Series</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <PodcastIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Podcast</span>
+          <CrownIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">crown</span>
         </div>
         <div className="flex items-center gap-3">
           <EventIcon size={24} className="text-gray-900" />
-          <span className="text-xs text-gray-700">Event</span>
+          <span className="text-xs text-gray-700">event</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <GiftIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">gift</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <HomeIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">home</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <LockClosedIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">lock-closed</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <LockOpenIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">lock-open</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <MinistryIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">ministry</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <PodcastIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">podcast</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <SeriesIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">series</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <SermonIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">sermon</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <SubscriptionIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">subscription</span>
         </div>
       </div>
     </div>
