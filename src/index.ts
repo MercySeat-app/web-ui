@@ -3,6 +3,7 @@ import "./index.css";
 export * from "./components/badge";
 export * from "./components/breadcrumb";
 export * from "./components/button";
+export * from "./components/checkbox";
 export * from "./components/form";
 export * from "./components/icons";
 export * from "./components/input";

@@ -25,7 +25,7 @@ export function RadioButton({
       htmlFor={id}
       className={cn(
         "group w-full p-4 gap-1 flex items-start justify-start rounded-lg border border-gray-50 bg-white transition-colors",
-        "focus-within:ring-2 focus-within:ring-blue-hepatica-600",
+        "focus-within:ring-2 focus-within:ring-blue-hepatica-300",
         {
           "border-2 border-blue-hepatica-600 bg-blue-hepatica-100": checked,
           "opacity-60 cursor-not-allowed": disabled,
