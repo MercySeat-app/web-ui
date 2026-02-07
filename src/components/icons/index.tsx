@@ -8,13 +8,14 @@ import { CrownIcon } from "./crown-icon";
 import { EventIcon } from "./event-icon";
 import { GiftIcon } from "./gift-icon";
 import { HomeIcon } from "./home-icon";
+import { LockClosedIcon } from "./lock-closed-icon";
+import { LockOpenIcon } from "./lock-open-icon";
 import { MinistryIcon } from "./ministry-icon";
 import { PodcastIcon } from "./podcast-icon";
 import { SeriesIcon } from "./series-icon";
 import { SermonIcon } from "./sermon-icon";
 import { SubscriptionIcon } from "./subscription-icon";
-import { LockClosedIcon } from "./lock-closed-icon";
-import { LockOpenIcon } from "./lock-open-icon";
+import { VideoIcon } from "./video-icon";
 
 export type IconName =
   | "announcement"
@@ -30,7 +31,8 @@ export type IconName =
   | "podcast"
   | "series"
   | "sermon"
-  | "subscription";
+  | "subscription"
+  | "video";
 
 const iconMap: Record<IconName, (props: IconProps) => JSX.Element> = {
   announcement: AnnouncementIcon,
@@ -47,6 +49,7 @@ const iconMap: Record<IconName, (props: IconProps) => JSX.Element> = {
   series: SeriesIcon,
   sermon: SermonIcon,
   subscription: SubscriptionIcon,
+  video: VideoIcon,
 };
 
 export function Icon({ name, ...props }: IconProps & { name: IconName }) {
@@ -69,4 +72,5 @@ export {
   SeriesIcon,
   SermonIcon,
   SubscriptionIcon,
+  VideoIcon,
 };

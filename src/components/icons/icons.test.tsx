@@ -16,6 +16,7 @@ import {
   SeriesIcon,
   SermonIcon,
   SubscriptionIcon,
+  VideoIcon,
 } from "./index";
 
 describe("Icon components", () => {
@@ -178,6 +179,17 @@ describe("Icon components", () => {
     const { container } = render(<LockClosedIcon aria-label="Lock Closed icon" />);
 
     const svg = screen.getByRole("img", { name: "Lock Closed icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("fill", "currentColor");
+  });
+
+  it("VideoIcon uses currentColor for stroke", () => {
+    const { container } = render(<VideoIcon aria-label="Video icon" />);
+
+    const svg = screen.getByRole("img", { name: "Video icon" });
     expect(svg.tagName.toLowerCase()).toBe("svg");
 
     const path = container.querySelector("path");
