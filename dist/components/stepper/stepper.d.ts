@@ -1,5 +1,5 @@
 /**
- * A single step in a Stepper
+ * A single step in a Stepper.
  */
 export type StepItem = {
     /**
@@ -17,7 +17,7 @@ export type StepItem = {
     disabled?: boolean;
 };
 /**
- * Props for the Stepper component
+ * Props for the Stepper component.
  */
 export type StepperProps = {
     /**
@@ -39,9 +39,10 @@ export type StepperProps = {
     className?: string;
 };
 /**
- * Stepper renders a horizontal list of steps for the multi-step flows.
+ * Stepper renders a horizontal list of steps for multi-step flows.
  *
  * - Displays step number + label
+ * - Completed steps show a check icon
  * - Current step is highlighted (`aria-current="step"`)
  * - Disabled steps cannot be clicked
  * - Clicking the current step is a no-op

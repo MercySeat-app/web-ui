@@ -1,5 +1,5 @@
 /**
- * Props for a single Step inside a Stepper
+ * Props for a single Step inside a Stepper.
  */
 type StepProps = {
     /**
@@ -16,6 +16,10 @@ type StepProps = {
      */
     current: boolean;
     /**
+     * True when this step is completed (past the current step).
+     */
+    completed: boolean;
+    /**
      * True when this step is disabled and should not be clickable.
      */
     disabled?: boolean;
@@ -26,12 +30,13 @@ type StepProps = {
     onClick: () => void;
 };
 /**
- * Step renders a single step indicator (number) and label.
+ * Step renders a single step indicator (number or check icon) and label.
  *
  * - Uses `aria-current="step"` when current
+ * - Completed steps show a check icon
  * - Disabled steps are not clickable
- * - Click the current step does nothing
+ * - Clicking the current step does nothing
  */
-export declare function Step({ index, label, current, disabled, onClick, }: StepProps): import("react/jsx-runtime").JSX.Element;
+export declare function Step({ index, label, current, completed, disabled, onClick, }: StepProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=step.d.ts.map
