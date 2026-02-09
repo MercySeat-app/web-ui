@@ -12,7 +12,7 @@ import { buildAccept } from "./utils/accept";
 import { getCroppedImg } from "./utils/image-utils";
 
 export type ImageUploaderProps = {
-  value: File | null;
+  value: File | string | null;
   onChange: (file: File | null) => void;
 
   aspectRatio: number;
@@ -53,14 +53,25 @@ export function ImageUploader({
   useEffect(() => {
     // clear
     if (!value) {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      if (previewUrl && !previewUrl.startsWith("http")) {
+        URL.revokeObjectURL(previewUrl);
+      }
       setPreviewUrl(null);
       return;
     }
 
+    // value is already a URL string (edit mode)
+    if (typeof value === "string") {
+      setPreviewUrl(value);
+      return;
+    }
+
+    // value is a File
     const url = URL.createObjectURL(value);
-    // revoke old
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    // revoke old object URL (not external URLs)
+    if (previewUrl && !previewUrl.startsWith("http")) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setPreviewUrl(url);
 
     return () => {
@@ -115,10 +126,13 @@ export function ImageUploader({
   const handleConfirmCrop = useCallback(async () => {
     if (!sourceUrl || !croppedAreaPixels) return;
 
+    const fileName = value instanceof File ? value.name : "image.png";
+    const fileType = value instanceof File ? value.type : "image/png";
+
     try {
       const croppedFile = await getCroppedImg(sourceUrl, croppedAreaPixels, {
-        fileName: value?.name ?? "image.png",
-        fileType: value?.type ?? "image/png",
+        fileName,
+        fileType,
       });
 
       // parent owns state
@@ -133,11 +147,13 @@ export function ImageUploader({
 
       console.error("Error cropping image:", err);
     }
-  }, [croppedAreaPixels, onChange, sourceUrl, value?.name, value?.type]);
+  }, [croppedAreaPixels, onChange, sourceUrl, value]);
 
   const handleRemove = useCallback(() => {
-    // revoke preview URL (we created it)
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    // revoke preview URL only if it's an object URL (not external)
+    if (previewUrl && !previewUrl.startsWith("http")) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setPreviewUrl(null);
     onChange(null);
   }, [onChange, previewUrl]);
