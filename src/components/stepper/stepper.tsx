@@ -4,7 +4,7 @@ import { cn } from "../../lib/utils";
 import { Step } from "./step";
 
 /**
- * A single step in a Stepper
+ * A single step in a Stepper.
  */
 export type StepItem = {
   /**
@@ -25,7 +25,7 @@ export type StepItem = {
 };
 
 /**
- * Props for the Stepper component
+ * Props for the Stepper component.
  */
 export type StepperProps = {
   /**
@@ -51,9 +51,10 @@ export type StepperProps = {
 };
 
 /**
- * Stepper renders a horizontal list of steps for the multi-step flows.
+ * Stepper renders a horizontal list of steps for multi-step flows.
  *
  * - Displays step number + label
+ * - Completed steps show a check icon
  * - Current step is highlighted (`aria-current="step"`)
  * - Disabled steps cannot be clicked
  * - Clicking the current step is a no-op
@@ -66,6 +67,8 @@ export function Stepper({
   onStepChange,
   className,
 }: StepperProps) {
+  const currentIndex = steps.findIndex((step) => step.id === currentId);
+
   return (
     <nav
       aria-label="Steps"
@@ -75,10 +78,13 @@ export function Stepper({
       <ol className="flex items-center justify-between gap-2 relative">
         <span className="absolute border-b border-b-gray-50 top-1/2 left-0 right-0"></span>
         {steps.map((step, index) => {
+          const completed = currentIndex !== -1 && index < currentIndex;
+
           return (
             <Step
               key={step.id}
               current={step.id === currentId}
+              completed={completed}
               disabled={step.disabled}
               index={index}
               label={step.label}

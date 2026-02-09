@@ -5,6 +5,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "../../lib/utils";
 
+/**
+ * Generates class names for Badge variants and sizes.
+ */
 const badgeVariants = cva(
   "inline-flex items-center justify-center px-2.5 font-sans text-xs font-normal gap-2 whitespace-nowrap transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none",
   {
@@ -30,6 +33,10 @@ const badgeVariants = cva(
           "bg-turquoise-green-600 hover:bg-turquoise-green-800 focus-visible:bg-turquoise-green-900 text-white disabled:bg-turquoise-green-200",
         "success-outline":
           "border border-turquoise-green-700 text-turquoise-green-700 bg-transparent hover:bg-turquoise-green-100 hover:border-turquoise-green-800 hover:text-turquoise-green-800 focus-visible:bg-turquoise-green-200 hover:border-turquoise-green-800 hover:text-turquoise-green-800 disabled:text-turquoise-green-100 disabled:border-turquoise-green-100",
+        "media-filled":
+          "bg-purple-rain-600 hover:bg-purple-rain-800 focus-visible:bg-purple-rain-900 text-white disabled:bg-purple-rain-200",
+        "media-outline":
+          "border border-purple-rain-700 text-purple-rain-700 bg-transparent hover:bg-purple-rain-100 hover:border-purple-rain-800 hover:text-purple-rain-800 focus-visible:bg-purple-rain-200 hover:border-purple-rain-800 hover:text-purple-rain-800 disabled:text-purple-rain-100 disabled:border-purple-rain-100",
       },
       size: {
         sm: "h-6 rounded-[.75rem]",
@@ -40,9 +47,12 @@ const badgeVariants = cva(
       variant: "default-filled",
       size: "sm",
     },
-  }
+  },
 );
 
+/**
+ * Badge component for compact status labels.
+ */
 function Badge({
   className,
   variant,

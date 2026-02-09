@@ -1,9 +1,10 @@
 "use client";
 
+import { Check } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 /**
- * Props for a single Step inside a Stepper
+ * Props for a single Step inside a Stepper.
  */
 type StepProps = {
   /**
@@ -23,6 +24,11 @@ type StepProps = {
   current: boolean;
 
   /**
+   * True when this step is completed (past the current step).
+   */
+  completed: boolean;
+
+  /**
    * True when this step is disabled and should not be clickable.
    */
   disabled?: boolean;
@@ -35,16 +41,18 @@ type StepProps = {
 };
 
 /**
- * Step renders a single step indicator (number) and label.
+ * Step renders a single step indicator (number or check icon) and label.
  *
  * - Uses `aria-current="step"` when current
+ * - Completed steps show a check icon
  * - Disabled steps are not clickable
- * - Click the current step does nothing
+ * - Clicking the current step does nothing
  */
 export function Step({
   index,
   label,
   current,
+  completed,
   disabled = false,
   onClick,
 }: StepProps) {
@@ -65,18 +73,22 @@ export function Step({
           "border border-gray-50 bg-gray-25",
           {
             "bg-blue-hepatica-600 text-white border-none hover:bg-blue-hepatica-700":
-              current,
+              current || completed,
             "cursor-not-allowed": disabled,
           }
         )}
       >
-        <span
-          className={cn("font-semibold text-sm text-gray-300", {
-            "text-white": current,
-          })}
-        >
-          {index + 1}
-        </span>
+        {completed && !current ? (
+          <Check className="size-4 text-white" aria-hidden="true" />
+        ) : (
+          <span
+            className={cn("font-semibold text-sm text-gray-300", {
+              "text-white": current,
+            })}
+          >
+            {index + 1}
+          </span>
+        )}
       </button>
       <span
         className={cn(

@@ -3,6 +3,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Stepper } from "./stepper";
 
+/**
+ * Tests for the Stepper component.
+ */
 describe("<Stepper />", () => {
   const steps = [
     { id: "profile", label: "Profile" },
@@ -73,5 +76,17 @@ describe("<Stepper />", () => {
     await user.click(buttons[2]);
 
     expect(onStepChange).not.toHaveBeenCalled();
+  });
+
+  it("marks steps before the current one as completed", () => {
+    const { container } = render(
+      <Stepper steps={steps} currentId="billing" onStepChange={() => {}} />
+    );
+
+    const buttons = container.querySelectorAll("button");
+
+    expect(buttons[0]).toHaveClass("bg-blue-hepatica-600");
+    expect(buttons[1]).toHaveClass("bg-blue-hepatica-600");
+    expect(buttons[2]).toHaveClass("bg-blue-hepatica-600");
   });
 });

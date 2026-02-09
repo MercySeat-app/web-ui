@@ -3,10 +3,19 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Step } from "./step";
 
+/**
+ * Tests for the Step component.
+ */
 describe("<Step />", () => {
   it("renders the step number and label", () => {
     render(
-      <Step index={0} label="Profile" current={false} onClick={() => {}} />
+      <Step
+        index={0}
+        label="Profile"
+        current={false}
+        completed={false}
+        onClick={() => {}}
+      />
     );
 
     expect(screen.getByText("1")).toBeInTheDocument();
@@ -18,7 +27,13 @@ describe("<Step />", () => {
     const onClick = vi.fn();
 
     render(
-      <Step index={1} label="Address" current={false} onClick={onClick} />
+      <Step
+        index={1}
+        label="Address"
+        current={false}
+        completed={false}
+        onClick={onClick}
+      />
     );
 
     await user.click(screen.getByRole("button"));
@@ -29,7 +44,15 @@ describe("<Step />", () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
 
-    render(<Step index={1} label="Address" current onClick={onClick} />);
+    render(
+      <Step
+        index={1}
+        label="Address"
+        current
+        completed={false}
+        onClick={onClick}
+      />
+    );
 
     await user.click(screen.getByRole("button"));
     expect(onClick).not.toHaveBeenCalled();
@@ -44,6 +67,7 @@ describe("<Step />", () => {
         index={2}
         label="Billing"
         current={false}
+        completed={false}
         disabled
         onClick={onClick}
       />
@@ -54,10 +78,33 @@ describe("<Step />", () => {
   });
 
   it("sets data-slot and data-current correctly", () => {
-    render(<Step index={0} label="Profile" current onClick={() => {}} />);
+    render(
+      <Step
+        index={0}
+        label="Profile"
+        current
+        completed={false}
+        onClick={() => {}}
+      />
+    );
 
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("data-slot", "step");
     expect(button).toHaveAttribute("data-current", "true");
+  });
+
+  it("renders a check icon for completed steps", () => {
+    const { container } = render(
+      <Step
+        index={0}
+        label="Profile"
+        current={false}
+        completed
+        onClick={() => {}}
+      />
+    );
+
+    expect(screen.queryByText("1")).not.toBeInTheDocument();
+    expect(container.querySelector("svg")).toBeInTheDocument();
   });
 });

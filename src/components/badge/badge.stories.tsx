@@ -22,6 +22,8 @@ const meta: Meta<typeof Badge> = {
         "warning-outline",
         "success-filled",
         "success-outline",
+        "media-filled",
+        "media-outline",
       ],
     },
     size: {
@@ -97,6 +99,14 @@ export const Variants: Story = {
           <Badge variant="warning-outline">Warning outline</Badge>
           <Badge variant="error-filled">Error filled</Badge>
           <Badge variant="error-outline">Error outline</Badge>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <p className="text-xs font-medium text-gray-500">Media</p>
+        <div className="flex flex-wrap gap-3">
+          <Badge variant="media-filled">Media filled</Badge>
+          <Badge variant="media-outline">Media outline</Badge>
         </div>
       </div>
     </div>

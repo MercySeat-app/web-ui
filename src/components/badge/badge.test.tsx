@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { Badge } from "./badge";
+import { Badge, badgeVariants } from "./badge";
 
 describe("<Badge />", () => {
   it("renders as a span with role=status and data-slot=badge", () => {
@@ -58,5 +58,16 @@ describe("<Badge />", () => {
 
     expect(badge).toHaveClass("custom-badge-class");
     expect(badge).toHaveClass("border-turquoise-green-700");
+  });
+});
+
+describe("badgeVariants", () => {
+  it("returns base and default variant classes when called without options", () => {
+    const className = badgeVariants();
+
+    expect(className).toContain("inline-flex");
+    expect(className).toContain("h-6");
+    expect(className).toContain("bg-gray-50");
+    expect(className).toContain("text-gray-700");
   });
 });
