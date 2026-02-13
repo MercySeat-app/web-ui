@@ -16,6 +16,7 @@ export * from "./components/radio-button";
 export * from "./components/section";
 export * from "./components/select";
 export * from "./components/sidebar";
+export * from "./components/shimmer";
 export * from "./components/stepper";
 export * from "./components/suspended-menu";
 export * from "./components/table";
