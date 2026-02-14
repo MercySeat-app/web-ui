@@ -3,14 +3,26 @@
 import { useCallback, useState, type ReactNode } from "react";
 import { RiMenuUnfold4Line } from "react-icons/ri";
 import { cn } from "../../lib/utils";
-import { LogoLockup } from "../main-logo";
+import { Logo } from "../main-logo";
 
+/**
+ * Resolved background image URL for the sidebar.
+ */
 const backgroundImageUrl = new URL("./background.svg", import.meta.url).href;
 
+/**
+ * Props for the Sidebar component.
+ */
 type SidebarProps = {
+  /**
+   * Sidebar content (navigation, menus, etc.).
+   */
   children: ReactNode;
 };
 
+/**
+ * Sidebar renders the primary navigation container with a mobile toggle.
+ */
 export function Sidebar({ children }: SidebarProps) {
   const [open, setOpen] = useState(false);
 
@@ -26,7 +38,7 @@ export function Sidebar({ children }: SidebarProps) {
         className={cn(
           "fixed left-4 top-4 z-40 inline-flex size-12 items-center justify-center",
           "rounded-lg bg-black",
-          "lg:hidden" // hide the button when viewport >= 912px
+          "lg:hidden", // hide the button when viewport >= 912px
         )}
         aria-label={open ? "Close sidebar" : "Open sidebar"}
       >
@@ -37,9 +49,7 @@ export function Sidebar({ children }: SidebarProps) {
       <div
         className={cn(
           "fixed inset-0 z-30 bg-black/40 transition-opacity sidebar:hidden lg:hidden",
-          open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
         )}
         onClick={handleClose}
       />
@@ -55,7 +65,7 @@ export function Sidebar({ children }: SidebarProps) {
 
           // desktop (>= 912px): always visible, static, no transform
           "lg:relative! lg:translate-x-0 lg:shadow-none",
-          "lg:flex lg:flex-col px-6 overflow-hidden"
+          "lg:flex lg:flex-col px-6 overflow-hidden",
         )}
       >
         <img
@@ -64,13 +74,16 @@ export function Sidebar({ children }: SidebarProps) {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
-        <div className="w-full flex flex-1 flex-col">
-          <div className="flex justify-center pt-7 pb-12 border-b border-b-white/15 mb-6">
-            <div className="w-35 flex items-center gap-x-1">
-              <LogoLockup size={32} />
+        <div className="w-full grid grid-rows-[112px_1fr]">
+          <div className="flex justify-center items-center">
+            <div className="flex flex-col items-center gap-y-2">
+              <Logo className="size-10.5" />
+              <h1 className="font-manrope font-nromal text-base text-white tracking-[0.04em]">
+                MercySeat
+              </h1>
             </div>
           </div>
-          <div className="flex flex-1">{children}</div>
+          <div>{children}</div>
         </div>
       </aside>
     </>
