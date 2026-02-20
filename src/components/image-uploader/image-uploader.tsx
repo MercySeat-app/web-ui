@@ -19,6 +19,10 @@ export type ImageUploaderProps = {
   extensions: string[];
   rounded?: boolean;
   maxSize?: number;
+  minWidth?: number;
+  minHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number;
   placeholder?: string;
   className?: string;
 };
@@ -30,10 +34,15 @@ export function ImageUploader({
   extensions,
   rounded = false,
   maxSize = 5 * 1024 * 1024,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight,
   placeholder = "Accepted files jpg, png and webp",
   className,
 }: ImageUploaderProps) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [dimensionErrors, setDimensionErrors] = useState<string[]>([]);
 
   // crop state
   const [isCropping, setIsCropping] = useState(false);
@@ -69,20 +78,90 @@ export function ImageUploader({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const onDrop = useCallback((accepted: File[]) => {
-    const file = accepted[0];
-    if (!file) return;
+  const onDrop = useCallback(
+    async (accepted: File[]) => {
+      const file = accepted[0];
+      if (!file) return;
 
-    // open crop modal with a temporary source URL
-    const url = URL.createObjectURL(file);
-    setSourceUrl(url);
-    setIsCropping(true);
+      setDimensionErrors([]);
 
-    // reset crop controls per new selection
-    setCrop({ x: 0, y: 0 });
-    setZoom(1);
-    setCroppedAreaPixels(null);
-  }, []);
+      const hasDimensionRules = [minWidth, minHeight, maxWidth, maxHeight].some(
+        (value) => typeof value === "number"
+      );
+
+      if (hasDimensionRules) {
+        try {
+          const dimensions = await new Promise<{ width: number; height: number }>(
+            (resolve, reject) => {
+              const imageUrl = URL.createObjectURL(file);
+              const image = new Image();
+
+              image.onload = () => {
+                const width = image.naturalWidth || image.width;
+                const height = image.naturalHeight || image.height;
+                URL.revokeObjectURL(imageUrl);
+                resolve({ width, height });
+              };
+
+              image.onerror = () => {
+                URL.revokeObjectURL(imageUrl);
+                reject(new Error("Unable to read image dimensions"));
+              };
+
+              image.src = imageUrl;
+            }
+          );
+
+          const dimensionValidationErrors: string[] = [];
+
+          if (typeof minWidth === "number" && dimensions.width < minWidth) {
+            dimensionValidationErrors.push(
+              `Image width is too small. Minimum width is ${minWidth}px.`
+            );
+          }
+
+          if (typeof minHeight === "number" && dimensions.height < minHeight) {
+            dimensionValidationErrors.push(
+              `Image height is too small. Minimum height is ${minHeight}px.`
+            );
+          }
+
+          if (typeof maxWidth === "number" && dimensions.width > maxWidth) {
+            dimensionValidationErrors.push(
+              `Image width is too large. Maximum width is ${maxWidth}px.`
+            );
+          }
+
+          if (typeof maxHeight === "number" && dimensions.height > maxHeight) {
+            dimensionValidationErrors.push(
+              `Image height is too large. Maximum height is ${maxHeight}px.`
+            );
+          }
+
+          if (dimensionValidationErrors.length > 0) {
+            setDimensionErrors(dimensionValidationErrors);
+            return;
+          }
+        } catch {
+          setDimensionErrors([
+            "Unable to read image dimensions. Please try another image.",
+          ]);
+          return;
+        }
+      }
+
+      // open crop modal with a temporary source URL
+      const url = URL.createObjectURL(file);
+      setSourceUrl(url);
+      setIsCropping(true);
+
+      // reset crop controls per new selection
+      setCrop({ x: 0, y: 0 });
+      setZoom(1);
+      setCroppedAreaPixels(null);
+    },
+    [maxHeight, maxWidth, minHeight, minWidth]
+  );
 
   const { getRootProps, getInputProps, isDragActive, fileRejections } =
     useDropzone({
@@ -92,19 +171,22 @@ export function ImageUploader({
       multiple: false,
     });
 
-  const errors = fileRejections.flatMap((rej) =>
-    rej.errors.map((e) => {
-      if (e.code === "file-too-large") {
-        return `File is too large. Max size is ${(maxSize / 1048576).toFixed(
-          0
-        )}MB`;
-      }
-      if (e.code === "file-invalid-type") {
-        return `Invalid file type. Allowed types: ${extensions.join(", ")}`;
-      }
-      return e.message;
-    })
-  );
+  const errors = [
+    ...fileRejections.flatMap((rej) =>
+      rej.errors.map((e) => {
+        if (e.code === "file-too-large") {
+          return `File is too large. Max size is ${(maxSize / 1048576).toFixed(
+            0
+          )}MB`;
+        }
+        if (e.code === "file-invalid-type") {
+          return `Invalid file type. Allowed types: ${extensions.join(", ")}`;
+        }
+        return e.message;
+      })
+    ),
+    ...dimensionErrors,
+  ];
 
   const handleCloseCrop = useCallback(() => {
     setIsCropping(false);

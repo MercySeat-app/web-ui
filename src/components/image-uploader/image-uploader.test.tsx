@@ -96,4 +96,57 @@ describe("<ImageUploader />", () => {
 
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
   });
+
+  it("shows dimension validation errors and does not open crop modal", async () => {
+    const createObjectURLSpy = vi
+      .spyOn(URL, "createObjectURL")
+      .mockReturnValue("blob:mock-image");
+    const revokeObjectURLSpy = vi
+      .spyOn(URL, "revokeObjectURL")
+      .mockImplementation(() => {});
+
+    class MockImage {
+      onload: null | (() => void) = null;
+      onerror: null | (() => void) = null;
+      naturalWidth = 120;
+      naturalHeight = 120;
+      width = 120;
+      height = 120;
+
+      set src(_value: string) {
+        setTimeout(() => this.onload?.(), 0);
+      }
+    }
+
+    vi.stubGlobal("Image", MockImage as unknown as typeof Image);
+
+    render(
+      <ImageUploader
+        value={null}
+        onChange={vi.fn()}
+        aspectRatio={1}
+        extensions={["png"]}
+        minWidth={200}
+      />
+    );
+
+    const input = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
+
+    fireEvent.change(input, {
+      target: {
+        files: [createFile()],
+      },
+    });
+
+    expect(
+      await screen.findByText("Image width is too small. Minimum width is 200px.")
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+
+    createObjectURLSpy.mockRestore();
+    revokeObjectURLSpy.mockRestore();
+    vi.unstubAllGlobals();
+  });
 });

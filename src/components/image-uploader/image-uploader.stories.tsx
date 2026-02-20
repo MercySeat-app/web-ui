@@ -64,3 +64,17 @@ export const SmallMaxSize: Story = {
     />
   ),
 };
+
+export const DimensionConstraints: Story = {
+  render: () => (
+    <StatefulWrapper
+      aspectRatio={1}
+      extensions={["jpg", "jpeg", "png"]}
+      minWidth={600}
+      minHeight={600}
+      maxWidth={2400}
+      maxHeight={2400}
+      placeholder="Image must be between 600x600 and 2400x2400"
+    />
+  ),
+};
