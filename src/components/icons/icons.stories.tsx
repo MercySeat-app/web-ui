@@ -16,6 +16,7 @@ import {
   LockClosedIcon,
   LockOpenIcon,
   VideoIcon,
+  ListIcon,
 } from "./index";
 
 const meta: Meta<typeof Icon> = {
@@ -36,6 +37,7 @@ const meta: Meta<typeof Icon> = {
         "class",
         "crown",
         "gift",
+        "list",
         "lock-closed",
         "lock-open",
         "ministry",
@@ -140,6 +142,10 @@ export const AllIconsOnDark: Story = {
           <span className="text-xs text-slate-200">home</span>
         </div>
         <div className="flex items-center gap-3">
+          <ListIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">list</span>
+        </div>
+        <div className="flex items-center gap-3">
           <LockClosedIcon size={24} className="text-white" />
           <span className="text-xs text-slate-200">lock-closed</span>
         </div>
@@ -218,6 +224,10 @@ export const AllIconsOnLight: Story = {
         <div className="flex items-center gap-3">
           <HomeIcon size={24} className="text-gray-900" />
           <span className="text-xs text-gray-700">home</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <ListIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">list</span>
         </div>
         <div className="flex items-center gap-3">
           <LockClosedIcon size={24} className="text-gray-900" />

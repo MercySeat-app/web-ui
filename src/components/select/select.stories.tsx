@@ -10,6 +10,9 @@ import {
   SelectSeparator,
 } from "./select";
 
+/**
+ * Storybook metadata for Select.
+ */
 const meta: Meta<typeof SelectTrigger> = {
   title: "Components/Select",
   component: SelectTrigger,
@@ -47,8 +50,14 @@ const meta: Meta<typeof SelectTrigger> = {
 
 export default meta;
 
+/**
+ * Story type for Select stories.
+ */
 type Story = StoryObj<typeof SelectTrigger>;
 
+/**
+ * Default select example.
+ */
 export const Basic: Story = {
   name: "Default",
   render: (args) => (
@@ -75,6 +84,9 @@ export const Basic: Story = {
   },
 };
 
+/**
+ * Ghost trigger variant for compact toolbars.
+ */
 export const GhostToolbar: Story = {
   name: "Ghost variant (toolbar)",
   render: () => (
@@ -112,6 +124,9 @@ export const GhostToolbar: Story = {
   },
 };
 
+/**
+ * Select example with grouped options and separator.
+ */
 export const WithGroupsAndSeparator: Story = {
   name: "With groups and separator",
   render: () => (

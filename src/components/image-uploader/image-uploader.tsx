@@ -86,7 +86,7 @@ export function ImageUploader({
       setDimensionErrors([]);
 
       const hasDimensionRules = [minWidth, minHeight, maxWidth, maxHeight].some(
-        (value) => typeof value === "number"
+        (value) => typeof value === "number",
       );
 
       if (hasDimensionRules) {
@@ -109,32 +109,32 @@ export function ImageUploader({
               };
 
               image.src = imageUrl;
-            }
+            },
           );
 
           const dimensionValidationErrors: string[] = [];
 
           if (typeof minWidth === "number" && dimensions.width < minWidth) {
             dimensionValidationErrors.push(
-              `Image width is too small. Minimum width is ${minWidth}px.`
+              `Image width is too small. Minimum width is ${minWidth}px.`,
             );
           }
 
           if (typeof minHeight === "number" && dimensions.height < minHeight) {
             dimensionValidationErrors.push(
-              `Image height is too small. Minimum height is ${minHeight}px.`
+              `Image height is too small. Minimum height is ${minHeight}px.`,
             );
           }
 
           if (typeof maxWidth === "number" && dimensions.width > maxWidth) {
             dimensionValidationErrors.push(
-              `Image width is too large. Maximum width is ${maxWidth}px.`
+              `Image width is too large. Maximum width is ${maxWidth}px.`,
             );
           }
 
           if (typeof maxHeight === "number" && dimensions.height > maxHeight) {
             dimensionValidationErrors.push(
-              `Image height is too large. Maximum height is ${maxHeight}px.`
+              `Image height is too large. Maximum height is ${maxHeight}px.`,
             );
           }
 
@@ -143,9 +143,7 @@ export function ImageUploader({
             return;
           }
         } catch {
-          setDimensionErrors([
-            "Unable to read image dimensions. Please try another image.",
-          ]);
+          setDimensionErrors(["Unable to read image dimensions. Please try another image."]);
           return;
         }
       }
@@ -160,30 +158,27 @@ export function ImageUploader({
       setZoom(1);
       setCroppedAreaPixels(null);
     },
-    [maxHeight, maxWidth, minHeight, minWidth]
+    [maxHeight, maxWidth, minHeight, minWidth],
   );
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } =
-    useDropzone({
-      onDrop,
-      accept,
-      maxSize,
-      multiple: false,
-    });
+  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
+    onDrop,
+    accept,
+    maxSize,
+    multiple: false,
+  });
 
   const errors = [
     ...fileRejections.flatMap((rej) =>
       rej.errors.map((e) => {
         if (e.code === "file-too-large") {
-          return `File is too large. Max size is ${(maxSize / 1048576).toFixed(
-            0
-          )}MB`;
+          return `File is too large. Max size is ${(maxSize / 1048576).toFixed(0)}MB`;
         }
         if (e.code === "file-invalid-type") {
           return `Invalid file type. Allowed types: ${extensions.join(", ")}`;
         }
         return e.message;
-      })
+      }),
     ),
     ...dimensionErrors,
   ];
@@ -236,9 +231,9 @@ export function ImageUploader({
           className={cn(
             "relative flex w-full items-center justify-center",
             "rounded-[0.625rem] border border-gray-50 bg-white",
-            "min-h-[11rem]",
+            "min-h-44",
             "cursor-pointer transition-colors",
-            isDragActive && "border-blue-hepatica-600"
+            isDragActive && "border-blue-hepatica-600",
           )}
         >
           <input {...getInputProps()} />
@@ -247,18 +242,16 @@ export function ImageUploader({
             <p className="text-sm font-sans font-medium text-gray-700">
               Click to upload or drag and drop
             </p>
-            {!!placeholder && (
-              <p className="text-xs text-gray-500">{placeholder}</p>
-            )}
+            {!!placeholder && <p className="text-xs text-gray-500">{placeholder}</p>}
           </div>
         </div>
       ) : (
-        <div className="relative w-fit max-h-[11rem]">
+        <div className="relative w-fit max-h-44">
           {/* Preview frame — mobile friendly, max height 11rem */}
           <div
             className={cn(
-              "h-[11rem] overflow-hidden border border-gray-50 bg-white shadow-lg",
-              rounded ? "rounded-full" : "rounded-lg"
+              "h-44 overflow-hidden border border-gray-50 bg-white shadow-lg",
+              rounded ? "rounded-full" : "rounded-lg",
             )}
             style={previewBoxStyle}
           >
@@ -277,7 +270,7 @@ export function ImageUploader({
             className={cn(
               "absolute right-1 top-1 inline-flex items-center justify-center",
               "size-10 rounded-full bg-gray-600 text-white border border-white",
-              "hover:bg-gray-700 transition-colors"
+              "hover:bg-gray-700 transition-colors",
             )}
           >
             <X className="size-4" />

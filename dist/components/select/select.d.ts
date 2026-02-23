@@ -1,17 +1,47 @@
 import { ComponentProps } from 'react';
 import * as SelectPrimitive from "@radix-ui/react-select";
+/**
+ * Root wrapper for the Radix Select primitive.
+ */
 declare function Select({ ...props }: ComponentProps<typeof SelectPrimitive.Root>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Groups related select items.
+ */
 declare function SelectGroup({ ...props }: ComponentProps<typeof SelectPrimitive.Group>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Displays the selected value or placeholder inside the trigger.
+ */
 declare function SelectValue({ ...props }: ComponentProps<typeof SelectPrimitive.Value>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Trigger button that opens the select content.
+ */
 declare function SelectTrigger({ className, size, variant, children, ...props }: ComponentProps<typeof SelectPrimitive.Trigger> & {
     size?: "sm" | "default";
     variant?: "default" | "ghost";
 }): import("react/jsx-runtime").JSX.Element;
+/**
+ * Floating content container with optional popper positioning.
+ */
 declare function SelectContent({ className, children, position, align, ...props }: React.ComponentProps<typeof SelectPrimitive.Content>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Label for a select group.
+ */
 declare function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Single selectable option.
+ */
 declare function SelectItem({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Item>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Visual separator between groups/items.
+ */
 declare function SelectSeparator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Separator>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Scroll control shown when options overflow above the viewport.
+ */
 declare function SelectScrollUpButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>): import("react/jsx-runtime").JSX.Element;
+/**
+ * Scroll control shown when options overflow below the viewport.
+ */
 declare function SelectScrollDownButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>): import("react/jsx-runtime").JSX.Element;
 export { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, };
 //# sourceMappingURL=select.d.ts.map

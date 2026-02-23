@@ -19,8 +19,8 @@ export function Shimmer({ className, ...props }: ShimmerProps) {
       aria-hidden="true"
       className={cn(
         "relative overflow-hidden rounded-md",
-        "bg-linear-to-r from-gray-25 via-white to-gray-25",
-        "bg-size-[200%_100%] animate-[shimmer_1.6s_ease-in-out_infinite]",
+        "bg-linear-to-r from-gray-50 via-gray-100 to-gray-50",
+        "bg-size-[200%_100%] animate-[shimmer_2.5s_ease-in-out_infinite]",
         "h-4 w-full",
         className,
       )}

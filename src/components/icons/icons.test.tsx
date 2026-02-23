@@ -9,6 +9,7 @@ import {
   GiftIcon,
   HomeIcon,
   Icon,
+  ListIcon,
   LockClosedIcon,
   LockOpenIcon,
   MinistryIcon,
@@ -195,5 +196,16 @@ describe("Icon components", () => {
     const path = container.querySelector("path");
     expect(path).not.toBeNull();
     expect(path).toHaveAttribute("fill", "currentColor");
+  });
+
+  it("ListIcon uses currentColor for stroke", () => {
+    const { container } = render(<ListIcon aria-label="List icon" />);
+
+    const svg = screen.getByRole("img", { name: "List icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
   });
 });

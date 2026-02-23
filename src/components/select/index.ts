@@ -1,1 +1,4 @@
-export * from "./select"
+/**
+ * Select component exports.
+ */
+export * from "./select";

@@ -6,22 +6,34 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 
+/**
+ * Root wrapper for the Radix Select primitive.
+ */
 function Select({ ...props }: ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
+/**
+ * Groups related select items.
+ */
 function SelectGroup({
   ...props
 }: ComponentProps<typeof SelectPrimitive.Group>) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
+/**
+ * Displays the selected value or placeholder inside the trigger.
+ */
 function SelectValue({
   ...props
 }: ComponentProps<typeof SelectPrimitive.Value>) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+/**
+ * Trigger button that opens the select content.
+ */
 function SelectTrigger({
   className,
   size = "default",
@@ -61,6 +73,9 @@ function SelectTrigger({
   );
 }
 
+/**
+ * Floating content container with optional popper positioning.
+ */
 function SelectContent({
   className,
   children,
@@ -98,6 +113,9 @@ function SelectContent({
   );
 }
 
+/**
+ * Label for a select group.
+ */
 function SelectLabel({
   className,
   ...props
@@ -111,6 +129,9 @@ function SelectLabel({
   );
 }
 
+/**
+ * Single selectable option.
+ */
 function SelectItem({
   className,
   children,
@@ -135,6 +156,9 @@ function SelectItem({
   );
 }
 
+/**
+ * Visual separator between groups/items.
+ */
 function SelectSeparator({
   className,
   ...props
@@ -148,6 +172,9 @@ function SelectSeparator({
   );
 }
 
+/**
+ * Scroll control shown when options overflow above the viewport.
+ */
 function SelectScrollUpButton({
   className,
   ...props
@@ -166,6 +193,9 @@ function SelectScrollUpButton({
   );
 }
 
+/**
+ * Scroll control shown when options overflow below the viewport.
+ */
 function SelectScrollDownButton({
   className,
   ...props
