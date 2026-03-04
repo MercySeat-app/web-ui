@@ -128,6 +128,7 @@
   --color-maroon-light-100: #F9EBF0;
 
   --shadow-button: 0px 0px 0px 4px var(--color-gray-100);
+  --shadow-dialog: 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 7px 8px -4px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes shimmer {
