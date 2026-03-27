@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 import type { IconProps } from "./types";
 
+import { AnalyticsIcon } from "./analytics-icon";
 import { AnnouncementIcon } from "./announcement-icon";
 import { ChurchIcon } from "./church-icon";
 import { ClassIcon } from "./class-icon";
@@ -19,6 +20,7 @@ import { SubscriptionIcon } from "./subscription-icon";
 import { VideoIcon } from "./video-icon";
 
 export type IconName =
+  | "analytics"
   | "announcement"
   | "church"
   | "class"
@@ -37,6 +39,7 @@ export type IconName =
   | "video";
 
 const iconMap: Record<IconName, (props: IconProps) => JSX.Element> = {
+  analytics: AnalyticsIcon,
   announcement: AnnouncementIcon,
   church: ChurchIcon,
   class: ClassIcon,
@@ -61,6 +64,7 @@ export function Icon({ name, ...props }: IconProps & { name: IconName }) {
 }
 
 export {
+  AnalyticsIcon,
   AnnouncementIcon,
   ChurchIcon,
   ClassIcon,

@@ -17,6 +17,7 @@ import {
   LockOpenIcon,
   VideoIcon,
   ListIcon,
+  AnalyticsIcon,
 } from "./index";
 
 const meta: Meta<typeof Icon> = {
@@ -114,6 +115,10 @@ export const AllIconsOnDark: Story = {
       <h3 className="mb-4 text-sm font-medium text-slate-100">Icons on dark surface</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
         <div className="flex items-center gap-3">
+          <AnalyticsIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">analytics</span>
+        </div>
+        <div className="flex items-center gap-3">
           <AnnouncementIcon size={24} className="text-white" />
           <span className="text-xs text-slate-200">announcement</span>
         </div>
@@ -197,6 +202,10 @@ export const AllIconsOnLight: Story = {
     <div className="bg-white p-6 rounded-xl border border-gray-100">
       <h3 className="mb-4 text-sm font-medium text-gray-900">Icons on light surface</h3>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="flex items-center gap-3">
+          <AnalyticsIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">analytics</span>
+        </div>
         <div className="flex items-center gap-3">
           <AnnouncementIcon size={24} className="text-gray-900" />
           <span className="text-xs text-gray-700">announcement</span>

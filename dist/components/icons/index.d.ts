@@ -1,4 +1,5 @@
 import { IconProps } from './types';
+import { AnalyticsIcon } from './analytics-icon';
 import { AnnouncementIcon } from './announcement-icon';
 import { ChurchIcon } from './church-icon';
 import { ClassIcon } from './class-icon';
@@ -15,9 +16,9 @@ import { SeriesIcon } from './series-icon';
 import { SermonIcon } from './sermon-icon';
 import { SubscriptionIcon } from './subscription-icon';
 import { VideoIcon } from './video-icon';
-export type IconName = "announcement" | "church" | "class" | "crown" | "event" | "gift" | "home" | "list" | "lock-closed" | "lock-open" | "ministry" | "podcast" | "series" | "sermon" | "subscription" | "video";
+export type IconName = "analytics" | "announcement" | "church" | "class" | "crown" | "event" | "gift" | "home" | "list" | "lock-closed" | "lock-open" | "ministry" | "podcast" | "series" | "sermon" | "subscription" | "video";
 export declare function Icon({ name, ...props }: IconProps & {
     name: IconName;
 }): import("react/jsx-runtime").JSX.Element;
-export { AnnouncementIcon, ChurchIcon, ClassIcon, CrownIcon, EventIcon, GiftIcon, HomeIcon, ListIcon, LockClosedIcon, LockOpenIcon, MinistryIcon, PodcastIcon, SeriesIcon, SermonIcon, SubscriptionIcon, VideoIcon, };
+export { AnalyticsIcon, AnnouncementIcon, ChurchIcon, ClassIcon, CrownIcon, EventIcon, GiftIcon, HomeIcon, ListIcon, LockClosedIcon, LockOpenIcon, MinistryIcon, PodcastIcon, SeriesIcon, SermonIcon, SubscriptionIcon, VideoIcon, };
 //# sourceMappingURL=index.d.ts.map
