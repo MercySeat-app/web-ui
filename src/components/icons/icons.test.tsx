@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import {
+  AnalyticsIcon,
   AnnouncementIcon,
   ChurchIcon,
   ClassIcon,
@@ -202,6 +203,17 @@ describe("Icon components", () => {
     const { container } = render(<ListIcon aria-label="List icon" />);
 
     const svg = screen.getByRole("img", { name: "List icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const path = container.querySelector("path");
+    expect(path).not.toBeNull();
+    expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("Analytics uses currentColor for stroke", () => {
+    const { container } = render(<AnalyticsIcon aria-label="Analytics icon" />);
+
+    const svg = screen.getByRole("img", { name: "Analytics icon" });
     expect(svg.tagName.toLowerCase()).toBe("svg");
 
     const path = container.querySelector("path");

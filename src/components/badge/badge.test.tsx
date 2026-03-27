@@ -47,6 +47,15 @@ describe("<Badge />", () => {
     expect(badge).toHaveClass("text-white");
   });
 
+  it("applies the success-filled variant styles", () => {
+    render(<Badge variant="success-filled">Success</Badge>);
+
+    const badge = screen.getByText("Success");
+
+    expect(badge).toHaveClass("bg-turquoise-green-700");
+    expect(badge).toHaveClass("text-white");
+  });
+
   it("merges custom className with variant classes", () => {
     render(
       <Badge className="custom-badge-class" variant="success-outline">
