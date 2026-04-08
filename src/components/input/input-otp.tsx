@@ -1,10 +1,15 @@
-"use client"
+"use client";
 
-import { type ComponentProps, type ComponentPropsWithoutRef, type ReactNode, useContext } from "react"
-import { OTPInput, OTPInputContext } from "input-otp"
-import { MinusIcon } from "lucide-react"
+import {
+  type ComponentProps,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  useContext,
+} from "react";
+import { OTPInput, OTPInputContext } from "input-otp";
+import { MinusIcon } from "lucide-react";
 
-import { cn } from "../../lib/utils"
+import { cn } from "../../lib/utils";
 
 type BaseOTPInputProps = ComponentPropsWithoutRef<typeof OTPInput>;
 
@@ -13,22 +18,15 @@ export type InputOTPProps = Omit<BaseOTPInputProps, "render" | "children"> & {
   containerClassName?: string;
 };
 
-function InputOTP({
-  className,
-  containerClassName,
-  ...props
-}:InputOTPProps) {
+function InputOTP({ className, containerClassName, ...props }: InputOTPProps) {
   return (
     <OTPInput
       data-slot="input-otp"
-      containerClassName={cn(
-        "flex items-center gap-2 has-disabled:opacity-50",
-        containerClassName
-      )}
+      containerClassName={cn("flex items-center gap-2 has-disabled:opacity-50", containerClassName)}
       className={cn("disabled:cursor-not-allowed", className)}
       {...props}
     />
-  )
+  );
 }
 
 function InputOTPGroup({ className, ...props }: ComponentProps<"div">) {
@@ -38,7 +36,7 @@ function InputOTPGroup({ className, ...props }: ComponentProps<"div">) {
       className={cn("flex items-center gap-2", className)}
       {...props}
     />
-  )
+  );
 }
 
 function InputOTPSlot({
@@ -46,10 +44,10 @@ function InputOTPSlot({
   className,
   ...props
 }: ComponentProps<"div"> & {
-  index: number
+  index: number;
 }) {
-  const inputOTPContext = useContext(OTPInputContext)
-  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {}
+  const inputOTPContext = useContext(OTPInputContext);
+  const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {};
 
   return (
     <div
@@ -59,9 +57,9 @@ function InputOTPSlot({
         "data-[active=true]:bg-white data-[active=true]:shadow-button data-[active=true]:ring-0",
         "data-[active=true]:border-blue-hepatica-600 data-[active=true]:aria-invalid:border-bright-red-600",
         "border border-gray-200 relative flex size-10 items-center justify-center",
-        " rounded-sm text-base font-sans bg-transparent transition-all outline-none",
+        " rounded-sm text-base font-manrope bg-transparent transition-all outline-none",
         "data-[active=true]:z-10",
-        className
+        className,
       )}
       {...props}
     >
@@ -72,7 +70,7 @@ function InputOTPSlot({
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function InputOTPSeparator({ ...props }: ComponentProps<"div">) {
@@ -80,7 +78,7 @@ function InputOTPSeparator({ ...props }: ComponentProps<"div">) {
     <div data-slot="input-otp-separator" role="separator" {...props}>
       <MinusIcon />
     </div>
-  )
+  );
 }
 
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };

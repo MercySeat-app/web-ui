@@ -7,5 +7,5 @@ declare function TableRow({ className, ...props }: React.ComponentProps<"tr">): 
 declare function TableHead({ className, ...props }: React.ComponentProps<"th">): import("react/jsx-runtime").JSX.Element;
 declare function TableCell({ className, ...props }: React.ComponentProps<"td">): import("react/jsx-runtime").JSX.Element;
 declare function TableCaption({ className, ...props }: React.ComponentProps<"caption">): import("react/jsx-runtime").JSX.Element;
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption, };
+export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
 //# sourceMappingURL=table.d.ts.map

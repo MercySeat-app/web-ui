@@ -5,10 +5,7 @@ import { ChevronRightIcon } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "../../lib/utils";
 
-export function Breadcrumb({
-  className,
-  ...props
-}: React.ComponentProps<"nav">) {
+export function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
       aria-label="Breadcrumb"
@@ -50,25 +47,22 @@ export function BreadcrumbLink({
     <Comp
       data-slot="breadcrumb-link"
       className={cn(
-        "flex w-fit font-sans text-sm font-normal leading-4.5 text-gray-200 hover:text-gray-600 hover:underline transition-all",
-        className
+        "flex w-fit font-manrope text-sm font-normal leading-4.5 text-gray-200 hover:text-gray-600 hover:underline transition-all",
+        className,
       )}
       {...props}
     />
   );
 }
 
-export function BreadcrumbPage({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+export function BreadcrumbPage({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="breadcrumb-page"
       aria-current="page"
       className={cn(
-        "font-sans text-sm font-semibold text-blue-hepatica-600 leading-4",
-        className
+        "font-manrope text-sm font-semibold text-blue-hepatica-600 leading-4",
+        className,
       )}
       {...props}
     />

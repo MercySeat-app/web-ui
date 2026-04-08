@@ -1,15 +1,10 @@
 "use client";
 
-import type {
-  ComponentPropsWithoutRef,
-  ElementType,
-  JSX,
-  ReactNode,
-} from "react";
+import type { ComponentPropsWithoutRef, ElementType, JSX, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
-export const typographyVariants = cva("font-sans text-gray-900", {
+export const typographyVariants = cva("font-manrope text-gray-900", {
   variants: {
     variant: {
       "heading-1":
@@ -54,9 +49,7 @@ export const typographyVariants = cva("font-sans text-gray-900", {
   },
 });
 
-type TypographyVariant = NonNullable<
-  VariantProps<typeof typographyVariants>["variant"]
->;
+type TypographyVariant = NonNullable<VariantProps<typeof typographyVariants>["variant"]>;
 
 type DefaultTag = keyof JSX.IntrinsicElements;
 
@@ -80,9 +73,7 @@ export type TypographyProps<TTag extends ElementType = "p"> = {
 } & VariantProps<typeof typographyVariants> &
   Omit<ComponentPropsWithoutRef<TTag>, "as" | "children">;
 
-export function Typography<TTag extends ElementType = "p">(
-  props: TypographyProps<TTag>
-) {
+export function Typography<TTag extends ElementType = "p">(props: TypographyProps<TTag>) {
   const { as, variant, className, children, ...rest } = props;
 
   const resolvedVariant = (variant ?? "body-md") as TypographyVariant;
@@ -91,10 +82,7 @@ export function Typography<TTag extends ElementType = "p">(
 
   return (
     <Component
-      className={cn(
-        typographyVariants({ variant: resolvedVariant }),
-        className
-      )}
+      className={cn(typographyVariants({ variant: resolvedVariant }), className)}
       {...rest}
     >
       {children}

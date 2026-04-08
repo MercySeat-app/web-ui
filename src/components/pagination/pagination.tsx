@@ -3,13 +3,7 @@
 import type { ComponentProps } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "../../lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../select";
 
 export type PaginationProps = {
   /** Current page (1-based) */
@@ -46,8 +40,7 @@ export function Pagination({
   const safePage = Math.min(Math.max(page, 1), totalPages);
 
   const startIndex = totalItems === 0 ? 0 : (safePage - 1) * pageSize + 1;
-  const endIndex =
-    totalItems === 0 ? 0 : Math.min(totalItems, safePage * pageSize);
+  const endIndex = totalItems === 0 ? 0 : Math.min(totalItems, safePage * pageSize);
 
   const canGoPrev = !disabled && safePage > 1;
   const canGoNext = !disabled && safePage < totalPages;
@@ -75,12 +68,12 @@ export function Pagination({
       className={cn(
         "flex w-full items-center justify-end gap-4 py-3 text-sm text-gray-700",
         "border-t border-gray-50",
-        className
+        className,
       )}
       {...props}
     >
       <div className="flex items-center gap-2">
-        <span className="font-sans text-xs text-gray-700">Rows per page:</span>
+        <span className="font-manrope text-xs text-gray-700">Rows per page:</span>
 
         <div className="w-16">
           <Select
@@ -105,13 +98,8 @@ export function Pagination({
 
       {/* Range + pagination controls */}
       <div className="flex items-center gap-4">
-        <p
-          data-slot="pagination-range"
-          className="text-xs text-gray-600 whitespace-nowrap"
-        >
-          {totalItems === 0
-            ? "0 of 0"
-            : `${startIndex} – ${endIndex} of ${totalItems}`}
+        <p data-slot="pagination-range" className="text-xs text-gray-600 whitespace-nowrap">
+          {totalItems === 0 ? "0 of 0" : `${startIndex} – ${endIndex} of ${totalItems}`}
         </p>
 
         <div className="flex items-center gap-x-1">

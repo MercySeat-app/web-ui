@@ -6,17 +6,11 @@ type LogoLockupProps = HTMLAttributes<HTMLDivElement> & {
   size?: number | string;
 };
 
-export function LogoLockup({
-  size = 32,
-  className,
-  ...props
-}: LogoLockupProps) {
+export function LogoLockup({ size = 32, className, ...props }: LogoLockupProps) {
   return (
     <div className={cn("inline-flex items-center gap-2", className)} {...props}>
       <Logo size={size} />
-      <span className="font-sans text-base font-normal leading-none text-white">
-        MercySeat
-      </span>
+      <span className="font-manrope text-base font-normal leading-none text-white">MercySeat</span>
     </div>
   );
 }

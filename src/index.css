@@ -3,7 +3,7 @@
 @import "tw-animate-css";
 
 @theme {
-  --font-sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-manrope: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --color-blue-hepatica-900: #19183B;
   --color-blue-hepatica-800: #323175;
