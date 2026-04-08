@@ -24,7 +24,7 @@ describe("<Input />", () => {
 
     const input = screen.getByPlaceholderText("Your name");
 
-    expect(input.className).toContain("font-sans");
+    expect(input.className).toContain("font-manrope");
     expect(input.className).toContain("border-gray-200");
     expect(input.className).toContain("h-10");
     expect(input.className).toContain("custom-class");
@@ -38,18 +38,11 @@ describe("<Input />", () => {
   });
 
   it("includes aria-invalid variants in className for error styling", () => {
-    render(
-      <Input
-        aria-invalid="true"
-        placeholder="Email"
-      />
-    );
+    render(<Input aria-invalid="true" placeholder="Email" />);
 
     const input = screen.getByPlaceholderText("Email");
 
     expect(input.className).toContain("aria-invalid:border-bright-red-600");
-    expect(input.className).toContain(
-      "aria-invalid:focus-visible:border-bright-red-600"
-    );
+    expect(input.className).toContain("aria-invalid:focus-visible:border-bright-red-600");
   });
 });

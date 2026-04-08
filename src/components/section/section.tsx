@@ -43,7 +43,7 @@ export function Section({
     <section {...props} className={cn(sectionVariants({ elevation, className }))}>
       {!!title && (
         <header className="h-15 flex items-center px-8 border-b border-b-gray-25">
-          <h3 className="font-sans font-semibold text-base text-gray-900 leading-5">{title}</h3>
+          <h3 className="font-manrope font-semibold text-base text-gray-900 leading-5">{title}</h3>
         </header>
       )}
       <div className="flex flex-col p-4 md:p-8!">{children}</div>

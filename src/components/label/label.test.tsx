@@ -20,12 +20,7 @@ describe("<Label />", () => {
 
     expect(label).toBeInTheDocument();
     expect(star).toBeInTheDocument();
-    expect(star).toHaveClass(
-      "text-base",
-      "font-normal",
-      "text-bright-red-600",
-      "ml-1"
-    );
+    expect(star).toHaveClass("text-base", "font-normal", "text-bright-red-600", "ml-1");
   });
 
   it("does not render a required asterisk when required is false", () => {
@@ -42,7 +37,7 @@ describe("<Label />", () => {
     render(<Label className="custom-class">Name</Label>);
 
     const label = screen.getByText("Name").parentElement!;
-    expect(label.className).toContain("font-sans");
+    expect(label.className).toContain("font-manrope");
     expect(label.className).toContain("font-medium");
     expect(label.className).toContain("text-sm");
     expect(label.className).toContain("text-gray-700");
@@ -54,7 +49,7 @@ describe("<Label />", () => {
       <>
         <Label htmlFor="email-input">Email</Label>
         <input id="email-input" />
-      </>
+      </>,
     );
 
     const label = screen.getByText("Email").parentElement!;
@@ -71,7 +66,7 @@ describe("<Label />", () => {
         }}
       >
         With ref
-      </Label>
+      </Label>,
     );
 
     expect(ref.current).not.toBeNull();

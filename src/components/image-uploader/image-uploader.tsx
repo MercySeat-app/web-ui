@@ -239,7 +239,7 @@ export function ImageUploader({
           <input {...getInputProps()} />
           <div className="flex flex-col items-center justify-center px-4 text-center gap-y-3">
             <img src={dropzone} alt="" />
-            <p className="text-sm font-sans font-medium text-gray-700">
+            <p className="text-sm font-manrope font-medium text-gray-700">
               Click to upload or drag and drop
             </p>
             {!!placeholder && <p className="text-xs text-gray-500">{placeholder}</p>}

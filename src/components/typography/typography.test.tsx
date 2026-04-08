@@ -8,7 +8,7 @@ describe("<Typography />", () => {
 
     const el = screen.getByText("Default text");
     expect(el.tagName.toLowerCase()).toBe("p");
-    expect(el.className).toContain("font-sans");
+    expect(el.className).toContain("font-manrope");
     expect(el.className).toContain("text-gray-900");
     expect(el.className).toContain("text-[1rem]");
     expect(el.className).toContain("leading-[1.5]");
@@ -69,7 +69,7 @@ describe("<Typography />", () => {
     render(
       <Typography as="div" variant="heading-2">
         Div heading
-      </Typography>
+      </Typography>,
     );
 
     const el = screen.getByText("Div heading");
@@ -81,7 +81,7 @@ describe("<Typography />", () => {
     render(
       <Typography variant="body-md" className="custom-class">
         Custom
-      </Typography>
+      </Typography>,
     );
 
     const el = screen.getByText("Custom");
