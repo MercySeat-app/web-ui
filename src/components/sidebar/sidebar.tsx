@@ -6,22 +6,51 @@ import { cn } from "../../lib/utils";
 import { Logo } from "../main-logo";
 
 /**
- * Resolved background image URL for the sidebar.
+ * Resolved background image URL for the sidebar background decoration.
+ *
+ * Uses `import.meta.url` so the bundler can resolve the SVG asset at build
+ * time regardless of the deployment base path.
+ *
+ * @constant
  */
 const backgroundImageUrl = new URL("./background.svg", import.meta.url).href;
 
 /**
- * Props for the Sidebar component.
+ * Props accepted by the {@link Sidebar} component.
  */
 type SidebarProps = {
   /**
-   * Sidebar content (navigation, menus, etc.).
+   * Content rendered inside the sidebar panel (e.g. navigation links,
+   * menus, user profile sections). The content is placed in a scrollable
+   * container below the MercySeat logo lockup.
    */
   children: ReactNode;
 };
 
 /**
- * Sidebar renders the primary navigation container with a mobile toggle.
+ * Primary application sidebar that contains navigation and branding.
+ *
+ * **Responsive behaviour:**
+ * - **Mobile (< 912 px):** The sidebar is hidden off-screen by default.
+ *   A floating hamburger button toggles it in/out with a slide animation,
+ *   and a semi-transparent overlay is shown behind it. Clicking the overlay
+ *   or the toggle button again closes the sidebar.
+ * - **Desktop (≥ 912 px):** The sidebar is always visible in the normal
+ *   document flow (no toggle, no overlay).
+ *
+ * The component renders three sibling elements:
+ * 1. A `<button>` for the mobile toggle (hidden on desktop).
+ * 2. A `<div>` overlay (hidden on desktop, visible when open on mobile).
+ * 3. An `<aside>` containing the logo lockup, a decorative background
+ *    image, and the provided {@link SidebarProps.children | children}.
+ *
+ * @example
+ * ```tsx
+ * <Sidebar>
+ *   <NavLinks />
+ *   <UserProfile />
+ * </Sidebar>
+ * ```
  */
 export function Sidebar({ children }: SidebarProps) {
   const [open, setOpen] = useState(false);
@@ -74,7 +103,7 @@ export function Sidebar({ children }: SidebarProps) {
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-top"
         />
-        <div className="w-full grid grid-rows-[112px_1fr]">
+        <div className="w-66.75 grid grid-rows-[112px_1fr]">
           <div className="flex justify-center items-center">
             <div className="flex flex-col items-center gap-y-2">
               <Logo className="size-10.5" />
@@ -83,7 +112,7 @@ export function Sidebar({ children }: SidebarProps) {
               </h1>
             </div>
           </div>
-          <div>{children}</div>
+          <div className="overflow-hidden w-66.75">{children}</div>
         </div>
       </aside>
     </>
