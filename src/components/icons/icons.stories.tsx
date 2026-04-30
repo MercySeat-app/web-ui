@@ -18,6 +18,7 @@ import {
   VideoIcon,
   ListIcon,
   AnalyticsIcon,
+  LivestreamIcon,
 } from "./index";
 
 const meta: Meta<typeof Icon> = {
@@ -151,6 +152,10 @@ export const AllIconsOnDark: Story = {
           <span className="text-xs text-slate-200">list</span>
         </div>
         <div className="flex items-center gap-3">
+          <LivestreamIcon size={24} className="text-white" />
+          <span className="text-xs text-slate-200">livestream</span>
+        </div>
+        <div className="flex items-center gap-3">
           <LockClosedIcon size={24} className="text-white" />
           <span className="text-xs text-slate-200">lock-closed</span>
         </div>
@@ -237,6 +242,10 @@ export const AllIconsOnLight: Story = {
         <div className="flex items-center gap-3">
           <ListIcon size={24} className="text-gray-900" />
           <span className="text-xs text-gray-700">list</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <LivestreamIcon size={24} className="text-gray-900" />
+          <span className="text-xs text-gray-700">livestream</span>
         </div>
         <div className="flex items-center gap-3">
           <LockClosedIcon size={24} className="text-gray-900" />

@@ -10,6 +10,7 @@ import { EventIcon } from "./event-icon";
 import { GiftIcon } from "./gift-icon";
 import { HomeIcon } from "./home-icon";
 import { ListIcon } from "./list-icon";
+import { LivestreamIcon } from "./livestream-icon";
 import { LockClosedIcon } from "./lock-closed-icon";
 import { LockOpenIcon } from "./lock-open-icon";
 import { MinistryIcon } from "./ministry-icon";
@@ -29,6 +30,7 @@ export type IconName =
   | "gift"
   | "home"
   | "list"
+  | "livestream"
   | "lock-closed"
   | "lock-open"
   | "ministry"
@@ -48,6 +50,7 @@ const iconMap: Record<IconName, (props: IconProps) => JSX.Element> = {
   gift: GiftIcon,
   home: HomeIcon,
   list: ListIcon,
+  livestream: LivestreamIcon,
   "lock-closed": LockClosedIcon,
   "lock-open": LockOpenIcon,
   ministry: MinistryIcon,
@@ -73,6 +76,7 @@ export {
   GiftIcon,
   HomeIcon,
   ListIcon,
+  LivestreamIcon,
   LockClosedIcon,
   LockOpenIcon,
   MinistryIcon,
