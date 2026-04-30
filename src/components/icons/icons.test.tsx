@@ -11,6 +11,7 @@ import {
   HomeIcon,
   Icon,
   ListIcon,
+  LivestreamIcon,
   LockClosedIcon,
   LockOpenIcon,
   MinistryIcon,
@@ -219,5 +220,18 @@ describe("Icon components", () => {
     const path = container.querySelector("path");
     expect(path).not.toBeNull();
     expect(path).toHaveAttribute("stroke", "currentColor");
+  });
+
+  it("Livestream uses currentColor for stroke and fill", () => {
+    const { container } = render(<LivestreamIcon aria-label="Livestream icon" />);
+
+    const svg = screen.getByRole("img", { name: "Livestream icon" });
+    expect(svg.tagName.toLowerCase()).toBe("svg");
+
+    const paths = container.querySelectorAll("circle");
+    expect(paths).not.toBeNull();
+    expect(paths[0]).toHaveAttribute("fill", "currentColor");
+    expect(paths[1]).toHaveAttribute("fill", "currentColor");
+    expect(paths[2]).toHaveAttribute("stroke", "currentColor");
   });
 });
