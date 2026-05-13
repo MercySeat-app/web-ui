@@ -12,8 +12,14 @@ const meta: Meta<typeof TimePicker> = {
   parameters: {
     docs: {
       description: {
-        component:
-          "A Safari-compatible time picker that renders a scrollable list of 15-minute slots inside a Radix UI Popover. Built to replace `<input type=\"time\">` which is unsupported in Safari.",
+        component: `
+A Safari-compatible time picker that combines a **free-text input** with a
+**15-minute slot dropdown**.
+
+- **Type** any time directly: \`2:30 PM\`, \`14:30\`, \`9am\`, \`930\` — all normalised to \`HH:mm\` on blur.
+- **Pick** a slot from the dropdown for quick selection.
+- Built on Radix UI Popover so the dropdown escapes any \`overflow-hidden\` ancestor.
+        `.trim(),
       },
     },
     backgrounds: {
@@ -32,8 +38,8 @@ export default meta;
 type Story = StoryObj<typeof TimePicker>;
 
 /**
- * Default uncontrolled-style demo. Click the trigger to open the slot list
- * and select a time.
+ * Empty state — input shows placeholder. Try typing `"3pm"`, `"930"`, or
+ * `"14:30"` and pressing Tab to see the value normalise.
  */
 export const Default: Story = {
   name: "Default (no value)",
@@ -42,21 +48,27 @@ export const Default: Story = {
     return (
       <div className="w-56 p-6">
         <TimePicker value={value} onChange={setValue} />
+        {value && (
+          <p className="mt-2 text-xs text-gray-500">
+            Raw value: <code>{value}</code>
+          </p>
+        )}
       </div>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "Empty state — trigger shows the placeholder text.",
+        story:
+          "Empty state. Type a time (e.g. `3pm`, `14:30`, `9:30 AM`) and press Tab — the input normalises to 12-hour format and the raw `HH:mm` value is shown below.",
       },
     },
   },
 };
 
 /**
- * Pre-selected value example. The trigger displays the formatted 12-hour
- * time and the popover scrolls to the active slot on open.
+ * Pre-selected value. The input shows the formatted 12-hour time.
+ * Opening the dropdown scrolls the active slot into view.
  */
 export const WithValue: Story = {
   name: "With pre-selected value",
@@ -65,6 +77,9 @@ export const WithValue: Story = {
     return (
       <div className="w-56 p-6">
         <TimePicker value={value} onChange={setValue} />
+        <p className="mt-2 text-xs text-gray-500">
+          Raw value: <code>{value}</code>
+        </p>
       </div>
     );
   },
@@ -72,25 +87,24 @@ export const WithValue: Story = {
     docs: {
       description: {
         story:
-          "Controlled example with an initial value of `14:30` (2:30 PM). Opening the popover scrolls the active slot into view.",
+          "Controlled example with an initial value of `14:30` (2:30 PM). Opening the dropdown scrolls the nearest slot into view.",
       },
     },
   },
 };
 
 /**
- * Side-by-side layout showing a DatePicker + TimePicker pair, as they appear
- * in event creation forms.
+ * Side-by-side date + time row, as used in event creation forms.
  */
 export const DateTimeRow: Story = {
   name: "In a date + time row",
   render: () => {
     const [time, setTime] = useState("10:00");
     return (
-      <div className="flex items-center gap-3 rounded-xl bg-white p-6 shadow-sm">
+      <div className="flex items-end gap-3 rounded-xl bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-1">
           <label className="text-xs font-medium text-gray-500">Date</label>
-          <div className="flex h-10 w-40 items-center gap-2 rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900">
+          <div className="flex h-10 w-44 items-center gap-2 rounded-md border border-gray-200 bg-white px-3 text-sm text-gray-900">
             May 15, 2026
           </div>
         </div>
@@ -107,7 +121,7 @@ export const DateTimeRow: Story = {
     docs: {
       description: {
         story:
-          "Typical event-form layout pairing the `TimePicker` with a date display.",
+          "Typical event-form layout pairing the `TimePicker` with a date input.",
       },
     },
   },
