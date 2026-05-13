@@ -27,3 +27,4 @@ export * from "./components/table";
 export * from "./components/textarea";
 export * from "./components/tooltip";
 export * from "./components/typography";
+export * from "./components/date-time";
