@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import { TimePicker } from "./time-picker";
@@ -18,8 +18,7 @@ describe("<TimePicker />", () => {
     const user = userEvent.setup();
     render(<TimePicker value="" onChange={() => {}} />);
 
-    await user.click(screen.getByText("Select a time"));
-    // At least one slot label should be visible
+    await user.click(screen.getByRole("button"));
     expect(screen.getByText("12:00 AM")).toBeInTheDocument();
   });
 
@@ -28,7 +27,7 @@ describe("<TimePicker />", () => {
     const onChange = vi.fn();
     render(<TimePicker value="" onChange={onChange} />);
 
-    await user.click(screen.getByText("Select a time"));
+    await user.click(screen.getByRole("button"));
     await user.click(screen.getByText("2:00 PM"));
 
     expect(onChange).toHaveBeenCalledWith("14:00");
@@ -39,7 +38,6 @@ describe("<TimePicker />", () => {
     const user = userEvent.setup();
     render(<TimePicker value="09:00" onChange={() => {}} />);
 
-    // Open the list (click the trigger, which shows the formatted time)
     await user.click(screen.getByRole("button"));
 
     // Both the trigger span and the slot button contain "9:00 AM" — find the slot button
@@ -53,7 +51,7 @@ describe("<TimePicker />", () => {
     const user = userEvent.setup();
     render(<TimePicker value="" onChange={() => {}} />);
 
-    await user.click(screen.getByText("Select a time"));
+    await user.click(screen.getByRole("button"));
     expect(screen.getByText("12:00 AM")).toBeInTheDocument();
 
     await user.keyboard("{Escape}");
@@ -69,10 +67,10 @@ describe("<TimePicker />", () => {
       </div>,
     );
 
-    await user.click(screen.getByText("Select a time"));
+    await user.click(screen.getByRole("button", { name: /Select a time/i }));
     expect(screen.getByText("12:00 AM")).toBeInTheDocument();
 
-    fireEvent.mouseDown(screen.getByText("Outside"));
+    await user.click(screen.getByText("Outside"));
     expect(screen.queryByText("12:00 AM")).not.toBeInTheDocument();
   });
 });

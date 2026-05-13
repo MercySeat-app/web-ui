@@ -1,5 +1,22 @@
 "use client";
 
+/**
+ * @file date-picker.tsx
+ * @description Safari-compatible date picker with a custom month-grid calendar
+ * rendered inside a positioned overlay.
+ *
+ * **Why a custom calendar?**
+ * Safari does not support `<input type="date">`. This component renders a
+ * full month grid built with `date-fns` so the experience is consistent across
+ * all browsers.
+ *
+ * **Overflow escape strategy**
+ * The popup uses `position: fixed` + `getBoundingClientRect()` so it always
+ * escapes any `overflow-hidden` ancestor — including the `Section` component
+ * whose `cva` base class hard-codes `overflow-hidden`. Do **not** remove that
+ * class; other components depend on it.
+ */
+
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
   addMonths,
@@ -19,14 +36,53 @@ import {
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
 
+/** Abbreviated weekday column headers, starting Sunday. */
 const DAY_LABELS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
-type DatePickerProps = {
-  value: string; // YYYY-MM-DD or ""
-  onChange: (value: string) => void;
-  "data-testid"?: string;
-};
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
+/** Props for the {@link DatePicker} component. */
+export interface DatePickerProps {
+  /**
+   * The currently selected date as a `YYYY-MM-DD` string (e.g. `"2026-05-15"`),
+   * or an empty string when no date has been chosen.
+   */
+  value: string;
+  /**
+   * Callback fired when the user selects a date.
+   * Receives the selected date formatted as `YYYY-MM-DD`.
+   */
+  onChange: (value: string) => void;
+  /**
+   * Optional `data-testid` attribute forwarded to the root element,
+   * useful for targeting the component in tests.
+   */
+  "data-testid"?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
+/**
+ * A Safari-compatible date picker that renders a custom month-grid calendar
+ * in a `position: fixed` overlay.
+ *
+ * - Past dates are disabled and cannot be selected.
+ * - Today is highlighted in blue.
+ * - The calendar jumps to the selected month when re-opened.
+ * - Keyboard `Escape` and click-outside both close the calendar.
+ * - The popup escapes any `overflow-hidden` ancestor via fixed positioning.
+ *
+ * @example
+ * ```tsx
+ * const [date, setDate] = useState("");
+ *
+ * <DatePicker value={date} onChange={setDate} />
+ * ```
+ */
 export function DatePicker({
   value,
   onChange,
@@ -44,8 +100,11 @@ export function DatePicker({
   const selectedDate = value ? new Date(`${value}T00:00:00`) : null;
   const today = startOfDay(new Date());
 
-  // Uses fixed positioning so the calendar escapes any overflow-hidden ancestor
-  // (e.g. the Section component has overflow-hidden baked into its cva).
+  /**
+   * Recalculates the calendar's fixed position relative to the trigger button.
+   * Called on open, scroll (capture), and resize so the popup tracks the
+   * trigger even when the page scrolls.
+   */
   const updatePosition = useCallback(() => {
     if (!triggerRef.current) return;
     const rect = triggerRef.current.getBoundingClientRect();
@@ -57,8 +116,8 @@ export function DatePicker({
     });
   }, []);
 
+  /** Opens the calendar, jumping to the selected month if one exists. */
   const openPicker = () => {
-    // Jump to the selected month when re-opening (e.g. editing an existing event)
     if (value) setViewDate(new Date(`${value}T00:00:00`));
     updatePosition();
     setIsOpen(true);
@@ -74,7 +133,7 @@ export function DatePicker({
     };
     document.addEventListener("mousedown", onMouseDown);
     document.addEventListener("keydown", onKeyDown);
-    // Capture-phase scroll catches scroll in any ancestor
+    // Capture phase catches scroll in any ancestor, not just window.
     window.addEventListener("scroll", updatePosition, true);
     window.addEventListener("resize", updatePosition);
     return () => {
@@ -90,6 +149,10 @@ export function DatePicker({
     end: endOfWeek(endOfMonth(viewDate)),
   });
 
+  /**
+   * Handles a day cell click. Ignores past days (the button is also `disabled`
+   * for accessibility) and fires `onChange` with the formatted date string.
+   */
   const handleSelectDay = (day: Date) => {
     if (isBefore(day, today)) return;
     onChange(format(day, "yyyy-MM-dd"));
@@ -117,7 +180,7 @@ export function DatePicker({
           style={popupStyle}
           className="w-72 rounded-xl border border-gray-200 bg-white p-4 shadow-lg"
         >
-          {/* Month navigation */}
+          {/* Month navigation row */}
           <div className="mb-3 flex items-center justify-between">
             <button
               type="button"
@@ -140,7 +203,7 @@ export function DatePicker({
             </button>
           </div>
 
-          {/* Weekday labels */}
+          {/* Weekday column headers */}
           <div className="mb-1 grid grid-cols-7">
             {DAY_LABELS.map((label) => (
               <div
