@@ -28,6 +28,6 @@ export * from "./components/stepper";
 export * from "./components/suspended-menu";
 export * from "./components/table";
 export * from "./components/textarea";
+export * from "./components/timepicker";
 export * from "./components/tooltip";
 export * from "./components/typography";
-export * from "./components/time-picker";
