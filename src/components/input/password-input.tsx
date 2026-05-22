@@ -27,8 +27,8 @@ export function PasswordInput({
         className="absolute right-0 top-0 size-10 flex items-center justify-center"
         onClick={handleToggleVisibility}
       >
-        {visible && <EyeOff className="size-4 text-gray-300" />}
-        {!visible && <Eye className="size-4 text-gray-300" />}
+        {!visible && <EyeOff className="size-4 text-gray-300" />}
+        {visible && <Eye className="size-4 text-gray-300" />}
       </button>
     </div>
   );

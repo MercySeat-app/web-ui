@@ -47,6 +47,31 @@ describe("<PasswordInput />", () => {
     expect(toggledIcon).not.toBe(initialIcon);
   });
 
+  it("muestra el ícono EyeOff por defecto (password oculto)", () => {
+    render(<PasswordInput placeholder="Password" />);
+    const toggleButton = screen.getByRole("button");
+    // Debe mostrar EyeOff cuando el password está oculto
+    const icon = toggleButton.querySelector("svg");
+    expect(icon).toHaveClass("lucide-eye-off");
+  });
+
+  it("cambia el ícono entre EyeOff y Eye al hacer click", async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput placeholder="Password" />);
+    const toggleButton = screen.getByRole("button");
+    // Por defecto, EyeOff
+    let icon = toggleButton.querySelector("svg");
+    expect(icon).toHaveClass("lucide-eye-off");
+    await user.click(toggleButton);
+    // Ahora debe mostrar Eye
+    icon = toggleButton.querySelector("svg");
+    expect(icon).toHaveClass("lucide-eye");
+    await user.click(toggleButton);
+    // Vuelve a EyeOff
+    icon = toggleButton.querySelector("svg");
+    expect(icon).toHaveClass("lucide-eye-off");
+  });
+
   it("merges custom className into the underlying Input", () => {
     render(
       <PasswordInput
