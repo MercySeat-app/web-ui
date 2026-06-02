@@ -15988,8 +15988,8 @@ function Zk({
         className: "absolute right-0 top-0 size-10 flex items-center justify-center",
         onClick: o,
         children: [
-          t && /* @__PURE__ */ d.jsx(Zh, { className: "size-4 text-gray-300" }),
-          !t && /* @__PURE__ */ d.jsx(Jh, { className: "size-4 text-gray-300" })
+          !t && /* @__PURE__ */ d.jsx(Zh, { className: "size-4 text-gray-300" }),
+          t && /* @__PURE__ */ d.jsx(Jh, { className: "size-4 text-gray-300" })
         ]
       }
     )
@@ -18100,7 +18100,7 @@ function kS({
   }
   function z(D) {
     const R = ft(D);
-    R && (h(Mr(R)), n(fc(R)), w(!1), C(-1), S.current?.focus());
+    h(Mr(R)), n(fc(R)), w(!1), C(-1), S.current?.focus();
   }
   function Z(D) {
     if (_) {
@@ -18174,28 +18174,26 @@ function kS({
         "data-slot": "timepicker-listbox",
         className: "absolute left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-sm border border-gray-200 bg-white py-1 shadow-dropdown",
         children: L.map((D, R) => {
-          const M = ft(D);
-          if (!M) return null;
-          const k = Mr(M), T = R === b;
+          const M = Mr(ft(D)), k = R === b;
           return /* @__PURE__ */ d.jsx(
             "li",
             {
               id: `${E}-${R}`,
               role: "option",
-              "aria-selected": T,
+              "aria-selected": k,
               "data-timepicker-option": !0,
               "data-listbox-id": E,
               "data-index": R,
-              "data-active": T,
-              onMouseDown: (W) => {
-                W.preventDefault(), z(D);
+              "data-active": k,
+              onMouseDown: (T) => {
+                T.preventDefault(), z(D);
               },
               onMouseEnter: () => C(R),
               className: j(
                 "cursor-pointer px-3 py-1.5 text-sm hover:bg-blue-hepatica-50",
-                T && "bg-blue-hepatica-50"
+                k && "bg-blue-hepatica-50"
               ),
-              children: k
+              children: M
             },
             D
           );
