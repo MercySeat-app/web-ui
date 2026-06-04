@@ -15966,19 +15966,21 @@ function p2({ className: e, type: n, ...t }) {
 }
 function Zk({
   className: e,
-  ...n
+  visible: n,
+  onVisibilityChange: t,
+  ...r
 }) {
-  const [t, r] = Fe(!1), o = ue(() => {
-    r((a) => !a);
-  }, []);
+  const [o, a] = Fe(!1), i = n !== void 0, s = i ? n : o, c = ue(() => {
+    i ? t?.(!s) : a((l) => !l);
+  }, [i, s, t]);
   return /* @__PURE__ */ d.jsxs("div", { className: "relative w-full", children: [
     /* @__PURE__ */ d.jsx(
       p2,
       {
-        ...n,
+        ...r,
         "data-slot": "input",
         className: j(e, "pr-10"),
-        type: t ? "text" : "password"
+        type: s ? "text" : "password"
       }
     ),
     /* @__PURE__ */ d.jsxs(
@@ -15986,10 +15988,10 @@ function Zk({
       {
         type: "button",
         className: "absolute right-0 top-0 size-10 flex items-center justify-center",
-        onClick: o,
+        onClick: c,
         children: [
-          !t && /* @__PURE__ */ d.jsx(Zh, { className: "size-4 text-gray-300" }),
-          t && /* @__PURE__ */ d.jsx(Jh, { className: "size-4 text-gray-300" })
+          !s && /* @__PURE__ */ d.jsx(Zh, { className: "size-4 text-gray-300" }),
+          s && /* @__PURE__ */ d.jsx(Jh, { className: "size-4 text-gray-300" })
         ]
       }
     )

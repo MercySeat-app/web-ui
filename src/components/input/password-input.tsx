@@ -4,15 +4,29 @@ import { Eye, EyeOff } from "lucide-react";
 import { Input } from "./input";
 import { cn } from "../../lib/utils";
 
+export interface PasswordInputProps extends Omit<ComponentProps<"input">, "type"> {
+  visible?: boolean;
+  onVisibilityChange?: (visible: boolean) => void;
+}
+
 export function PasswordInput({
   className,
+  visible: controlledVisible,
+  onVisibilityChange,
   ...props
-}: ComponentProps<"input">) {
-  const [visible, setVisible] = useState<boolean>(false);
+}: PasswordInputProps) {
+  const [uncontrolledVisible, setUncontrolledVisible] = useState<boolean>(false);
+
+  const isControlled = controlledVisible !== undefined;
+  const visible = isControlled ? controlledVisible : uncontrolledVisible;
 
   const handleToggleVisibility = useCallback(() => {
-    setVisible((current) => !current);
-  }, []);
+    if (isControlled) {
+      onVisibilityChange?.(!visible);
+    } else {
+      setUncontrolledVisible((current) => !current);
+    }
+  }, [isControlled, visible, onVisibilityChange]);
 
   return (
     <div className="relative w-full">
