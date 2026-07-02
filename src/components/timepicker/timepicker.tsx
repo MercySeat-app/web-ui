@@ -439,7 +439,7 @@ export function TimePicker({
     <div className="relative w-full">
       <ClockIcon
         aria-hidden
-        className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-300"
+        className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-50"
       />
       <input
         ref={inputRef}

@@ -179,7 +179,7 @@ export function DatePicker({
           ) : (
             <span className="text-muted-foreground">{placeholder}</span>
           )}
-          <CalendarIcon className="size-4 shrink-0" aria-hidden />
+          <CalendarIcon className="size-4 shrink-0 text-gray-50" aria-hidden />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
