@@ -175,9 +175,13 @@ export function DatePicker({
           )}
         >
           {value ? (
-            <span>{format(value, dateFormat)}</span>
+            <span className="min-w-0 flex-1 truncate text-left">
+              {format(value, dateFormat)}
+            </span>
           ) : (
-            <span className="text-muted-foreground">{placeholder}</span>
+            <span className="min-w-0 flex-1 truncate text-left text-muted-foreground">
+              {placeholder}
+            </span>
           )}
           <CalendarIcon className="size-4 shrink-0 text-gray-50" aria-hidden />
         </button>
