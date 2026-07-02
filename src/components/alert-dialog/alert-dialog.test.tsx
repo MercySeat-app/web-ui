@@ -273,6 +273,94 @@ describe("AlertDialog", () => {
     expect(screen.getByText("Item 2")).toBeInTheDocument();
   });
 
+  it("renders a close button when showCloseButton is true", () => {
+    render(
+      <AlertDialog
+        open={true}
+        onOpenChange={vi.fn()}
+        showCloseButton
+        header="Test Dialog"
+        content="Test description"
+        actions={
+          <>
+            <DialogCancel asChild>
+              <Button type="button" variant="gray-outline">
+                Cancel
+              </Button>
+            </DialogCancel>
+            <DialogAction asChild>
+              <Button type="button" variant="blue-hepatica-solid">
+                Confirm
+              </Button>
+            </DialogAction>
+          </>
+        }
+      />
+    );
+
+    expect(screen.getByRole("button", { name: /close/i })).toBeInTheDocument();
+  });
+
+  it("calls onOpenChange when the close button is clicked", async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+
+    render(
+      <AlertDialog
+        open={true}
+        onOpenChange={onOpenChange}
+        showCloseButton
+        header="Test Dialog"
+        content="Test description"
+        actions={
+          <>
+            <DialogCancel asChild>
+              <Button type="button" variant="gray-outline">
+                Cancel
+              </Button>
+            </DialogCancel>
+            <DialogAction asChild>
+              <Button type="button" variant="blue-hepatica-solid">
+                Confirm
+              </Button>
+            </DialogAction>
+          </>
+        }
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: /close/i }));
+
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it("does not render a close button by default", () => {
+    render(
+      <AlertDialog
+        open={true}
+        onOpenChange={vi.fn()}
+        header="Test Dialog"
+        content="Test description"
+        actions={
+          <>
+            <DialogCancel asChild>
+              <Button type="button" variant="gray-outline">
+                Cancel
+              </Button>
+            </DialogCancel>
+            <DialogAction asChild>
+              <Button type="button" variant="blue-hepatica-solid">
+                Confirm
+              </Button>
+            </DialogAction>
+          </>
+        }
+      />
+    );
+
+    expect(screen.queryByRole("button", { name: /close/i })).not.toBeInTheDocument();
+  });
+
   it("can be closed with ESC key", async () => {
     const user = userEvent.setup();
     const onOpenChange = vi.fn();

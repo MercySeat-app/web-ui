@@ -164,7 +164,7 @@ export function DatePicker({
           aria-labelledby={ariaLabelledBy}
           aria-describedby={ariaDescribedBy}
           className={cn(
-            "flex w-full h-10 min-w-0 items-center gap-2 border border-gray-200 rounded-sm bg-transparent",
+            "flex w-full h-10 min-w-0 items-center justify-between border border-gray-200 rounded-sm bg-transparent",
             "px-3 text-base font-manrope outline-none disabled:pointer-events-none",
             "disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
             "hover:border-blue-hepatica-700 focus-visible:border-2",
@@ -174,12 +174,12 @@ export function DatePicker({
             className,
           )}
         >
-          <CalendarIcon className="size-4 shrink-0" aria-hidden />
           {value ? (
             <span>{format(value, dateFormat)}</span>
           ) : (
             <span className="text-muted-foreground">{placeholder}</span>
           )}
+          <CalendarIcon className="size-4 shrink-0" aria-hidden />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">

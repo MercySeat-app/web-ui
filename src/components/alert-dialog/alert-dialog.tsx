@@ -11,8 +11,10 @@ import {
   Title,
 } from "@radix-ui/react-alert-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { XIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "../../lib/utils";
+import { Button } from "../button";
 
 export interface AlertDialogProps {
   /**
@@ -39,6 +41,11 @@ export interface AlertDialogProps {
    * Additional CSS classes for the dialog content
    */
   className?: string;
+  /**
+   * Renders a close button aligned with the header title. Clicking it dismisses
+   * the dialog, same as the cancel action.
+   */
+  showCloseButton?: boolean;
 }
 
 function AlertDialog({
@@ -48,6 +55,7 @@ function AlertDialog({
   content,
   actions,
   className,
+  showCloseButton = false,
 }: AlertDialogProps) {
   return (
     <Root open={open} onOpenChange={onOpenChange}>
@@ -60,9 +68,29 @@ function AlertDialog({
           )}
         >
           <div className="flex flex-col space-y-2">
-            <Title className="text-lg font-semibold text-gray-900">
-              {header}
-            </Title>
+            <div
+              className={cn(
+                "flex items-center justify-between gap-4",
+                showCloseButton && "border-b border-b-gray-25 pb-4",
+              )}
+            >
+              <Title className="text-lg font-semibold text-gray-900 min-w-0 flex-1">
+                {header}
+              </Title>
+              {showCloseButton && (
+                <Cancel asChild>
+                  <Button
+                    type="button"
+                    variant="gray-ghost"
+                    size="sm"
+                    className="size-10 shrink-0 flex items-center justify-center"
+                  >
+                    <XIcon />
+                    <span className="sr-only">Close</span>
+                  </Button>
+                </Cancel>
+              )}
+            </div>
             {typeof content === "string" ? (
               <Description className="text-sm text-gray-600">
                 {content}
