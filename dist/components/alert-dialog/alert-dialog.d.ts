@@ -25,7 +25,12 @@ export interface AlertDialogProps {
      * Additional CSS classes for the dialog content
      */
     className?: string;
+    /**
+     * Renders a close button aligned with the header title. Clicking it dismisses
+     * the dialog, same as the cancel action.
+     */
+    showCloseButton?: boolean;
 }
-declare function AlertDialog({ open, onOpenChange, header, content, actions, className, }: AlertDialogProps): import("react/jsx-runtime").JSX.Element;
+declare function AlertDialog({ open, onOpenChange, header, content, actions, className, showCloseButton, }: AlertDialogProps): import("react/jsx-runtime").JSX.Element;
 export { AlertDialog, Action as DialogAction, Cancel as DialogCancel };
 //# sourceMappingURL=alert-dialog.d.ts.map
