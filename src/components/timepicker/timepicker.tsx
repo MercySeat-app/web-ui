@@ -439,7 +439,7 @@ export function TimePicker({
     <div className="relative w-full">
       <ClockIcon
         aria-hidden
-        className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-300"
+        className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-gray-50"
       />
       <input
         ref={inputRef}
@@ -468,7 +468,7 @@ export function TimePicker({
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         className={cn(
-          "border border-gray-200 h-10 w-full min-w-0 rounded-sm bg-transparent pl-9 pr-3 text-base font-manrope transition-[color,box-shadow]",
+          "border border-gray-200 h-10 w-full min-w-0 rounded-sm bg-transparent pl-3 pr-9 text-base font-manrope transition-[color,box-shadow]",
           "outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           "hover:border-blue-hepatica-700 focus-visible:border-2 focus-visible:border-blue-hepatica-600",
           "focus-visible:shadow-button focus-visible:ring-0 focus-visible:bg-blue-hepatica-50",

@@ -31,11 +31,13 @@ function AlertDialogExample({
   header,
   content,
   actions,
+  showCloseButton,
 }: {
   defaultOpen?: boolean;
   header: React.ReactNode;
   content: React.ReactNode;
   actions: React.ReactNode;
+  showCloseButton?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
@@ -50,6 +52,7 @@ function AlertDialogExample({
         header={header}
         content={content}
         actions={actions}
+        showCloseButton={showCloseButton}
       />
     </>
   );
@@ -80,6 +83,42 @@ export const Default: Story = {
       }
     />
   ),
+};
+
+export const WithCloseButton: Story = {
+  render: () => (
+    <AlertDialogExample
+      showCloseButton
+      header="Create Serve Role"
+      content="Configure the details for this serve role before saving."
+      actions={
+        <>
+          <DialogCancel asChild>
+            <Button type="button" variant="gray-outline">
+              Cancel
+            </Button>
+          </DialogCancel>
+          <DialogAction asChild>
+            <Button
+              type="button"
+              variant="blue-hepatica-solid"
+              onClick={() => console.log("Created!")}
+            >
+              Create
+            </Button>
+          </DialogAction>
+        </>
+      }
+    />
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Set `showCloseButton` to render a dismiss control aligned with the header title.",
+      },
+    },
+  },
 };
 
 export const Destructive: Story = {
