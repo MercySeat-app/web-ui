@@ -148,9 +148,17 @@ export function DatePicker({
   "aria-describedby": ariaDescribedBy,
 }: DatePickerProps) {
   const [open, setOpen] = useState(false);
+  const [month, setMonth] = useState<Date>(() => value ?? new Date());
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen && value) {
+      setMonth(value);
+    }
+    setOpen(nextOpen);
+  };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <button
           type="button"
@@ -190,7 +198,8 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={value}
-          defaultMonth={value}
+          month={month}
+          onMonthChange={setMonth}
           onSelect={(date) => {
             onChange(date);
             setOpen(false);
