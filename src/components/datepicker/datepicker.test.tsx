@@ -158,6 +158,18 @@ describe("<DatePicker /> — selection", () => {
 
     expect(document.querySelector('[data-slot="calendar"]')).not.toBeInTheDocument();
   });
+
+  it("highlights the selected day when the popover opens", async () => {
+    const user = userEvent.setup();
+
+    render(<ControlledDatePicker initialValue={new Date(2026, 6, 16)} />);
+
+    await user.click(screen.getByRole("button"));
+
+    const selectedDay = document.querySelector('[data-selected-single="true"]');
+    expect(selectedDay).not.toBeNull();
+    expect(selectedDay).toHaveAttribute("data-day", "7/16/2026");
+  });
 });
 
 describe("<DatePicker /> — accessibility", () => {
@@ -201,3 +213,4 @@ describe("<DatePicker /> — accessibility", () => {
     expect(screen.getByRole("button")).toHaveAttribute("name", "dob");
   });
 });
+
