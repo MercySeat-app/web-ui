@@ -4817,7 +4817,7 @@ function sk({
                   i && "border-b border-b-gray-25 pb-4"
                 ),
                 children: [
-                  /* @__PURE__ */ d.jsx(Tm, { className: "text-lg font-semibold text-gray-900 min-w-0 flex-1", children: t }),
+                  /* @__PURE__ */ d.jsx(Tm, { className: "font-manrope text-lg font-semibold text-gray-900 min-w-0 flex-1", children: t }),
                   i && /* @__PURE__ */ d.jsx(jm, { asChild: !0, children: /* @__PURE__ */ d.jsxs(
                     rr,
                     {
@@ -4834,7 +4834,7 @@ function sk({
                 ]
               }
             ),
-            typeof r == "string" ? /* @__PURE__ */ d.jsx(Gi, { className: "text-sm text-gray-600", children: r }) : /* @__PURE__ */ d.jsxs(d.Fragment, { children: [
+            typeof r == "string" ? /* @__PURE__ */ d.jsx(Gi, { className: "font-manrope text-sm text-gray-700", children: r }) : /* @__PURE__ */ d.jsxs(d.Fragment, { children: [
               /* @__PURE__ */ d.jsx(Gi, { asChild: !0, children: /* @__PURE__ */ d.jsx(Ym, { children: /* @__PURE__ */ d.jsx("span", { children: "Confirmation dialog content" }) }) }),
               /* @__PURE__ */ d.jsx("div", { className: "text-sm text-gray-600", children: r })
             ] })
