@@ -74,7 +74,7 @@ function AlertDialog({
                 showCloseButton && "border-b border-b-gray-25 pb-4",
               )}
             >
-              <Title className="text-lg font-semibold text-gray-900 min-w-0 flex-1">
+              <Title className="font-manrope text-lg font-semibold text-gray-900 min-w-0 flex-1">
                 {header}
               </Title>
               {showCloseButton && (
@@ -92,7 +92,7 @@ function AlertDialog({
               )}
             </div>
             {typeof content === "string" ? (
-              <Description className="text-sm text-gray-600">
+              <Description className="font-manrope text-sm text-gray-700">
                 {content}
               </Description>
             ) : (
