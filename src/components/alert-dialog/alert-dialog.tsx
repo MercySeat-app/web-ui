@@ -96,6 +96,10 @@ function AlertDialog({
                 {content}
               </Description>
             ) : (
+              <Description asChild>
+                {content}
+              </Description>
+            )}
               <>
                 <Description asChild>
                   <VisuallyHidden.Root>
