@@ -4836,7 +4836,7 @@ function sk({
             ),
             typeof r == "string" ? /* @__PURE__ */ d.jsx(Gi, { className: "font-manrope text-sm text-gray-700", children: r }) : /* @__PURE__ */ d.jsxs(d.Fragment, { children: [
               /* @__PURE__ */ d.jsx(Gi, { asChild: !0, children: /* @__PURE__ */ d.jsx(Ym, { children: /* @__PURE__ */ d.jsx("span", { children: "Confirmation dialog content" }) }) }),
-              /* @__PURE__ */ d.jsx("div", { className: "text-sm text-gray-600", children: r })
+              /* @__PURE__ */ d.jsx("div", { className: "text-sm text-gray-700", children: r })
             ] })
           ] }),
           /* @__PURE__ */ d.jsx("div", { className: "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 space-y-2 space-y-reverse sm:space-y-0", children: o })

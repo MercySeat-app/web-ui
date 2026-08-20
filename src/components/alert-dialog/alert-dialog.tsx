@@ -102,7 +102,7 @@ function AlertDialog({
                     <span>Confirmation dialog content</span>
                   </VisuallyHidden.Root>
                 </Description>
-                <div className="text-sm text-gray-600">{content}</div>
+                <div className="text-sm text-gray-700">{content}</div>
               </>
             )}
           </div>
